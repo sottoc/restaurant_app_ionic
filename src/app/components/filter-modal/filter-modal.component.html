@@ -1,0 +1,27 @@
+<ion-content>
+  <ion-button color="secondary" class="filter-modal-title-button" shape="round"> {{ 'select_categories' | translate }}
+  </ion-button>
+  <div class="filter-modal-div">
+    <span class="detail-text"> {{ 'you_can_choose_more_than_one_option' | translate }} </span>
+    <ion-content class="ion-padding">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" *ngFor="let category of categories">
+            <div *ngIf="lang_en" class="ion-text-left" style="padding-left:15px;" (click)="clickCate(category.id)">
+              <ion-checkbox [checked]="category.isChecked" color="primary"> </ion-checkbox>
+              <span class="cate-name-span"> {{category.name}} </span>
+            </div>
+            <div *ngIf="!lang_en" class="ion-text-right" style="padding-right:15px;"
+              (click)="clickCate(category.id)">
+              <span class="cate-name-span"> {{category.name}} </span>
+              <ion-checkbox [checked]="category.isChecked" color="primary"> </ion-checkbox>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <div class="spin" *ngIf="loading">
+        <ion-spinner name="bubbles"></ion-spinner>
+      </div>
+    </ion-content>
+  </div>
+</ion-content>

@@ -24,3 +24,79 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+ion-content {
+    --ion-background-color:#f5f6f6;
+    color: #3c426d;
+    height: 100%;
+}
+
+ion-button {
+    --box-shadow: none;
+    text-transform: none;
+    font-weight: bold;
+}
+
+.primary-text {
+    color: #3c426d;
+    font-weight: bold;
+}
+
+.social-btn {
+    background: #ffffff;
+    width: 50px;
+    height: 50px;
+    position: relative;
+    border-radius: 100%;
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,0.2),0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12);
+    outline: none;
+}
+
+.social-btn:active {
+    background-color: #d8dadd;
+}
+
+.input-field {
+    background-color: white; 
+    margin-bottom:4px;
+}
+
+.normal-icon {
+    color: #3c426d;
+    opacity: 0.7;
+}
+
+.field-text {
+    font-size: 12px;
+    opacity: 50%;
+    padding-left: 7px;
+}
+
+.filter-modal .modal-wrapper {
+    width: 100%;
+    left: 0px;
+    position: absolute;
+    height: 70%;
+    top: 30%;
+    background: transparent !important;
+}
+
+.bold-opacity-title {
+    color: #3c426d; 
+    font-weight: bold; 
+    opacity: 0.8;
+}
+
+.spin{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+ }
+ 
+ ion-spinner {
+    width: 28px;
+    height: 28px;
+    stroke: #444;
+    fill: #222;
+ }

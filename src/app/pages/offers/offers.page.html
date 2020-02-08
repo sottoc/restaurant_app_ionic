@@ -1,0 +1,32 @@
+<app-header title="{{'offers' | translate}}" back_link="/home" style="background: #f5f6f6; padding: 10px;"></app-header>
+<ion-content>
+  <ion-grid>
+    <div class="offer-top">
+      <span> {{'the_latest_restaurant_offers' | translate}} </span>
+    </div>
+    <ion-row>
+      <ion-col size="6" *ngFor="let offer of offers">
+        <div class="cover-div">
+          <img [src]="offer.cover_img_url" width="100%" height="130px" class="cover-img" (click)="visitOffer(offer.offer_id)">
+          <div class="top-div">
+            <span class="offer-title"> {{offer.offer_title}} </span>
+          </div>
+          <img [src]="offer.logo_url ? offer.logo_url : '../../../assets/imgs/splash.png'" width="40px" height="40px" class="logo-img">
+          <div class="bottom-div">
+            <ion-row>
+              <ion-col size="5">
+                <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'">
+                  <ion-icon name="pin"></ion-icon>
+                  <span> {{offer.distance}} </span>
+                  <span> {{'km' | translate}} </span>
+                </div>
+              </ion-col>
+            </ion-row>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<app-footer active_page="offers_page"></app-footer>

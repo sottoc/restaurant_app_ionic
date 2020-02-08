@@ -1,0 +1,21 @@
+<ion-footer class="footer">
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button [class.actived-tab-button]="active_page=='home_page'" (click)="goToHome()">
+        <ion-icon name="home" size="large"></ion-icon>
+      </ion-tab-button>
+  
+      <ion-tab-button [class.actived-tab-button]="active_page=='offers_page'" (click)="goToOffers()">
+        <ion-icon name="notifications" size="large"></ion-icon>
+      </ion-tab-button>
+  
+      <ion-tab-button [class.actived-tab-button]="active_page=='qrcode'" (click)="goToQRScan()">
+        <ion-icon name="qr-scanner" size="large"></ion-icon>
+      </ion-tab-button>
+  
+      <ion-tab-button [class.actived-tab-button]="active_page=='profile_page'" (click)="goToProfile()">
+        <ion-icon name="person" size="large"></ion-icon>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-footer>

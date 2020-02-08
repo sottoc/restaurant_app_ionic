@@ -1,0 +1,31 @@
+.filter-modal-title-button {
+    width: 50%;
+    margin: auto;
+    margin-left: 25%;
+}
+
+.detail-text {
+    margin-left: 20%;
+    color: #aeaeae;
+    font-size: 12px;
+}
+
+.cate-name-span {
+    color: #3c426d;
+    font-size: 12px;
+    font-weight: bold;
+    padding:6px;
+}
+
+ion-content {
+    --ion-background-color: transparent;
+}
+
+.filter-modal-div {
+    background: white;
+    margin-top: -15px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    height: calc(100% - 15px - 6px);
+    padding-top: 20px;
+}

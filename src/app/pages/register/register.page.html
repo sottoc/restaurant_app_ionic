@@ -1,0 +1,111 @@
+<ion-content>
+  <ion-grid style="height: 15%;" class="ion-padding">
+    <app-header title="{{'register' | translate}}" back_link="/start"></app-header>
+  </ion-grid>
+
+  <ion-grid style="margin:0px 7%;">
+    <form #form="ngForm" (ngSubmit)="register(form)">
+      <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'">
+        <ion-row class="input-field">
+          <ion-col size="2" class="ion-align-self-center" style="text-align: center;">
+            <ion-icon size="large" class="normal-icon"  name="mail"></ion-icon>
+          </ion-col>
+          <ion-col size="10">
+            <ion-row>
+              <span class="field-text">{{ 'email_address' | translate }}</span>
+            </ion-row>
+            <ion-row>
+              <ion-input type="text" #email_input ngModel required color="primary" name="email" (ionBlur)="emailInputBlur($event)"></ion-input>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="input-field">
+          <ion-col size="2" class="ion-align-self-center" style="text-align: center;">
+            <ion-icon size="large" class="normal-icon" name="person"></ion-icon>
+          </ion-col>
+          <ion-col size="10">
+            <ion-row>
+              <span class="field-text">{{ 'username' | translate }}</span>
+            </ion-row>
+            <ion-row>
+              <ion-input type="text" #username_input ngModel required color="primary" name="username" value="mohamed5"></ion-input>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="input-field">
+          <ion-col size="2" class="ion-align-self-center" style="text-align: center;">
+            <img src="../../../assets/imgs/icon_password.png" width="25px" height="25px">
+          </ion-col>
+          <ion-col size="10">
+            <ion-row>
+              <span class="field-text">{{ 'password' | translate }}</span>
+            </ion-row>
+            <ion-row>
+              <ion-input type="password" #password_input ngModel required color="primary" name="password" (ionBlur)="passwordInputBlur($event)"></ion-input>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="input-field">
+          <ion-col size="2" class="ion-align-self-center" style="text-align: center;">
+            <img src="../../../assets/imgs/icon_password.png" width="25px" height="25px">
+          </ion-col>
+          <ion-col size="10">
+            <ion-row>
+              <span class="field-text">{{ 'rewrite' | translate }}</span>
+            </ion-row>
+            <ion-row>
+              <ion-input type="password" #confirm_password_input ngModel required color="primary" name="confirm_password" (ionBlur)="confirmPasswordInputBlur($event)"></ion-input>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="input-field">
+          <ion-col size="2" class="ion-align-self-center" style="text-align: center;">
+            <ion-icon size="large" class="normal-icon" name="pin"></ion-icon>
+          </ion-col>
+          <ion-col size="10">
+            <ion-row>
+              <span class="field-text">{{ 'city' | translate }}</span>
+            </ion-row>
+            <ion-row>
+              <ion-input type="text" ngModel required color="primary" name="city" value="Geddah"></ion-input>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="input-field">
+          <ion-col size="2" class="ion-align-self-center" style="text-align: center;">
+            <ion-icon size="large" class="normal-icon" name="call"></ion-icon>
+          </ion-col>
+          <ion-col size="10">
+            <ion-row>
+              <span class="field-text">{{ 'phone_number' | translate }}</span>
+            </ion-row>
+            <ion-row class="phone-number-row">
+              <ion-col size="1" class="ion-align-self-center">
+                <span style="padding: 9px 0px; color: #3c426d">+</span>
+              </ion-col>
+              <ion-col size="3" class="ion-align-self-center">
+                <ion-input type="number" ngModel required color="primary" name="country_code" (ionChange)="changeCountryCode($event)"></ion-input>
+              </ion-col>
+              <ion-col size="8" class="ion-align-self-center">
+                <ion-input type="number" #phone_number_input ngModel required color="primary" name="phone_number"></ion-input>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col class="ion-text-center">
+            <ion-button type="submit" color="secondary" style="width: 85%" shape="round" [disabled]="form.invalid">
+              <span> {{ 'register_a_new_account' | translate }} </span> 
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </div>
+    </form>
+  </ion-grid>
+</ion-content>

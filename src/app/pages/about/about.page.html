@@ -1,0 +1,44 @@
+<app-header title="{{'about_us' | translate}}" back_link="/profile" style="background-color: #f5f6f6; padding:10px 10px;"></app-header>
+<ion-content>
+  <ion-grid class="ion-padding">
+    <ion-row class="ion-padding">
+      <ion-col class="ion-align-self-center ion-text-center">
+        <img src="../../../assets/imgs/logo_menu.png" width="40%" alt="Splash">
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-align-self-center ion-text-center">
+        <span style="color: #3c426d; font-size: 14px; font-weight: bold; opacity: 0.9;">
+          {{'description_of_about_us' | translate}}
+        </span>
+      </ion-col>
+    </ion-row>
+
+    <div style="margin-top: 30px;">
+      <ion-row>
+        <ion-col class="ion-align-self-center ion-text-center">
+          <ion-button color="primary" size="small" shape="round">
+            <span> {{'call_us' | translate}} </span>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <div style="color: #3c426d; font-weight: bold; opacity: 0.8;">
+        <ion-row>
+          <ion-col class="ion-align-self-center ion-text-center">
+            <ion-icon name="call"></ion-icon>
+            <span> 0570786888 </span>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="ion-align-self-center ion-text-center">
+            <ion-icon name="mail"></ion-icon>
+            <span> cmenu@cmenu.com </span>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+  </ion-grid>
+  
+</ion-content>
+<app-footer active_page="profile_page"></app-footer>

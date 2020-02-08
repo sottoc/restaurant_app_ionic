@@ -1,0 +1,39 @@
+<ion-content>
+  <ion-grid style="height: 15%;" class="ion-padding" style="padding-top:30px;">
+    <ion-row class="ion-float-right">
+      <ion-button color="light" size="small" class="white-btn" shape="round" (click)="setLang('en')"> 
+        <span class="primary-text"> English </span>
+      </ion-button>
+      <ion-button color="light" size="small" class="white-btn" shape="round" (click)="setLang('ar')">
+        <span class="primary-text"> عربـــــي </span>
+      </ion-button>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid style="height: 85%; padding-top: 20%">
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-button color="secondary" style="width: 70%" shape="round" routerLink="/register"> {{ 'sign_up' | translate }} </ion-button>
+        <ion-button color="primary" style="width: 70%" shape="round" routerLink="/login"> {{ 'login' | translate }} </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-padding">
+      <ion-col class="ion-text-center">
+        <span class="primary-text"> {{ 'or_login_with' | translate }} </span>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-text-center">
+      <ion-col>
+        <button type="button" class="social-btn" style="color: #a9ad6d">
+          <ion-icon size="large" name="logo-google"></ion-icon>
+        </button>
+        <button type="button" class="social-btn" style="color: #3b5998; margin:0px 10px;">
+          <ion-icon size="large" name="logo-facebook"></ion-icon>
+        </button>
+        <button type="button" class="social-btn" style="color: #38a1f3">
+          <ion-icon name="logo-twitter" size="large"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

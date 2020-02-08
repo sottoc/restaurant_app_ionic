@@ -1,0 +1,15 @@
+.pen_change_row {
+    background: white;
+    border-radius: 30px;
+    height: 30px;
+    ion-input {
+        font-size: 14px;
+        --padding-top: 0px;
+        --padding-bottom: 0px;
+    }
+}
+
+.phone-number-row ion-input {
+    border: 1px solid #e0dfdf;
+    padding: 0px 2px;
+}

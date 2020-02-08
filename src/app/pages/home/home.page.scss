@@ -1,0 +1,112 @@
+.home-icons {
+    margin: 0 6px;
+    color: #3c426d;
+    font-size: 25px;
+}
+
+.home-icons:active {
+    color: blue;
+}
+
+.home-icons:hover {
+    transform: scale(1.1);
+}
+
+ion-searchbar {
+    --background: #eaeaea;
+    --color: #3c426d;
+    --icon-color: #3c426d;
+    --placeholder-font-size: 13px;
+}
+
+.searchbar-input {
+    font-size: 13px !important;
+}
+
+.cover-div {
+    position: relative;
+    margin: 3px;
+    box-shadow: 1px 2px 2px #d8d2d2;
+}
+
+.top-div {
+    position: absolute;
+    top: 0px;
+    height: 25px;
+    opacity: 0.8;
+    background: white;
+    width: 100%;
+    padding: 4px 4px;
+}
+
+.rest-name-text {
+    color: #3c426d;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.cate-name-text {
+    color: #3c426d;
+    font-size: 13px;
+    font-weight: bold;
+    float: right;
+}
+
+.cover-img {
+    z-index: -1;
+}
+
+.bottom-div {
+    height: 25px;
+    background: white;
+    color: #3c426d;
+    font-size: 13px;
+}
+
+.logo-img {
+    position: absolute;
+    right: 10px;
+    bottom: 12px;
+    border-radius: 50%;
+    background: #adaf92;
+}
+
+.heart-img {
+    position: absolute;
+    left: 10px;
+    bottom: 35px;
+    z-index: 0;
+}
+
+.list-div {
+    height: 80px;
+    border: 1px solid white;
+    width: 100%;
+    margin: 5px 15px;
+    padding: 2px 4px;
+    border-radius: 40px;
+    background: white;
+}
+
+.list-logo-img {
+    border-radius: 50%;
+    background: #adaf92;
+}
+
+.list-rest-name-text {
+    color: #3c426d;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.list-cate-name-text {
+    color: #3c426d;
+    font-size: 13px;
+    opacity: 0.5;
+}
+
+.list-distance-text {
+    color: #f68625;
+    font-size: 11px;
+}

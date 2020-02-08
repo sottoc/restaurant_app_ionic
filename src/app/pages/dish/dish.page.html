@@ -1,0 +1,57 @@
+<app-header title="{{'dish' | translate}}" back_link="/restaurant" style="background-color: #f5f6f6; padding:10px 10px;"></app-header>
+
+<div class="cover-div">
+  <img [src]="dish_img_url" width="100%" height="250px" class="cover-img">
+  <img [src]="'../../../assets/imgs/logo-black.png'" width="100px" height="100px" class="logo-img">
+  <img [src]="dish_favorite_checked ? '../../../assets/imgs/heart_red.png' : '../../../assets/imgs/heart_white.png'" width="35px" height="35px" 
+    (click)="setFavoriteDish()" class="favorite-icon">
+</div>
+<div class="bottom-div">
+  <ion-row style="font-size: 22px;">
+    <ion-col size="5" class="ion-text-left" style="color: #f68625">
+      <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'">
+        <span> {{dish_price}} </span>
+        <span> {{'SAR' | translate}} </span>
+      </div>
+    </ion-col>
+    <ion-col size="2">
+      
+    </ion-col>
+    <ion-col size="5" class="ion-text-right">
+      <div>
+        <span class="bold-opacity-title"> {{dish_name}} </span>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="12">
+      <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'">
+        <span class="bold-opacity-title" style="font-size: 13px; padding: 5px;">
+          {{dish_detail}}
+        </span>
+      </div>
+    </ion-col>
+  </ion-row>
+</div>
+<ion-content>
+  <ion-grid>
+    <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" style="margin-top: 10px;" class="bold-opacity-title">
+      <form #form="ngForm" (ngSubmit)="sendOpinion(form)">
+        <div style="padding: 8px; font-size: 12px;">
+          <ion-row>
+            <span> {{'your_opinion_about_the_dish' | translate}} </span>
+          </ion-row>
+          <ion-row>
+            <ion-textarea type="number" ngModel required color="primary" value="" name="opinion" style="background: white; border:1px solid rgba(60, 67, 109, 0.5);"></ion-textarea>
+          </ion-row>
+        </div>
+        <div style="padding: 5px;" [dir]="lang == 'en' ? 'rtl' : 'ltr'">
+          <ion-row>
+            <ion-button type="submit" color="primary" shape="round" [disabled]="form.invalid" style="height:30px;">{{'post_your_opinion_on_this_dish' | translate}}</ion-button>
+          </ion-row>
+        </div>
+      </form>
+    </div>
+  </ion-grid>
+</ion-content>
+<app-footer active_page="home_page"></app-footer>

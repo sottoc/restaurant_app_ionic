@@ -1,0 +1,17 @@
+.footer{
+    min-height: 50px;
+    bottom: 0px;
+}
+
+ion-tabs .hydrated {
+    background: rgb(255, 255, 255) !important;
+}
+
+ion-tabs .hydrated .actived-tab-button {
+    color: #3c426d;
+    border-bottom: 5px solid;
+}
+
+ion-tabs .tabs-inner[_ngcontent-wpx-c4] {
+    display: none !important;
+}

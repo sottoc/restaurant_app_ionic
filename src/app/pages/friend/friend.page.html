@@ -1,0 +1,113 @@
+<app-header title="{{'friend' | translate}}" back_link="/friends" style="background-color: #3c426d; padding:10px 10px"></app-header>
+<div style="width: 100%; background: #3c426d;">
+  <ion-grid class="ion-padding">
+    <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'">
+      <ion-row>
+        <ion-col size="5">
+          <div style="margin: auto; width: 80px; height: 80px; border: 1px solid #f68625; border-radius: 50%;">
+            <img [src]="logo_url" style="border-radius: 50%;">
+          </div>
+        </ion-col>
+        <ion-col size="7" style="font-size: 15px; color: white; margin-top: 10px;">
+          <div style="color: #f68625; font-weight: bold;">
+            <span> {{name}} </span>
+          </div>
+          <div style="margin-top: 3px;">
+            <span> {{bio}} </span>
+          </div>
+          <div style="color: #f68625; margin-top: 3px;">
+            <span> {{city}} </span>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+    <div style="text-align: center; margin-top:15px;">
+        <ion-button color="light" size="small" class="white-btn" shape="round" style="height: 23px;">
+          <span class="follow-text">{{'followers' | translate}} </span>
+          <span class="follow-text" style="margin-left: 4px;"> 236 </span>
+        </ion-button>
+        <ion-button color="light" size="small" class="white-btn" shape="round" style="height: 23px;">
+          <span class="follow-text">{{'following' | translate}} </span>
+          <span class="follow-text" style="margin-left: 4px;"> 40 </span>
+        </ion-button>
+    </div>
+    <div *ngIf="!is_followed" style="text-align: center; margin-top:5px;">
+      <ion-button color="light" size="small" class="white-btn follow-btn" shape="round" (click)="makeFriend()">
+        <span class="follow-text">{{'follow' | translate}} </span>
+      </ion-button>
+    </div>
+  </ion-grid>
+</div>
+
+<div style="text-align: right; padding: 10px; background: #f5f6f6;">
+  <div *ngIf="is_followed">
+    <ion-button [color]="selected_dishes ? 'primary' : 'light'" size="small" shape="round" (click)="switchDishRest('dish')"> 
+      <span [class]="selected_dishes ? 'unselected-button-text' : 'selected-button-text'"> {{'favorite_dishes' | translate}} </span> 
+    </ion-button>
+    <ion-button [color]="selected_dishes ? 'light' : 'primary'" size="small" shape="round" (click)="switchDishRest('restaurant')"> 
+      <span [class]="selected_dishes ? 'selected-button-text' : 'unselected-button-text'"> {{'favorite_restaurant' | translate}} </span> 
+    </ion-button>
+  </div>
+</div>
+<ion-content>
+  <ion-grid style="padding-bottom: 50px;" class="ion-padding" *ngIf="is_followed">
+    <div *ngIf="!selected_dishes">
+      <ion-row *ngFor="let restaurant of favorite_restaurants">
+        <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" class="list-div">
+            <ion-row style="width: 100%;">
+              <ion-col size="5">
+                <div style="padding-top: 15px;">
+                  <div> <span class="list-rest-name-text"> {{restaurant.name}} </span></div>
+                  <div> <span class="list-cate-name-text"> {{restaurant.category_name}} </span></div>
+                </div>
+              </ion-col>
+              <ion-col size="2">
+                
+              </ion-col>
+              <ion-col size="2" class="ion-text-center">
+                <div style="padding-top: 10px;">
+                  <img [src]="restaurant.favorite_checked ? '../../../assets/imgs/heart_red.png' : '../../../assets/imgs/heart_white.png'" 
+                    width="26px" height="26px" (click)="setFavorite(restaurant.id)">
+                </div>
+                <div class="list-distance-text">
+                  <span> {{restaurant.distance}} </span>
+                  <span> {{'km' | translate}} </span>
+                </div>
+              </ion-col>
+              <ion-col size="3">
+                <img [src]="restaurant.logo_url ? restaurant.logo_url : '../../../assets/imgs/splash.png'" width="65px" height="65px" class="list-logo-img">
+              </ion-col>
+            </ion-row>
+        </div>
+      </ion-row>
+    </div>
+
+    <div *ngIf="selected_dishes">
+      <ion-row *ngFor="let dish of favorite_dishes">
+        <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" class="list-div">
+            <ion-row style="width: 100%;">
+              <ion-col size="5">
+                <div style="padding-top: 15px;">
+                  <div> <span class="list-rest-name-text"> {{dish.name}} </span></div>
+                  <div> <span class="list-cate-name-text"> {{dish.category_name}} </span></div>
+                </div>
+              </ion-col>
+              <ion-col size="2">
+                
+              </ion-col>
+              <ion-col size="2" class="ion-text-center">
+                <div style="padding-top: 10px;">
+                  <img [src]="dish.favorite_checked ? '../../../assets/imgs/heart_red.png' : '../../../assets/imgs/heart_white.png'" 
+                    width="26px" height="26px">
+                </div>
+              </ion-col>
+              <ion-col size="3">
+                <img [src]="dish.dish_img_url ? dish.dish_img_url : '../../../assets/imgs/splash.png'" width="65px" height="65px" class="list-logo-img">
+              </ion-col>
+            </ion-row>
+        </div>
+      </ion-row>
+    </div>
+  </ion-grid>
+</ion-content>
+<app-footer active_page="profile_page"></app-footer>

@@ -1,0 +1,64 @@
+<app-header title="{{'profile' | translate}}" back_link="/home" style="background-color: #3c426d; padding:10px 10px"></app-header>
+<ion-content>
+  <ion-grid style="height: 33%; background: #3c426d;" class="ion-padding">
+    <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'">
+      <ion-row>
+        <ion-col size="5">
+          <div style="margin: auto; width: 80px; height: 80px; border: 1px solid #f68625; border-radius: 50%;">
+            <img src="../../../assets/imgs/avatar.png" style="border-radius: 50%;">
+          </div>
+        </ion-col>
+        <ion-col size="7" style="font-size: 15px; color: white; margin-top: 10px;">
+          <div style="color: #f68625; font-weight: bold;">
+            <span> {{name}} </span>
+          </div>
+          <div style="margin-top: 3px;">
+            <span> {{bio}} </span>
+          </div>
+          <div style="color: #f68625; margin-top: 3px;">
+            <span> {{city}} </span>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+    <div style="text-align: center; margin-top:15px;">
+        <ion-button color="light" size="small" class="white-btn" shape="round" style="height: 23px;">
+          <span class="follow-text">{{'followers' | translate}} </span>
+          <span class="follow-text" style="margin-left: 4px;"> 236 </span>
+        </ion-button>
+        <ion-button color="light" size="small" class="white-btn" shape="round" style="height: 23px;">
+          <span class="follow-text">{{'following' | translate}} </span>
+          <span class="follow-text" style="margin-left: 4px;"> 40 </span>
+        </ion-button>
+    </div>
+  </ion-grid>
+
+  <ion-grid style="height: 67%;" class="ion-padding">
+    <ion-button color="light" class="white-btn" shape="round" style="width: 100%;" routerLink="/favorite">
+      <img src="../../../assets/imgs/favorite.png" width="20" height="20" style="margin-right: 60%; opacity: 0.9;">
+      <span class="primary-text">{{'favorite' | translate}} </span>
+    </ion-button>
+    <ion-button color="light" class="white-btn" shape="round" style="width: 100%;" routerLink="/friends">
+      <img src="../../../assets/imgs/friends.png" width="20" height="20" style="margin-right: 60%; opacity: 0.9;">
+      <span class="primary-text">{{'friends' | translate}} </span>
+    </ion-button>
+    <ion-button color="light" class="white-btn" shape="round" style="width: 100%;" routerLink="/settings">
+      <img src="../../../assets/imgs/settings.png" width="20" height="20" style="margin-right: 60%; opacity: 0.9;">
+      <span class="primary-text">{{'settings' | translate}} </span>
+    </ion-button>
+    <ion-button color="light" class="white-btn" shape="round" style="width: 100%;" routerLink="/about">
+      <img src="../../../assets/imgs/about_us.png" width="20" height="20" style="margin-right: 60%; opacity: 0.9;">
+      <span class="primary-text">{{'about_us' | translate}} </span>
+    </ion-button>
+    <ion-button color="light" class="white-btn" shape="round" style="width: 100%;" routerLink="/contact">
+      <img src="../../../assets/imgs/contact_us.png" width="20" height="20" style="margin-right: 60%; opacity: 0.9;">
+      <span class="primary-text">{{'contact_us' | translate}} </span>
+    </ion-button>
+    <ion-button color="light" class="white-btn" shape="round" style="width: 100%;">
+      <img src="../../../assets/imgs/terms_of_use.png" width="20" height="20" style="margin-right: 50%; opacity: 0.9;">
+      <span class="primary-text">{{'terms_of_use' | translate}} </span>
+    </ion-button>
+  </ion-grid>
+  
+</ion-content>
+<app-footer active_page="profile_page"></app-footer>

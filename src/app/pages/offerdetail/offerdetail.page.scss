@@ -1,0 +1,40 @@
+.cover-div {
+    position: relative;
+    margin-bottom: 10px;
+    box-shadow: 1px 2px 2px #d8d2d2;
+}
+
+.top-div {
+    position: absolute;
+    top: 0px;
+    height: 50px;
+    background: #f68625;
+    width: 100%;
+    padding: 15px 4px;
+    text-align: center;
+}
+
+.offer-title {
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.cover-img {
+    z-index: -1;
+}
+
+.bottom-div {
+    height: 50px;
+    background: white;
+    color: #3c426d;
+    font-size: 15px;
+    padding: 10px;
+}
+
+.logo-img {
+    position: absolute;
+    right: 15px;
+    bottom: 20px;
+    border-radius: 50%;
+}

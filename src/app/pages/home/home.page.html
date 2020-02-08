@@ -1,0 +1,76 @@
+<app-header title="{{'home_page' | translate}}" back_link="/login" style="background-color: #f5f6f6; padding:10px 10px;"></app-header>
+<ion-row style="background-color: #f5f6f6;">
+  <ion-col size="7">
+    <ion-searchbar #searchInput mode="ios" [dir]="lang == 'ar' ? 'rtl' : 'ltr'" placeholder="{{'find_a_restaurant' | translate}}">
+    </ion-searchbar>
+  </ion-col>
+  <ion-col size="5" class="ion-align-self-center" style="text-align: center;">
+    <ion-icon name="flask" class="home-icons" (click)="showFilterModal()"></ion-icon>
+    <ion-icon name="list" class="home-icons" (click)="showList()"></ion-icon>
+    <ion-icon name="apps" class="home-icons" (click)="showGrid()"></ion-icon>
+  </ion-col>
+</ion-row>
+<ion-content>
+  <ion-grid *ngIf="display_grid_state">
+    <ion-row>
+      <ion-col size="6" *ngFor="let restaurant of restaurants">
+        <div class="cover-div">
+          <img [src]="restaurant.image_url" width="100%" height="130px" class="cover-img" (click)="visitRestaurant(restaurant.id)">
+          <div class="top-div">
+            <span class="rest-name-text"> {{restaurant.name}} </span>
+            <span class="cate-name-text"> {{restaurant.category_name}} </span>
+          </div>
+          <img [src]="restaurant.logo_url" width="40px" height="40px" class="logo-img">
+          <img [src]="restaurant.favorite_checked ? '../../../assets/imgs/heart_red.png' : '../../../assets/imgs/heart_white.png'" 
+            width="30px" height="30px" (click)="setFavorite(restaurant.id)" class="heart-img">
+          <div class="bottom-div">
+            <ion-row>
+              <ion-col size="5">
+                <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'">
+                  <ion-icon name="pin"></ion-icon>
+                  <span> {{restaurant.distance}} </span>
+                  <span> {{'km' | translate}} </span>
+                </div>
+              </ion-col>
+            </ion-row>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid *ngIf="!display_grid_state">
+    <ion-row *ngFor="let restaurant of restaurants">
+      <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" class="list-div">
+          <ion-row style="width: 100%;">
+            <ion-col size="5" (click)="visitRestaurant(restaurant.id)">
+              <div style="padding-top: 15px;">
+                <div> <span class="list-rest-name-text"> {{restaurant.name}} </span></div>
+                <div> <span class="list-cate-name-text"> {{restaurant.category_name}} </span></div>
+              </div>
+            </ion-col>
+            <ion-col size="2" (click)="visitRestaurant(restaurant.id)">
+              
+            </ion-col>
+            <ion-col size="2" class="ion-text-center">
+              <div style="padding-top: 10px;">
+                <img [src]="restaurant.favorite_checked ? '../../../assets/imgs/heart_red.png' : '../../../assets/imgs/heart_white.png'" 
+                  width="26px" height="26px" (click)="setFavorite(restaurant.id)">
+              </div>
+              <div class="list-distance-text">
+                <span> {{restaurant.distance}} </span>
+                <span> {{'km' | translate}} </span>
+              </div>
+            </ion-col>
+            <ion-col size="3">
+              <img [src]="restaurant.logo_url" width="65px" height="65px" class="list-logo-img">
+            </ion-col>
+          </ion-row>
+      </div>
+    </ion-row>
+  </ion-grid>
+  <div class="spin" *ngIf="loading">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
+</ion-content>
+<app-footer active_page="home_page"></app-footer>

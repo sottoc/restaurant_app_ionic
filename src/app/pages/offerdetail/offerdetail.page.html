@@ -1,0 +1,31 @@
+<app-header title="{{'offers' | translate}}" back_link="/home" style="background: #f5f6f6; padding: 10px;"></app-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <div class="cover-div">
+          <img [src]="cover_img_url" width="100%" height="250px" class="cover-img">
+          <div class="top-div">
+            <span class="offer-title"> {{offer_title}} </span>
+          </div>
+          <img [src]="logo_url ? logo_url : '../../../assets/imgs/splash.png'" width="70px" height="70px" class="logo-img">
+          <div class="bottom-div">
+            <ion-row>
+              <ion-col size="5">
+                <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'">
+                  <ion-icon name="pin"></ion-icon>
+                  <span> 12 </span>
+                  <span> {{'km' | translate}} </span>
+                </div>
+              </ion-col>
+            </ion-row>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <div style="text-align: center; margin-top: 20px;">
+      <ion-button color="primary" style="width: 70%" shape="round">{{'see_the_menu' | translate}}</ion-button>
+    </div>
+  </ion-grid>
+</ion-content>
+<app-footer active_page="offers_page"></app-footer>
