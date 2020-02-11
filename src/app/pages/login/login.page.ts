@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavController, ToastController, IonInput } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { RestService } from '../../services/rest.service';
+import { environment } from '../../../environments/environment';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-login',
@@ -8,14 +11,19 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+  api_url = environment.api_url
   lang : string
+  loading: boolean = false
   @ViewChild('email_input', { static: false }) emailInput: IonInput;
   constructor(
     private navCtrl: NavController,
     private translate: TranslateService,
     private toastController: ToastController,
+    public restApi: RestService,
+    private storage: Storage,
   ) { 
     this.lang = this.translate.currentLang;
+    this.getCategories();
   }
 
   ngOnInit() {
@@ -46,5 +54,21 @@ export class LoginPage implements OnInit {
       console.error("ERROR", err)
     }
   }
+
+  async getCategories() {
+    try {
+      this.loading = true;
+      let res: any = await this.restApi.getCategories();
+      let categories = res.data;
+      categories.forEach(element => {
+        element.isChecked = true;
+      });
+      await this.storage.set("categories", JSON.stringify(categories));
+    } catch(err) {
+      console.log(err);
+    }
+    this.loading = false;
+  }
+  
 
 }

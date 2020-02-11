@@ -21,11 +21,27 @@ export class RestService {
     return this.handleRequest(0, url, {});
   }
 
+  getRestaurantsByKey(key) {
+    const url = `${this.api_url}/api/restaurants?restaurant_name=${key}`;
+    return this.handleRequest(0, url, {});
+  }
+
+  getMenusAll() {
+    const url = `${this.api_url}/api/menus`;
+    return this.handleRequest(0, url, {});
+  }
+
+  getMenus(restaurant_id) {
+    console.log(restaurant_id);
+    const url = `${this.api_url}/api/menus?restaurant=${restaurant_id}`;
+    return this.handleRequest(0, url, {});
+  }
+
   handleRequest(method, url, params) {
     return new Promise(async (resolve, reject) => {
       try {
         this.http.setDataSerializer('json');
-        let promise = null;
+        let promise = null; 
         switch (method) {
           case 0:
             promise = this.http.get(url, params, {});

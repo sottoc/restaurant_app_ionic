@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { Location } from "@angular/common";
 
 @Component({
   selector: 'app-header',
@@ -11,13 +12,15 @@ export class HeaderComponent implements OnInit {
   @Input() back_link: string;
   constructor(
     private navCtrl: NavController,
+    private location: Location
   ) { }
 
   ngOnInit() {
   }
 
   goBack() {
-    this.navCtrl.navigateBack(this.back_link);
+    //this.navCtrl.navigateBack(this.back_link);
+    this.location.back();
   }
   
 

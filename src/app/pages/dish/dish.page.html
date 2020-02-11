@@ -1,23 +1,20 @@
 <app-header title="{{'dish' | translate}}" back_link="/restaurant" style="background-color: #f5f6f6; padding:10px 10px;"></app-header>
 
 <div class="cover-div">
-  <img [src]="dish_img_url" width="100%" height="250px" class="cover-img">
+  <img [src]="image_url" width="100%" height="250px" class="cover-img">
   <img [src]="'../../../assets/imgs/logo-black.png'" width="100px" height="100px" class="logo-img">
   <img [src]="dish_favorite_checked ? '../../../assets/imgs/heart_red.png' : '../../../assets/imgs/heart_white.png'" width="35px" height="35px" 
     (click)="setFavoriteDish()" class="favorite-icon">
 </div>
 <div class="bottom-div">
   <ion-row style="font-size: 22px;">
-    <ion-col size="5" class="ion-text-left" style="color: #f68625">
+    <ion-col size="4" class="ion-text-left" style="color: #f68625">
       <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'">
         <span> {{dish_price}} </span>
         <span> {{'SAR' | translate}} </span>
       </div>
     </ion-col>
-    <ion-col size="2">
-      
-    </ion-col>
-    <ion-col size="5" class="ion-text-right">
+    <ion-col size="8" class="ion-text-right">
       <div>
         <span class="bold-opacity-title"> {{dish_name}} </span>
       </div>

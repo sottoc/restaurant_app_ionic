@@ -1,5 +1,5 @@
 <app-header title="{{'restaurant' | translate}}" back_link="/home" style="background-color: #f5f6f6; padding:10px 10px"></app-header>
-<div style="height: 238px;">
+<div *ngIf="!loading" style="height: 238px;">
   <div class="cover-div">
     <img [src]="cover_img_url" width="100%" height="180px" class="cover-img">
     <img [src]="logo_url ? logo_url : '../../../assets/imgs/splash.png'" width="80px" height="80px" class="logo-img">
@@ -30,24 +30,28 @@
   </div>
 </div>
 
-<div style="background: #f5f6f6; padding: 5px 0px;">
-  <ion-slides #menu_slides [options]="slideOpts">
+<div *ngIf="!loading" style="background: #f5f6f6; padding: 5px 0px;">
+  <ion-slides #menu_slides [options]="slideOpts" *ngIf="menus.length">
     <ion-slide *ngFor="let menu of menus">
-      <ion-button [color]="selected_menu_id == menu.menu_id ? 'primary' : 'medium'" size="small" shape="round" (click)="selectMenu(menu.menu_id)" style="width: 90%;">
-        <span> {{menu.menu_name}} </span>
+      <ion-button [color]="selected_menu_id == menu.id ? 'primary' : 'medium'" size="small" shape="round" (click)="selectMenu(menu.id)" style="width: 90%;">
+        <span> {{menu.name}} </span>
       </ion-button>
     </ion-slide>
   </ion-slides>
+  <div *ngIf="!menus.length" class="ion-text-center">
+    No menus
+  </div>
 </div>
 
-<ion-content #dish_content (ionScroll)="scrollDishes($event)" (ionScrollEnd)="scrollDishesEnd()" [scrollEvents]="true">
-  <ion-grid>
+<ion-content *ngIf="!loading" #dish_content (ionScroll)="scrollDishes($event)" (ionScrollEnd)="scrollDishesEnd()" [scrollEvents]="true">
+  <ion-grid *ngIf="dishes.length">
     <ion-row>
       <ion-col size="6" *ngFor="let dish of dishes" style="padding-bottom: 10px;">
-        <div [id]="'dish_' + dish.dish_id">
-          <img [src]="dish.dish_image" width="100%" height="100px" class="cover-img" (click)="visitDish(dish.dish_id)">
+        <div [id]="'dish_' + dish.id">
+          <img [src]="dish.image_url" width="100%" height="100px" class="cover-img" 
+          (click)="visitDish(dish.id, dish.name, dish.price, dish.image_url, dish.favorite_checked)">
           <img [src]="dish.favorite_checked ? '../../../assets/imgs/heart_red.png' : '../../../assets/imgs/heart_white.png'" 
-            width="25px" height="25px" (click)="setFavoriteDish(dish.dish_id)" class="dish-heart-img">
+            width="25px" height="25px" (click)="setFavoriteDish(dish.id)" class="dish-heart-img">
         </div>
         <div style="height: 25px; background: white; font-size: 12px; margin-top:-5px;">
           <ion-row>
@@ -59,7 +63,7 @@
             </ion-col>
             <ion-col size="7" class="ion-text-right">
               <div class="bold-opacity-title" style="font-size: 15px;">
-                <span> {{dish.dish_name}} </span>
+                <span> {{dish.name}} </span>
               </div>
             </ion-col>
           </ion-row>
@@ -67,5 +71,11 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+  <div *ngIf="!dishes.length" class="ion-text-center">
+    No dishes
+  </div>
 </ion-content>
+<div class="spin" *ngIf="loading">
+  <ion-spinner name="bubbles"></ion-spinner>
+</div>
 <app-footer active_page="home_page"></app-footer>
