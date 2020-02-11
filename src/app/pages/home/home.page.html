@@ -20,7 +20,7 @@
         <ion-col size="6" *ngFor="let restaurant of restaurants">
           <div class="cover-div">
             <img [src]="restaurant.image_url" width="100%" height="130px" class="cover-img" 
-            (click)="visitRestaurant(restaurant.id, restaurant.image_url, restaurant.logo_url, restaurant.name, restaurant.categories[0].name, favorite_checked)">
+            (click)="visitRestaurant(restaurant.id, restaurant.image_url, restaurant.logo_url, restaurant.name, restaurant.categories[0].name, restaurant.favorite_checked)">
             <div class="top-div">
               <span class="rest-name-text"> {{restaurant.name}} </span>
               <span class="cate-name-text"> {{restaurant.category_name}} </span>
@@ -48,13 +48,13 @@
       <ion-row *ngFor="let restaurant of restaurants">
         <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" class="list-div">
             <ion-row style="width: 100%;">
-              <ion-col size="5" (click)="visitRestaurant(restaurant.id, restaurant.image_url, restaurant.logo_url, restaurant.name, restaurant.categories[0].name, favorite_checked)">
+              <ion-col size="5" (click)="visitRestaurant(restaurant.id, restaurant.image_url, restaurant.logo_url, restaurant.name, restaurant.categories[0].name, restaurant.favorite_checked)">
                 <div style="padding-top: 15px;">
                   <div> <span class="list-rest-name-text"> {{restaurant.name}} </span></div>
                   <div> <span class="list-cate-name-text"> {{restaurant.category_name}} </span></div>
                 </div>
               </ion-col>
-              <ion-col size="2" (click)="visitRestaurant(restaurant.id, restaurant.image_url, restaurant.logo_url, restaurant.name, restaurant.categories[0].name, favorite_checked)">
+              <ion-col size="2" (click)="visitRestaurant(restaurant.id, restaurant.image_url, restaurant.logo_url, restaurant.name, restaurant.categories[0].name, restaurant.favorite_checked)">
                 
               </ion-col>
               <ion-col size="2" class="ion-text-center">
