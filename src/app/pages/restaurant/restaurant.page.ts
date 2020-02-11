@@ -33,6 +33,7 @@ export class RestaurantPage implements OnInit {
   @ViewChild('dish_content', { static: false }) dish_content: IonContent;
   @ViewChild('menu_slides', { static: false }) menu_slides: IonSlides;
   clicked_menu_status : boolean = false
+  params: any
   constructor(
     private translate: TranslateService,
     private route: ActivatedRoute,
@@ -42,6 +43,7 @@ export class RestaurantPage implements OnInit {
   ) { 
     this.lang = this.translate.currentLang;
     this.route.queryParams.subscribe((params: any) => {
+      this.params = params;
       this.restaurant_id = params.id;
       this.cover_img_url = params.image_url;
       this.logo_url = params.logo_url;
@@ -72,6 +74,8 @@ export class RestaurantPage implements OnInit {
       if (this.menus && this.menus.length) {
         this.selected_menu_id = this.menus[0].id;
         this.getDishes();
+      } else {
+        this.loading = false;
       }
     } catch(err) {
       console.log(err);
@@ -143,7 +147,8 @@ export class RestaurantPage implements OnInit {
         name: name,
         price: price,
         image_url: image_url,
-        favorite_checked: favorite_checked
+        favorite_checked: favorite_checked,
+        back_params: this.params
       }
     });
   }
