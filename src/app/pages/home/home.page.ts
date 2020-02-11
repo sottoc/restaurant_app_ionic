@@ -49,6 +49,13 @@ export class HomePage implements OnInit {
       this.loading = true;
       let res: any = await this.restApi.getRestaurants();
       this.tempRestaurant = res.data;
+      this.tempRestaurant.forEach(element => {
+        element.image_url = this.api_url + element.image_url;
+        element.logo_url = element.logo_url ? this.api_url + element.logo_url : '../../../assets/imgs/logo-black.png';
+        element.favorite_checked = false;
+        element.distance = 12,
+        element.category_name = element.categories.length > 0 ? element.categories[0].name : '';
+      });
       this.refreshRestaurants();
     } catch(err) {
       console.log(err);
@@ -56,13 +63,6 @@ export class HomePage implements OnInit {
   }
 
   async refreshRestaurants() {
-    this.tempRestaurant.forEach(element => {
-      element.image_url = this.api_url + element.image_url;
-      element.logo_url = element.logo_url ? this.api_url + element.logo_url : '../../../assets/imgs/logo-black.png';
-      element.favorite_checked = false;
-      element.distance = 12,
-      element.category_name = element.categories.length > 0 ? element.categories[0].name : '';
-    });
     this.restaurants = [];
     let categories = await this.storage.get("categories");
     categories = JSON.parse(categories);
