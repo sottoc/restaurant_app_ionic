@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController, NavController, Platform } from '@ionic/angular';
+import { ToastController, NavController } from '@ionic/angular';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { RestService } from '../../services/rest.service';
 import { environment } from '../../../environments/environment';
@@ -29,8 +29,8 @@ export class QrcodePage implements OnInit {
   async presentToast(text) {
     const toast = await this.toastController.create({
         message: text,
-        position: 'bottom',
-        duration: 5000
+        position: 'middle',
+        duration: 3000
     });
     toast.present();
   }
@@ -48,6 +48,7 @@ export class QrcodePage implements OnInit {
       });
     } catch(err) {
       console.log(err);
+      this.presentToast(err.error);
     }
     this.qrScan();
   }
@@ -61,7 +62,8 @@ export class QrcodePage implements OnInit {
             console.log('Scanned something', text);
             this.QRSCANNED_DATA = text;
             if (this.QRSCANNED_DATA !== '') {
-              
+              this.closeScanner();
+              this.scanSub.unsubscribe();
               this.findRestaurant();
             }
           });
@@ -96,30 +98,30 @@ export class QrcodePage implements OnInit {
   }
 
   findRestaurant() {
+    this.scanSub = null;
+    (window.document.querySelector('ion-app') as HTMLElement).classList.remove('cameraView');
     const address_key = '54.211.162.185';
     if (this.QRSCANNED_DATA.includes(address_key) && this.QRSCANNED_DATA.split('_')[0] == address_key) {
       const restaurant_id = this.QRSCANNED_DATA.split('_')[1];
       let restaurant = this.restaurants.filter(e => e.id == restaurant_id)[0];
       if (restaurant) {
-        this.scanSub.unsubscribe();
-        this.closeScanner();
-        setTimeout(() => {
-          this.navCtrl.navigateBack('/restaurant', { queryParams: 
-            {
-              id : restaurant.id,
-              image_url : restaurant.image_url,
-              logo_url : restaurant.logo_url,
-              name : restaurant.name,
-              category_name : restaurant.category_name,
-              favorite_checked : restaurant.favorite_checked
-            }
-          });
-        }, 500);
+        this.navCtrl.navigateBack('/restaurant', { queryParams: 
+          {
+            id : restaurant.id,
+            image_url : restaurant.image_url,
+            logo_url : restaurant.logo_url,
+            name : restaurant.category_name,
+            category_name : restaurant.category_name,
+            favorite_checked : restaurant.favorite_checked
+          }
+        });
       } else {
         this.presentToast('Cannot find a restaurant of id = ' + restaurant_id);
+        this.qrScan();
       }
     } else {
       this.presentToast(this.QRSCANNED_DATA);
+      this.qrScan();
     }
   }
 

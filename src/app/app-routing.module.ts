@@ -79,7 +79,7 @@ const routes: Routes = [
   {
     path: 'friend',
     loadChildren: () => import('./pages/friend/friend.module').then( m => m.FriendPageModule)
-  },
+  }
 ];
 
 @NgModule({

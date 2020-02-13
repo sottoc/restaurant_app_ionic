@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ModalController, IonSearchbar, NavController, ToastController } from '@ionic/angular';
 import { FilterModalComponent } from '../../components/filter-modal/filter-modal.component';
@@ -27,6 +27,7 @@ export class HomePage implements OnInit {
     private toastController: ToastController,
     public restApi: RestService,
     private storage: Storage,
+    private cdref: ChangeDetectorRef
   ) {
     this.lang = this.translate.currentLang;
     this.getRestaurants();
@@ -59,6 +60,7 @@ export class HomePage implements OnInit {
       this.refreshRestaurants();
     } catch(err) {
       console.log(err);
+      this.presentToast(err.error);
     }
   }
 
@@ -82,6 +84,7 @@ export class HomePage implements OnInit {
       }
     });
     this.loading = false;
+    this.cdref.detectChanges();
   }
 
   async showFilterModal() {
@@ -93,10 +96,6 @@ export class HomePage implements OnInit {
       this.refreshRestaurants();
     });
     return await modal.present();
-  }
-
-  isValid(str){
-    return !/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(str);
   }
 
   async search(e) {
@@ -139,6 +138,10 @@ export class HomePage implements OnInit {
         favorite_checked : favorite_checked
       }
     });
+  }
+
+  isValid(str){
+    return !/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(str);
   }
 
 }

@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonContent, IonSlides, NavController, ToastController } from '@ionic/angular';
 import { RestService } from '../../services/rest.service';
 import { environment } from '../../../environments/environment';
+import { Storage } from '@ionic/storage';
 
 const Item_Height = 139;
 
@@ -40,6 +41,8 @@ export class RestaurantPage implements OnInit {
     private navCtrl: NavController,
     public restApi: RestService,
     private toastController: ToastController,
+    private storage: Storage,
+    private cdref: ChangeDetectorRef
   ) { 
     this.lang = this.translate.currentLang;
     this.route.queryParams.subscribe((params: any) => {
@@ -92,6 +95,7 @@ export class RestaurantPage implements OnInit {
       }
     });
     this.loading = false;
+    this.cdref.detectChanges();
   }
 
   setFavorite() {
@@ -119,6 +123,21 @@ export class RestaurantPage implements OnInit {
       let x = 0, y = Math.floor(len/2) * Item_Height, duration = 500;
       this.dish_content.scrollToPoint(x, y, duration);
     }
+    let selected_index = 0;
+    for (var i = 0; i < this.menus.length; i++) {
+      if (this.menus[i].id == this.selected_menu_id) {
+        selected_index = i;
+      }
+    }
+    this.menu_slides.getActiveIndex().then(index => {
+      console.log(index);
+      if (selected_index == index) {
+        this.menu_slides.slidePrev(500);
+      } else if (selected_index == index + 2) {
+        this.menu_slides.slideNext(500);
+      }
+    });
+    this.cdref.detectChanges();
   }
 
   scrollDishes(e) {
