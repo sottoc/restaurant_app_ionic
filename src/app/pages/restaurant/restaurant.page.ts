@@ -140,13 +140,14 @@ export class RestaurantPage implements OnInit {
     this.clicked_menu_status = false;
   }
 
-  visitDish(id, name, price, image_url, favorite_checked) {
+  visitDish(id, name, price, image_url, detail, favorite_checked) {
     this.navCtrl.navigateBack('/dish', { queryParams: 
       {
         id: id,
         name: name,
         price: price,
         image_url: image_url,
+        detail: detail,
         favorite_checked: favorite_checked,
         back_params: this.params
       }

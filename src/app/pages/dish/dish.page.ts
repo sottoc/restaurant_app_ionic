@@ -15,7 +15,7 @@ export class DishPage implements OnInit {
   dish_name: string
   dish_price: any
   dish_favorite_checked: boolean = true
-  dish_detail: string = "This is dish details about calorie, features and so on.This is dish details about calorie, features and so on.This is dish details about calorie, features and so on."
+  dish_detail: string 
   params : any = {}
   constructor(
     private translate: TranslateService,
@@ -29,6 +29,7 @@ export class DishPage implements OnInit {
      this.image_url = params.image_url;
      this.dish_name = params.name;
      this.dish_price = params.price;
+     this.dish_detail = params.detail;
      this.dish_favorite_checked = params.favorite_checked;
     });
   }

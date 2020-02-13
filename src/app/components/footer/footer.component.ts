@@ -8,8 +8,6 @@ import { NavController } from '@ionic/angular';
 })
 export class FooterComponent implements OnInit {
   @Input() active_page: string;
-  isOn = false;
-  QRSCANNED_DATA: string;
   constructor(
     private navCtrl: NavController
   ) { }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HTTP } from '@ionic-native/http/ngx';
+import { ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,17 @@ export class RestService {
   api_url = environment.api_url;
   constructor(
     private http: HTTP,
+    private toastController: ToastController,
   ) { }
+
+  async presentToast(text) {
+    const toast = await this.toastController.create({
+        message: text,
+        position: 'middle',
+        duration: 2000
+    });
+    toast.present();
+  }
 
   getRestaurants() {
     const url = `${this.api_url}/api/restaurants`;
@@ -66,10 +77,10 @@ export class RestService {
         console.log('response', res)
         resolve(res);
       } catch (err) {
-        console.log(err)
+        console.log(err);
+        this.presentToast(err.error);
         reject(err.error);
       }
     });
   }
-
 }
