@@ -74,6 +74,10 @@ export class RestaurantPage implements OnInit {
       this.loading = true;
       let res: any = await this.restApi.getMenus(this.restaurant_id);
       this.menus = res.data;
+      this.menus.sort((a, b) => {
+        if (a.id > b.id) return 1;
+        if (b.id > a.id) return -1;
+      });
       if (this.menus && this.menus.length) {
         this.selected_menu_id = this.menus[0].id;
         this.getDishes();
@@ -118,9 +122,15 @@ export class RestaurantPage implements OnInit {
     this.selected_menu_id = menu_id;
     let dishes = this.dishes.filter(e => e.menu_id == menu_id);
     if (dishes && dishes.length) {
-      var dish_id = dishes[0].id;
-      let len = this.dishes.filter(e => e.id < dish_id).length;
-      let x = 0, y = Math.floor(len/2) * Item_Height, duration = 500;
+      let dishes_count = 0;
+      for (var i = 0; i < this.menus.length; i++) {
+        if (this.menus[i].id == menu_id) {
+          break;
+        } else {
+          dishes_count += this.menus[i].items.length;
+        }
+      }
+      let x = 0, y = Math.floor(dishes_count/2) * Item_Height, duration = 500;
       this.dish_content.scrollToPoint(x, y, duration);
     }
     let selected_index = 0;
@@ -130,7 +140,6 @@ export class RestaurantPage implements OnInit {
       }
     }
     this.menu_slides.getActiveIndex().then(index => {
-      console.log(index);
       if (selected_index == index) {
         this.menu_slides.slidePrev(500);
       } else if (selected_index == index + 2) {
@@ -142,15 +151,16 @@ export class RestaurantPage implements OnInit {
 
   scrollDishes(e) {
     if (!this.clicked_menu_status) {
-      let len = Math.floor(e.detail.currentY / Item_Height) * 2;
+      let len = Math.floor((e.detail.currentY + Item_Height / 3) / Item_Height) * 2;
       if (this.dishes[len]) {
         let menu_id = this.dishes[len].menu_id;
         this.menus.forEach((m, index) => {
           if (m.id == menu_id) {
-            this.menu_slides.slideTo(index, 500);
+            this.menu_slides.slideTo(index - 1, 500);
           }
         });
         this.selected_menu_id = menu_id;
+        this.cdref.detectChanges();
       }
     }
   }
