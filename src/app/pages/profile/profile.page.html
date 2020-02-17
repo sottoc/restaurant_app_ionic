@@ -1,22 +1,22 @@
-<app-header title="{{'profile' | translate}}" back_link="/home" style="background-color: #3c426d; padding:10px 10px"></app-header>
+<app-header title="{{'profile' | translate}}" back_link="/home" style="background-color: #3c426d; padding:10px 10px 0px 10px"></app-header>
 <ion-content>
-  <ion-grid style="height: 33%; background: #3c426d;" class="ion-padding">
+  <ion-grid style="height: 35%; background: #3c426d;" class="ion-padding">
     <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'">
       <ion-row>
-        <ion-col size="5">
-          <div style="margin: auto; width: 80px; height: 80px; border: 1px solid #f68625; border-radius: 50%;">
-            <img src="../../../assets/imgs/avatar.png" style="border-radius: 50%;">
+        <ion-col size="4">
+          <div class="ion-text-center">
+            <img [src]="logo_url ? logo_url : '../../../assets/imgs/avatar.png'" width="80px" height="80px" style="border: 1px solid #f68625; border-radius: 50%;">
           </div>
         </ion-col>
-        <ion-col size="7" style="font-size: 15px; color: white; margin-top: 10px;">
+        <ion-col size="8" style="font-size: 15px; color: white; margin-top: 10px;">
           <div style="color: #f68625; font-weight: bold;">
-            <span> {{name}} </span>
+            <span [dir]="lang == 'ar' ? 'rtl' : 'ltr'"> {{name}} </span>
           </div>
           <div style="margin-top: 3px;">
-            <span> {{bio}} </span>
+            <span [dir]="lang == 'ar' ? 'rtl' : 'ltr'"> {{bio}} </span>
           </div>
           <div style="color: #f68625; margin-top: 3px;">
-            <span> {{city}} </span>
+            <span [dir]="lang == 'ar' ? 'rtl' : 'ltr'"> {{city}} </span>
           </div>
         </ion-col>
       </ion-row>
@@ -33,7 +33,7 @@
     </div>
   </ion-grid>
 
-  <ion-grid style="height: 67%;" class="ion-padding">
+  <ion-grid style="height: 65%;" class="ion-padding">
     <ion-button color="light" class="white-btn" shape="round" style="width: 100%;" routerLink="/favorite">
       <img src="../../../assets/imgs/favorite.png" width="20" height="20" style="margin-right: 60%; opacity: 0.9;">
       <span class="primary-text">{{'favorite' | translate}} </span>

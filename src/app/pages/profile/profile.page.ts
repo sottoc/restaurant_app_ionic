@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Storage } from '@ionic/storage';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-profile',
@@ -7,14 +9,24 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
+  api_url = environment.api_url
   lang : string
-  name : string = "محمد أحمد"
-  bio : string = "لاعب كرة سلة و كاتب , أحب السفرعاشق الهلال"
-  city : string = "المدينة المنورة"
+  name : string
+  bio : string
+  city : string
+  logo_url : any
   constructor(
     private translate: TranslateService,
+    private storage: Storage,
   ) {
     this.lang = this.translate.currentLang;
+    this.storage.get('user_profile').then(profile => {
+      profile = JSON.parse(profile);
+      this.logo_url = profile.logo_url ? this.api_url + profile.logo_url : null;
+      this.name = profile.name;
+      this.bio = profile.bio;
+      this.city = profile.city;
+    });
   }
 
   ngOnInit() {

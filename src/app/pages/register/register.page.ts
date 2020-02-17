@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavController, IonInput, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { RestService } from '../../services/rest.service';
 
 @Component({
   selector: 'app-register',
@@ -18,6 +19,7 @@ export class RegisterPage implements OnInit {
     private navCtrl: NavController,
     private toastController: ToastController,
     private translate: TranslateService,
+    public restApi: RestService,
   ) { 
     this.lang = this.translate.currentLang;
   }
@@ -28,7 +30,7 @@ export class RegisterPage implements OnInit {
   async presentToast(text) {
     const toast = await this.toastController.create({
         message: text,
-        position: 'bottom',
+        position: 'middle',
         duration: 2000
     });
     toast.present();
@@ -59,7 +61,6 @@ export class RegisterPage implements OnInit {
     if (confirm_password != this.passwordInput.value) {
       this.presentToast('Confirm password not matched.');
       this.confirmPasswordInput.value = "";
-      this.confirmPasswordInput.setFocus();
     }
   }
 
@@ -73,15 +74,35 @@ export class RegisterPage implements OnInit {
   async register(form) {
     try {
       const { email, username, password, confirm_password, city, country_code, phone_number } = form.control.value;
-      console.log(email, username, password, confirm_password, city, country_code, phone_number);
 
-      const cell_number = '+' + country_code + ' ' + phone_number;
-      this.navCtrl.navigateBack('/phoneverify', { queryParams: 
-        {cell_number: cell_number}
-      });
+      const params = {
+        email: email,
+        username: username,
+        password: password,
+        city: city,
+        country_code: country_code,
+        phone_number: phone_number
+      }
+      const response : any = await this.restApi.userRegister(params);
+      if (response.code == 200) {
+        this.presentToast(response.result);
+        setTimeout(() => {
+          this.navCtrl.navigateBack('/phoneverify', { queryParams: 
+            {
+              email: email,
+              country_code: country_code.toString(),
+              phone_number: phone_number.toString(),
+              from: 'register_page'
+            }
+          });
+        }, 2000);
+      } else {
+        this.presentToast(response.result);
+      }
+
     } catch (err) {
       console.error("ERROR", err);
-      this.presentToast(err);
+      this.presentToast(err.error);
     }
   }
 

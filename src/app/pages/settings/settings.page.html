@@ -5,7 +5,7 @@
       {{'personal_data' | translate}}
     </div>
     <div style="margin: auto;">
-      <img [src]="image ? image.path : '../../../assets/imgs/avatar.png'" width="80px" height="80px" style="border-radius: 50%; border: 1px solid #f68625;">
+      <img [src]="logo_url ? logo_url : '../../../assets/imgs/avatar.png'" width="80px" height="80px" style="border-radius: 50%; border: 1px solid #f68625;">
     </div>
     <div style="color: #3c426d; font-weight: bold; font-size: 13px; margin-top: 8px;">
       <span (click)="selectImage()"> {{'change_photo' | translate}} </span>
@@ -21,7 +21,7 @@
         <ion-col size="9" class="ion-align-self-center">
           <ion-row class="pen_change_row">
             <ion-col size="10">
-              <ion-input type="text" color="primary" value="myname" #input_name [disabled]="name_flag" (ionFocus)="getFocus('name')" (ionBlur)="loseFocus('name')"></ion-input>
+              <ion-input type="text" color="primary" #input_name [disabled]="name_flag" (ionFocus)="getFocus('name')" (ionBlur)="loseFocus('name')"></ion-input>
             </ion-col>
             <ion-col size="2">
               <img src="../../../assets/imgs/pencil.png" width="25px" height="25px" (click)="clickPencil('name')">
@@ -37,7 +37,7 @@
         <ion-col size="9" class="ion-align-self-center">
           <ion-row class="pen_change_row">
             <ion-col size="10">
-              <ion-input type="text" color="primary" value="myusername" #input_username [disabled]="username_flag" (ionFocus)="getFocus('username')" (ionBlur)="loseFocus('username')"></ion-input>
+              <ion-input type="text" color="primary" #input_username [disabled]="username_flag" (ionFocus)="getFocus('username')" (ionBlur)="loseFocus('username')"></ion-input>
             </ion-col>
             <ion-col size="2">
               <img src="../../../assets/imgs/pencil.png" width="25px" height="25px" (click)="clickPencil('username')">
@@ -53,7 +53,7 @@
         <ion-col size="9" class="ion-align-self-center">
           <ion-row class="pen_change_row">
             <ion-col size="10">
-              <ion-input type="text" color="primary" value="mybio" #input_bio [disabled]="bio_flag" (ionFocus)="getFocus('bio')" (ionBlur)="loseFocus('bio')"></ion-input>
+              <ion-input type="text" color="primary" #input_bio [disabled]="bio_flag" (ionFocus)="getFocus('bio')" (ionBlur)="loseFocus('bio')"></ion-input>
             </ion-col>
             <ion-col size="2">
               <img src="../../../assets/imgs/pencil.png" width="25px" height="25px" (click)="clickPencil('bio')">

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Storage } from '@ionic/storage';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-favorite',
@@ -7,14 +9,23 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./favorite.page.scss'],
 })
 export class FavoritePage implements OnInit {
+  api_url = environment.api_url
   lang : string
+  logo_url : any
+  name: string
   favorite_restaurants : any = []
   favorite_dishes : any = []
   selected_dishes : boolean = false
   constructor(
     private translate: TranslateService,
+    private storage: Storage,
   ) { 
     this.lang = this.translate.currentLang;
+    this.storage.get('user_profile').then(profile => {
+      profile = JSON.parse(profile);
+      this.logo_url = profile.logo_url ? this.api_url + profile.logo_url : null;
+      this.name = profile.name;
+    });
     this.favorite_restaurants = [
       {
         id: 1,

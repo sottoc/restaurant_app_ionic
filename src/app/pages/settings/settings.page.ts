@@ -8,6 +8,9 @@ import { HttpClient } from '@angular/common/http';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { Storage } from '@ionic/storage';
 import { FilePath } from '@ionic-native/file-path/ngx';
+import { RestService } from '../../services/rest.service';
+import { environment } from '../../../environments/environment';
+import { async } from 'rxjs/internal/scheduler/async';
 
 const STORAGE_KEY = 'my_logo_image';
 
@@ -17,8 +20,11 @@ const STORAGE_KEY = 'my_logo_image';
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit {
+  api_url = environment.api_url
+  user_id : any
+  profile : any
   lang : string
-  image : any
+  logo_url : any
   name_flag : boolean =  true
   username_flag : boolean =  true
   bio_flag : boolean =  true
@@ -48,18 +54,35 @@ export class SettingsPage implements OnInit {
     private plt: Platform, 
     private loadingController: LoadingController,
     private ref: ChangeDetectorRef, 
-    private filePath: FilePath
+    private filePath: FilePath,
+    public restApi: RestService,
   ) {
     this.lang = this.translate.currentLang;
+    this.storage.get('user_profile').then(profile =>{
+      profile = JSON.parse(profile);
+      this.profile = profile;
+      this.user_id = profile.id;
+      this.logo_url = profile.logo_url ? this.api_url + profile.logo_url : null;
+      this.nameInput.value = profile.name;
+      this.usernameInput.value = profile.username;
+      this.bioInput.value = profile.bio;
+      this.countryCodeInput.value = profile.country_code;
+      this.phoneInput.value = profile.phone_number;
+      this.locationInput.value = profile.city;
+    });
   }
 
   ngOnInit() {
   }
 
+  async ionViewWillLeave() {
+    await this.storage.set("user_profile", JSON.stringify(this.profile));
+  }
+
   async presentToast(text) {
     const toast = await this.toastController.create({
         message: text,
-        position: 'bottom',
+        position: 'middle',
         duration: 3000
     });
     toast.present();
@@ -100,7 +123,7 @@ export class SettingsPage implements OnInit {
 
   takePicture(sourceType: PictureSourceType) {
       var options: CameraOptions = {
-          quality: 100,
+          quality: 50,
           sourceType: sourceType,
           saveToPhotoAlbum: false,
           correctOrientation: true
@@ -157,12 +180,66 @@ export class SettingsPage implements OnInit {
             filePath: filePath
         };
 
-        this.image = newEntry;
+        this.startUpload(newEntry);
         this.ref.detectChanges(); // trigger change detection cycle
     });
   }
 
+  startUpload(imgEntry) {
+      this.file.resolveLocalFilesystemUrl(imgEntry.filePath)
+          .then(entry => {
+              ( < FileEntry > entry).file(file => this.readFile(file))
+          })
+          .catch(err => {
+              this.presentToast('Error while reading file.');
+          });
+  }
+  
+  readFile(file: any) {
+      const reader = new FileReader();
+      reader.onload = async () => {
+        const imgBlob = new Blob([reader.result], {
+            type: file.type
+        });
+        let base64file = await this.getBase64(imgBlob);
+        const params = {
+          id: this.user_id,
+          file: base64file,
+          file_name: file.name,
+          file_type: file.type
+        }
+        this.uploadLogo(params);
+      }
+      reader.readAsArrayBuffer(file);
+  }
 
+  getBase64(file) {
+    return new Promise(function(resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function() {
+        resolve(reader.result);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  };
+
+  async uploadLogo(params) {
+    const loading = await this.loadingController.create({
+        message: 'Uploading image...',
+    });
+    await loading.present();
+
+    try {
+      const response : any = await this.restApi.uploadLogo(params);
+      this.profile.logo_url = response.result;
+      this.logo_url = this.api_url + response.result;
+    } catch(err) {
+      this.presentToast(err.error);
+    }
+    loading.dismiss();
+    this.ref.detectChanges();
+  }
 
   // set all input field as disabled
   setDisabled() {
@@ -210,8 +287,83 @@ export class SettingsPage implements OnInit {
     console.log("focus", field);
   }
 
-  loseFocus(field) {
+  async loseFocus(field) {
     console.log("blur", field);
+    let response : any
+    switch (field) {
+      case "name":
+        response = await this.restApi.updateProfile({
+          id: this.user_id,
+          field: field,
+          value: this.nameInput.value
+        });
+        if (response.code == 200) {
+          this.profile.name = this.nameInput.value;
+        } else {
+          this.presentToast(response.result);
+        }
+        break;
+      case "username":
+        response = await this.restApi.updateProfile({
+          id: this.user_id,
+          field: field,
+          value: this.usernameInput.value
+        });
+        if (response.code == 200) {
+          this.profile.username = this.usernameInput.value;
+        } else {
+          this.presentToast(response.result);
+        }
+        break;
+      case "bio":
+        response = await this.restApi.updateProfile({
+          id: this.user_id,
+          field: field,
+          value: this.bioInput.value
+        });
+        if (response.code == 200) {
+          this.profile.bio = this.bioInput.value;
+        } else {
+          this.presentToast(response.result);
+        }
+        break;
+      case "location":
+        response = await this.restApi.updateProfile({
+          id: this.user_id,
+          field: "city",
+          value: this.locationInput.value
+        });
+        if (response.code == 200) {
+          this.profile.city = this.locationInput.value;
+        } else {
+          this.presentToast(response.result);
+        }
+        break;
+      case "phone_number":
+        response = await this.restApi.updateProfile({
+          id: this.user_id,
+          field: "phone",
+          country_code: this.countryCodeInput.value,
+          phone_number: this.phoneInput.value
+        });
+        if (response.code == 200) {
+          this.profile.country_code = this.countryCodeInput.value;
+          this.profile.phone_number = this.phoneInput.value;
+          this.navCtrl.navigateBack('/phoneverify', { queryParams: 
+            {
+              email: this.profile.email,
+              country_code: this.countryCodeInput.value.toString(),
+              phone_number: this.phoneInput.value.toString(),
+              from: 'settings_page'
+            }
+          });
+        } else {
+          this.presentToast(response.result);
+        }
+        break;
+      default:
+        break;
+    }
     this.setDisabled();
   }
 
@@ -228,10 +380,9 @@ export class SettingsPage implements OnInit {
   }
 
   setLang(langauge) {
-    this.events.publish('lang:change', langauge)
-    setTimeout(() => {
-      this.lang = langauge;
-      this.navCtrl.navigateBack('/settings');
-    }, 300);
+    this.events.publish('lang:change', langauge);
+    this.lang = langauge;
+    this.ref.detectChanges();
   }
+
 }

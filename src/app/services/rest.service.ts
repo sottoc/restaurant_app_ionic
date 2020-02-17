@@ -22,6 +22,36 @@ export class RestService {
     toast.present();
   }
 
+  userLogin(params) {
+    const url = `${this.api_url}/api/login`;
+    return this.handleRequest(1, url, params);
+  }
+
+  userRegister(params) {
+    const url = `${this.api_url}/api/register`;
+    return this.handleRequest(1, url, params);
+  }
+
+  verifyPhone(params) {
+    const url = `${this.api_url}/api/verify`;
+    return this.handleRequest(1, url, params);
+  }
+
+  verifyCode(params) {
+    const url = `${this.api_url}/api/verify-code`;
+    return this.handleRequest(1, url, params);
+  }
+
+  updateProfile(params) {
+    const url = `${this.api_url}/api/update_profile`;
+    return this.handleRequest(1, url, params);
+  }
+
+  uploadLogo(params) {
+    const url = `${this.api_url}/api/upload_logo`;
+    return this.handleRequest(1, url, params);
+  }
+
   getRestaurants() {
     const url = `${this.api_url}/api/restaurants`;
     return this.handleRequest(0, url, {});
@@ -43,7 +73,6 @@ export class RestService {
   }
 
   getMenus(restaurant_id) {
-    console.log(restaurant_id);
     const url = `${this.api_url}/api/menus?restaurant=${restaurant_id}`;
     return this.handleRequest(0, url, {});
   }

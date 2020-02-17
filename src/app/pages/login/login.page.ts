@@ -32,7 +32,7 @@ export class LoginPage implements OnInit {
   async presentToast(text) {
     const toast = await this.toastController.create({
         message: text,
-        position: 'bottom',
+        position: 'middle',
         duration: 2000
     });
     toast.present();
@@ -47,8 +47,13 @@ export class LoginPage implements OnInit {
         this.presentToast('Invalid email address');
         this.emailInput.setFocus();
       } else {
-        console.log(email, password);
-        this.navCtrl.navigateBack('/loginsplash');
+        const response : any = await this.restApi.userLogin({ email: email, password: password});
+        if (response.code == 200) {
+          await this.storage.set("user_profile", JSON.stringify(response.data[0]));
+          this.navCtrl.navigateBack('/loginsplash');
+        } else {
+          this.presentToast(response.result);
+        }
       }
     } catch (err) {
       console.error("ERROR", err)
