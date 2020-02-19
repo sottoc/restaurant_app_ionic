@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Storage } from '@ionic/storage';
 import { environment } from '../../../environments/environment';
@@ -18,6 +18,7 @@ export class ProfilePage implements OnInit {
   constructor(
     private translate: TranslateService,
     private storage: Storage,
+    private ref: ChangeDetectorRef,
   ) {
     this.lang = this.translate.currentLang;
     this.storage.get('user_profile').then(profile => {
@@ -26,10 +27,15 @@ export class ProfilePage implements OnInit {
       this.name = profile.name;
       this.bio = profile.bio;
       this.city = profile.city;
+      this.refresh();
     });
   }
 
   ngOnInit() {
+  }
+
+  refresh() {
+    this.ref.detectChanges();
   }
 
 }

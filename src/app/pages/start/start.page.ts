@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Events, ToastController, NavController } from '@ionic/angular';
-import { Router } from '@angular/router';
 import { RestService } from '../../services/rest.service';
 import { LoadingController } from '@ionic/angular';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
@@ -18,7 +17,7 @@ export class StartPage implements OnInit {
   constructor(
     private translate: TranslateService,
     public events: Events,
-    private router: Router,
+    private ref: ChangeDetectorRef,
     private navCtrl: NavController,
     public restApi: RestService,
     private google:GooglePlus,
@@ -57,7 +56,7 @@ export class StartPage implements OnInit {
         const params = {
           email: response.email,
           username: response.email,
-          password: response.idToken,
+          password: response.userId,
           city: '',
           name: response.displayName,
           country_code: '',
@@ -112,6 +111,7 @@ export class StartPage implements OnInit {
     setTimeout(function() {
       this.lang = langauge;
     }, 300);
+    this.ref.detectChanges();
   }
 
 }

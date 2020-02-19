@@ -10,7 +10,6 @@ import { Storage } from '@ionic/storage';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { RestService } from '../../services/rest.service';
 import { environment } from '../../../environments/environment';
-import { async } from 'rxjs/internal/scheduler/async';
 
 const STORAGE_KEY = 'my_logo_image';
 
