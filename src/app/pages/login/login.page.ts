@@ -23,7 +23,6 @@ export class LoginPage implements OnInit {
     private storage: Storage,
   ) { 
     this.lang = this.translate.currentLang;
-    this.getCategories();
   }
 
   ngOnInit() {
@@ -59,21 +58,5 @@ export class LoginPage implements OnInit {
       console.error("ERROR", err)
     }
   }
-
-  async getCategories() {
-    try {
-      this.loading = true;
-      let res: any = await this.restApi.getCategories();
-      let categories = res.data;
-      categories.forEach(element => {
-        element.isChecked = true;
-      });
-      await this.storage.set("categories", JSON.stringify(categories));
-    } catch(err) {
-      console.log(err);
-    }
-    this.loading = false;
-  }
-  
 
 }

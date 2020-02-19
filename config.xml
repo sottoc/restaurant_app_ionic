@@ -3,7 +3,7 @@
     <name>Restaurant</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://localhost:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -106,4 +106,9 @@
     <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
     <plugin name="cordova-plugin-ionic-webview" spec="^4.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
+    <plugin name="cordova-plugin-googleplus" spec="^8.4.0">
+        <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.782070961638-g9117mheafg2cq0di35878qsj2f9tf69" />
+        <variable name="WEB_APPLICATION_CLIENT_ID" value="782070961638-5hg2j42u2oq59j2jh6va97bs4vnpqqvv.apps.googleusercontent.com" />
+        <variable name="PLAY_SERVICES_VERSION" value="15.0.1" />
+    </plugin>
 </widget>

@@ -369,7 +369,7 @@ export class SettingsPage implements OnInit {
 
   changeCountryCode(e) {
     var country_code = e.target.value;
-    if (country_code.length == 3) {
+    if (country_code && country_code.length == 3) {
       this.phoneInput.setFocus();
     }
   }

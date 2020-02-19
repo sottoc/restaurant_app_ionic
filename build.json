@@ -1,0 +1,18 @@
+{
+    "android": {
+        "debug": {
+            "keystore": "debug.keystore",
+            "storePassword": "android",
+            "alias": "androiddebugkey",
+            "password" : "android",
+            "keystoreType": ""
+        },
+        "release": {
+            "keystore": "todo-release-key.keystore",
+            "storePassword": "&%>(p_3y4/4}HyQp",
+            "alias": "todo",
+            "password" : "&%>(p_3y4/4}HyQp",
+            "keystoreType": ""
+        }
+    }
+}

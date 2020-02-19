@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { RestService } from '../../services/rest.service';
+import { environment } from '../../../environments/environment';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-loginsplash',
@@ -8,17 +11,35 @@ import { Router } from '@angular/router';
 })
 export class LoginsplashPage implements OnInit {
 
-  constructor(private router: Router) { }
-
-  ngOnInit() {
-    let self = this;
-    setTimeout(function(){
-      self.goToHomePage();
-    }, 1000);
+  loading: boolean = false
+  constructor(
+    private router: Router,
+    public restApi: RestService,
+    private storage: Storage,
+  ) { 
+    this.getCategories();
   }
 
-  goToHomePage() {
-    this.router.navigate(['/home']);
+  ngOnInit() {
+  }
+
+  async getCategories() {
+    try {
+      this.loading = true;
+      let res: any = await this.restApi.getCategories();
+      let categories = res.data;
+      categories.forEach(element => {
+        element.isChecked = true;
+      });
+      await this.storage.set("categories", JSON.stringify(categories));
+      let self = this;
+      setTimeout(function(){
+        self.router.navigate(['/home']);
+      }, 1000);
+    } catch(err) {
+      console.log(err);
+    }
+    this.loading = false;
   }
 
 }

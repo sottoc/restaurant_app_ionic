@@ -80,6 +80,7 @@ export class RegisterPage implements OnInit {
         username: username,
         password: password,
         city: city,
+        name: '',
         country_code: country_code,
         phone_number: phone_number
       }
