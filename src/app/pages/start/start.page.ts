@@ -5,6 +5,8 @@ import { RestService } from '../../services/rest.service';
 import { LoadingController } from '@ionic/angular';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { Storage } from '@ionic/storage';
+import { Facebook } from '@ionic-native/facebook/ngx';
+import { Md5 } from 'ts-md5/dist/md5';
 
 @Component({
   selector: 'app-start',
@@ -24,6 +26,7 @@ export class StartPage implements OnInit {
     public loadingController: LoadingController,
     private toastController: ToastController,
     private storage: Storage,
+    private fb: Facebook,
   ) { 
     this.lang = this.translate.currentLang;
   }
@@ -56,7 +59,7 @@ export class StartPage implements OnInit {
         const params = {
           email: response.email,
           username: response.email,
-          password: response.userId,
+          password: Md5.hashStr(response.email),
           city: '',
           name: response.displayName,
           country_code: '',
@@ -68,6 +71,39 @@ export class StartPage implements OnInit {
         this.presentToast('error:' + JSON.stringify(error))
         this.loading.dismiss();
       });
+  }
+
+  async facebookLogin() {
+    this.loading.present();
+    //the permissions your facebook app needs from the user
+    const permissions = ["public_profile", "email"];
+    this.fb.login(permissions)
+		.then(response =>{
+      console.log(response);
+			let userId = response.authResponse.userID;
+			this.fb.api("/me?fields=name,email", permissions)
+			.then(user =>{
+        console.log(user);
+        const params = {
+          email: user.email,
+          username: user.email,
+          password: Md5.hashStr(user.email),
+          city: '',
+          name: user.name,
+          country_code: '',
+          phone_number: ''
+        }
+        this.register(params);
+        this.loading.dismiss();
+			})
+		}, error =>{
+			console.log(error);
+			this.loading.dismiss();
+		});
+  }
+
+  async twitterLogin() {
+
   }
 
   async register(params: any) {

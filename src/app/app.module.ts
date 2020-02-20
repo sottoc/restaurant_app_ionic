@@ -25,6 +25,8 @@ import { QRScanner } from '@ionic-native/qr-scanner/ngx';
 
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 
+import { Facebook } from '@ionic-native/facebook/ngx';
+
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -56,7 +58,8 @@ export function createTranslateLoader(http: HttpClient) {
     WebView,
     FilePath,
     QRScanner,
-    GooglePlus
+    GooglePlus,
+    Facebook
   ],
   bootstrap: [AppComponent]
 })
