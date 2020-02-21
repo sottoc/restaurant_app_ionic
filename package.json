@@ -36,6 +36,8 @@
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
     "cordova-android": "8.1.0",
+    "cordova-ios": "^5.1.1",
+    "cordova-plugin-add-swift-support": "^2.0.2",
     "cordova-plugin-advanced-http": "^2.4.0",
     "cordova-plugin-camera": "^4.1.0",
     "cordova-plugin-facebook4": "^6.3.0",
@@ -114,10 +116,12 @@
         "APP_NAME": "restaurant_app_proj",
         "FACEBOOK_HYBRID_APP_EVENTS": "false",
         "FACEBOOK_ANDROID_SDK_VERSION": "5.13.0"
-      }
+      },
+      "cordova-plugin-add-swift-support": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ]
   }
 }
