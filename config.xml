@@ -113,4 +113,10 @@
         <variable name="WEB_APPLICATION_CLIENT_ID" value="782070961638-5hg2j42u2oq59j2jh6va97bs4vnpqqvv.apps.googleusercontent.com" />
         <variable name="PLAY_SERVICES_VERSION" value="15.0.1" />
     </plugin>
+    <plugin name="cordova-plugin-facebook4" spec="^6.3.0">
+        <variable name="APP_ID" value="208833557177682" />
+        <variable name="APP_NAME" value="restaurant_app_proj" />
+        <variable name="FACEBOOK_HYBRID_APP_EVENTS" value="false" />
+        <variable name="FACEBOOK_ANDROID_SDK_VERSION" value="5.13.0" />
+    </plugin>
 </widget>
