@@ -48,7 +48,7 @@ export class StartPage implements OnInit {
 
   async googleLogin() {
     const params = {
-      'scopes':'',
+      'scopes':'profile',
       'webClientId': '782070961638-5hg2j42u2oq59j2jh6va97bs4vnpqqvv.apps.googleusercontent.com',
       'offline': true
     }
