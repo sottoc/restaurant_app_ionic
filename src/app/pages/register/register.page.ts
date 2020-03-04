@@ -10,6 +10,8 @@ import { RestService } from '../../services/rest.service';
 })
 export class RegisterPage implements OnInit {
   lang : string
+  cities : any = []
+  city: any
   @ViewChild('email_input', { static: false }) emailInput: IonInput;
   @ViewChild('username_input', { static: false }) usernameInput: IonInput;
   @ViewChild('password_input', { static: false }) passwordInput: IonInput;
@@ -22,6 +24,7 @@ export class RegisterPage implements OnInit {
     public restApi: RestService,
   ) { 
     this.lang = this.translate.currentLang;
+    this.getCities();
   }
 
   ngOnInit() {
@@ -34,6 +37,20 @@ export class RegisterPage implements OnInit {
         duration: 2000
     });
     toast.present();
+  }
+
+  async getCities() {
+    try {
+      let res: any = await this.restApi.getCities();
+      this.cities = res.data.filter(city => city.is_open == 1);
+      if (this.cities.length > 0) {
+        this.city = this.cities[0].id;
+      } else {
+        this.city = null;
+      }
+    } catch(err) {
+      console.log(err);
+    }
   }
 
   emailInputBlur(e) {
@@ -64,6 +81,10 @@ export class RegisterPage implements OnInit {
     }
   }
 
+  changeCity(e) {
+    this.city = e.target.value;
+  }
+
   changeCountryCode(e) {
     var country_code = e.target.value;
     if (country_code.length == 3) {
@@ -73,13 +94,13 @@ export class RegisterPage implements OnInit {
 
   async register(form) {
     try {
-      const { email, username, password, confirm_password, city, country_code, phone_number } = form.control.value;
+      const { email, username, password, confirm_password, country_code, phone_number } = form.control.value;
 
       const params = {
         email: email,
         username: username,
         password: password,
-        city: city,
+        city: this.city,
         name: '',
         country_code: country_code,
         phone_number: phone_number

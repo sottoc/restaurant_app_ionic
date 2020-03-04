@@ -51,6 +51,7 @@
           (click)="visitDish(dish.id, dish.name, dish.price, dish.image_url, dish.detail, dish.favorite_checked)">
           <img [src]="dish.favorite_checked ? '../../../assets/imgs/heart_red.png' : '../../../assets/imgs/heart_white.png'" 
             width="25px" height="25px" (click)="setFavoriteDish(dish.id)" class="dish-heart-img">
+          <img *ngIf="dish.image_url" [src]="'../../../assets/imgs/logo_menu.png'" width="40px" height="18px" class="logo-img-dish">
         </div>
         <div style="height: 25px; background: white; font-size: 12px; margin-top:-5px;">
           <ion-row>

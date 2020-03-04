@@ -71,7 +71,10 @@
               <span class="field-text">{{ 'city' | translate }}</span>
             </ion-row>
             <ion-row>
-              <ion-input type="text" ngModel required color="primary" name="city" value="Geddah"></ion-input>
+              <div *ngIf="!city" style="font-size: 10px; opacity: 0.6; margin-top:5px;"> No city </div>
+              <ion-select *ngIf="city" (ionChange)="changeCity($event)" [value]="city" okText="Ok" cancelText="Cancel" style="font-size: 12px;">
+                <ion-select-option *ngFor="let city of cities" [value]="city.id"> {{city.name}} </ion-select-option>
+              </ion-select>
             </ion-row>
           </ion-col>
         </ion-row>

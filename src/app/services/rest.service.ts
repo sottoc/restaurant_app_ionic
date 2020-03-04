@@ -52,18 +52,23 @@ export class RestService {
     return this.handleRequest(1, url, params);
   }
 
-  getRestaurants() {
-    const url = `${this.api_url}/api/restaurants`;
+  getCities() {
+    const url = `${this.api_url}/api/cities`;
     return this.handleRequest(0, url, {});
   }
 
-  getCategories() {
-    const url = `${this.api_url}/api/categories`;
+  getRestaurants(city) {
+    const url = `${this.api_url}/api/restaurants?city=${city}`;
     return this.handleRequest(0, url, {});
   }
 
-  getRestaurantsByKey(key) {
-    const url = `${this.api_url}/api/restaurants?restaurant_name=${key}`;
+  getCategories(city) {
+    const url = `${this.api_url}/api/categories?city=${city}`;
+    return this.handleRequest(0, url, {});
+  }
+
+  getRestaurantsByKey(city, key) {
+    const url = `${this.api_url}/api/restaurants?city=${city}&restaurant_name=${key}`;
     return this.handleRequest(0, url, {});
   }
 
@@ -74,6 +79,16 @@ export class RestService {
 
   getMenus(restaurant_id) {
     const url = `${this.api_url}/api/menus?restaurant=${restaurant_id}`;
+    return this.handleRequest(0, url, {});
+  }
+
+  getOffers() {
+    const url = `${this.api_url}/api/all_offers`;
+    return this.handleRequest(0, url, {});
+  }
+
+  getOfferDetail(id) {
+    const url = `${this.api_url}/api/get_offer_detail/${id}`;
     return this.handleRequest(0, url, {});
   }
 

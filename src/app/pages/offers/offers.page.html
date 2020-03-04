@@ -1,23 +1,26 @@
 <app-header title="{{'offers' | translate}}" back_link="/home" style="background: #f5f6f6; padding: 10px;"></app-header>
+<div class="offer-top">
+  <span> {{'the_latest_restaurant_offers' | translate}} </span>
+</div>
 <ion-content>
+  <div *ngIf="!offers.length" class="ion-text-center">
+    No offers
+  </div>
   <ion-grid>
-    <div class="offer-top">
-      <span> {{'the_latest_restaurant_offers' | translate}} </span>
-    </div>
     <ion-row>
       <ion-col size="6" *ngFor="let offer of offers">
         <div class="cover-div">
-          <img [src]="offer.cover_img_url" width="100%" height="130px" class="cover-img" (click)="visitOffer(offer.offer_id)">
+          <img [src]="offer.image_url" width="100%" height="130px" class="cover-img" (click)="visitOffer(offer.id)">
           <div class="top-div">
-            <span class="offer-title"> {{offer.offer_title}} </span>
+            <span class="offer-title"> {{offer.title}} </span>
           </div>
-          <img [src]="offer.logo_url ? offer.logo_url : '../../../assets/imgs/splash.png'" width="40px" height="40px" class="logo-img">
+          <img [src]="offer.logo_url" width="40px" height="40px" class="logo-img">
           <div class="bottom-div">
             <ion-row>
               <ion-col size="5">
                 <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'">
                   <ion-icon name="pin"></ion-icon>
-                  <span> {{offer.distance}} </span>
+                  <span> 12 </span>
                   <span> {{'km' | translate}} </span>
                 </div>
               </ion-col>
@@ -28,5 +31,7 @@
     </ion-row>
   </ion-grid>
 </ion-content>
-
+<div class="spin" *ngIf="loading">
+  <ion-spinner name="bubbles"></ion-spinner>
+</div>
 <app-footer active_page="offers_page"></app-footer>

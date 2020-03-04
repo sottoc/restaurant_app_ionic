@@ -95,7 +95,10 @@
         <ion-col size="9" class="ion-align-self-center">
           <ion-row class="pen_change_row">
             <ion-col size="10">
-              <ion-input type="text" color="primary" value="mylocation" #input_location [disabled]="location_flag" (ionFocus)="getFocus('location')" (ionBlur)="loseFocus('location')"></ion-input>
+              <div *ngIf="!cities.length" style="font-size: 10px; opacity: 0.6; margin-top:5px;"> No city </div>
+              <ion-select *ngIf="cities.length" (ionChange)="changeCity($event)" [value]="location_value" okText="Ok" cancelText="Cancel" [disabled]="location_flag">
+                <ion-select-option *ngFor="let city of cities" [value]="city.id"> {{city.name}} </ion-select-option>
+              </ion-select>
             </ion-col>
             <ion-col size="2">
               <img src="../../../assets/imgs/pencil.png" width="25px" height="25px" (click)="clickPencil('location')">

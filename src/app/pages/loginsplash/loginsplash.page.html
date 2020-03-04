@@ -3,9 +3,18 @@
     <app-header title="{{'login' | translate}}" back_link="/login"></app-header>
   </ion-grid>
   <ion-grid style="margin-top: 50%;">
-    <ion-row>
+    <ion-row *ngIf="city">
       <ion-col style="text-align: center;">
         <img src="../../../assets/imgs/logo_menu.png" width="60%" alt="Splash">
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="!city">
+      <ion-col style="text-align: center;">
+        <div *ngIf="!cities.length" style="font-size: 14px; opacity: 0.6;"> No city </div>
+        <ion-select *ngIf="cities.length" (ionChange)="changeCity($event)" [value]="city" okText="Ok" cancelText="Cancel">
+          <ion-select-option [value]="null"> Please select a city </ion-select-option>
+          <ion-select-option *ngFor="let city of cities" [value]="city.id"> {{city.name}} </ion-select-option>
+        </ion-select>
       </ion-col>
     </ion-row>
   </ion-grid>

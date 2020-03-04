@@ -29,7 +29,7 @@ export class DishPage implements OnInit {
      this.image_url = params.image_url;
      this.dish_name = params.name;
      this.dish_price = params.price;
-     this.dish_detail = params.detail;
+     this.dish_detail = params.detail ? params.detail : '';
      this.dish_favorite_checked = params.favorite_checked;
     });
   }

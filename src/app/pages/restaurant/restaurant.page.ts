@@ -94,7 +94,7 @@ export class RestaurantPage implements OnInit {
       for (var i = 0; i < menu.items.length; i++) {
         let dish = menu.items[i];
         dish.favorite_checked = true;
-        dish.image_url = this.api_url + dish.image_url;
+        dish.image_url = dish.image_url ? this.api_url + dish.image_url : dish.image_url;
         this.dishes.push(dish);
       }
     });

@@ -24,6 +24,7 @@ export class SettingsPage implements OnInit {
   profile : any
   lang : string
   logo_url : any
+  location_value : any
   name_flag : boolean =  true
   username_flag : boolean =  true
   bio_flag : boolean =  true
@@ -31,12 +32,12 @@ export class SettingsPage implements OnInit {
   phone_flag : boolean = true
   location_flag : boolean = true
   profile_privacy : boolean = true
+  cities : any = []
   @ViewChild('input_name', { static: false }) nameInput: IonInput;
   @ViewChild('input_username', { static: false }) usernameInput: IonInput;
   @ViewChild('input_bio', { static: false }) bioInput: IonInput;
   @ViewChild('input_country_code', { static: false }) countryCodeInput: IonInput;
   @ViewChild('input_phone_number', { static: false }) phoneInput: IonInput;
-  @ViewChild('input_location', { static: false }) locationInput: IonInput;
 
   constructor(
     private translate: TranslateService,
@@ -57,21 +58,33 @@ export class SettingsPage implements OnInit {
     public restApi: RestService,
   ) {
     this.lang = this.translate.currentLang;
-    this.storage.get('user_profile').then(profile =>{
-      profile = JSON.parse(profile);
-      this.profile = profile;
-      this.user_id = profile.id;
-      this.logo_url = profile.logo_url ? this.api_url + profile.logo_url : null;
-      this.nameInput.value = profile.name;
-      this.usernameInput.value = profile.username;
-      this.bioInput.value = profile.bio;
-      this.countryCodeInput.value = profile.country_code;
-      this.phoneInput.value = profile.phone_number;
-      this.locationInput.value = profile.city;
-    });
+    this.getCities();
   }
 
   ngOnInit() {
+  }
+
+  async getCities() {
+    try {
+      let res: any = await this.restApi.getCities();
+      this.cities = res.data.filter(city => city.is_open == 1);
+
+      this.storage.get('user_profile').then(profile =>{
+        profile = JSON.parse(profile);
+        this.profile = profile;
+        this.user_id = profile.id;
+        this.logo_url = profile.logo_url ? this.api_url + profile.logo_url : null;
+        this.nameInput.value = profile.name;
+        this.usernameInput.value = profile.username;
+        this.bioInput.value = profile.bio;
+        this.countryCodeInput.value = profile.country_code;
+        this.phoneInput.value = profile.phone_number;
+        this.location_value = parseInt(profile.city);
+      });
+
+    } catch(err) {
+      console.log(err);
+    }
   }
 
   async ionViewWillLeave() {
@@ -122,7 +135,7 @@ export class SettingsPage implements OnInit {
 
   takePicture(sourceType: PictureSourceType) {
       var options: CameraOptions = {
-          quality: 50,
+          quality: 40,
           sourceType: sourceType,
           saveToPhotoAlbum: false,
           correctOrientation: true
@@ -276,9 +289,6 @@ export class SettingsPage implements OnInit {
       }, 400);
     } else if (field == 'location') {
       this.location_flag = !this.location_flag;
-      setTimeout(() => {
-        this.locationInput.setFocus();
-      }, 400);
     }
   }
 
@@ -326,18 +336,6 @@ export class SettingsPage implements OnInit {
           this.presentToast(response.result);
         }
         break;
-      case "location":
-        response = await this.restApi.updateProfile({
-          id: this.user_id,
-          field: "city",
-          value: this.locationInput.value
-        });
-        if (response.code == 200) {
-          this.profile.city = this.locationInput.value;
-        } else {
-          this.presentToast(response.result);
-        }
-        break;
       case "phone_number":
         response = await this.restApi.updateProfile({
           id: this.user_id,
@@ -362,6 +360,22 @@ export class SettingsPage implements OnInit {
         break;
       default:
         break;
+    }
+    this.setDisabled();
+  }
+
+  async changeCity(e) {
+    this.location_value = e.target.value;
+    let response : any;
+    response = await this.restApi.updateProfile({
+      id: this.user_id,
+      field: "city",
+      value: this.location_value
+    });
+    if (response.code == 200) {
+      this.profile.city = this.location_value;
+    } else {
+      this.presentToast(response.result);
     }
     this.setDisabled();
   }

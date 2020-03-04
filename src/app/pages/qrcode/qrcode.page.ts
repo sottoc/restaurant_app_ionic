@@ -3,6 +3,7 @@ import { ToastController, NavController } from '@ionic/angular';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { RestService } from '../../services/rest.service';
 import { environment } from '../../../environments/environment';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-qrcode',
@@ -14,13 +15,19 @@ export class QrcodePage implements OnInit {
   api_url = environment.api_url
   restaurants : any = []
   scanSub : any
+  city: any
   constructor(
     private navCtrl: NavController,
     private toastController: ToastController,
     private qrScanner: QRScanner,
-    public restApi: RestService
+    public restApi: RestService,
+    private storage: Storage,
   ) { 
-    this.getRestaurants();
+    this.storage.get('user_profile').then(profile =>{
+      profile = JSON.parse(profile);
+      this.city = profile.city;
+      this.getRestaurants();
+    });
   }
 
   ngOnInit() {
@@ -37,13 +44,13 @@ export class QrcodePage implements OnInit {
 
   async getRestaurants() {
     try {
-      let res: any = await this.restApi.getRestaurants();
+      let res: any = await this.restApi.getRestaurants(this.city);
       this.restaurants = res.data;
       this.restaurants.forEach(element => {
         element.image_url = this.api_url + element.image_url;
         element.logo_url = element.logo_url ? this.api_url + element.logo_url : '../../../assets/imgs/logo-black.png';
         element.favorite_checked = false;
-        element.distance = 12,
+        element.distance = 12;
         element.category_name = element.categories.length > 0 ? element.categories[0].name : '';
       });
     } catch(err) {
@@ -105,16 +112,20 @@ export class QrcodePage implements OnInit {
       const restaurant_id = this.QRSCANNED_DATA.split('_')[1];
       let restaurant = this.restaurants.filter(e => e.id == restaurant_id)[0];
       if (restaurant) {
-        this.navCtrl.navigateBack('/restaurant', { queryParams: 
-          {
-            id : restaurant.id,
-            image_url : restaurant.image_url,
-            logo_url : restaurant.logo_url,
-            name : restaurant.category_name,
-            category_name : restaurant.category_name,
-            favorite_checked : restaurant.favorite_checked
-          }
-        });
+        if (restaurant.is_open == 1) { // if restaurant is opened
+            this.navCtrl.navigateBack('/restaurant', { queryParams: 
+              {
+                id : restaurant.id,
+                image_url : restaurant.image_url,
+                logo_url : restaurant.logo_url,
+                name : restaurant.category_name,
+                category_name : restaurant.category_name,
+                favorite_checked : restaurant.favorite_checked
+              }
+            });
+        } else { // if restaurant is closed
+          this.presentToast('This restaurant is closed');
+        }
       } else {
         this.presentToast('Cannot find a restaurant of id = ' + restaurant_id);
         this.qrScan();

@@ -19,6 +19,8 @@ export class HomePage implements OnInit {
   display_grid_state : boolean = true
   loading: boolean = false
   selected_category_ids: any = []
+  city : any
+  profile : any
   @ViewChild('searchInput', {static: false}) searchInput: IonSearchbar;
   constructor(
     private translate: TranslateService,
@@ -30,7 +32,12 @@ export class HomePage implements OnInit {
     private cdref: ChangeDetectorRef
   ) {
     this.lang = this.translate.currentLang;
-    this.getRestaurants();
+    this.storage.get('user_profile').then(profile =>{
+      profile = JSON.parse(profile);
+      this.profile = profile;
+      this.city = profile.city;
+      this.getRestaurants();
+    });
   }
 
   ngOnInit() {
@@ -48,8 +55,9 @@ export class HomePage implements OnInit {
   async getRestaurants() {
     try {
       this.loading = true;
-      let res: any = await this.restApi.getRestaurants();
+      let res: any = await this.restApi.getRestaurants(this.city);
       this.tempRestaurant = res.data;
+      this.tempRestaurant = this.tempRestaurant.filter(item => item.is_open == 1);
       this.tempRestaurant.forEach(element => {
         element.image_url = this.api_url + element.image_url;
         element.logo_url = element.logo_url ? this.api_url + element.logo_url : '../../../assets/imgs/logo-black.png';
@@ -105,7 +113,7 @@ export class HomePage implements OnInit {
     } else {
       key = key.toLowerCase();
       this.loading = true;
-      let res: any = await this.restApi.getRestaurantsByKey(key);
+      let res: any = await this.restApi.getRestaurantsByKey(this.city, key);
       this.tempRestaurant = res.data;
       this.refreshRestaurants();
     }
