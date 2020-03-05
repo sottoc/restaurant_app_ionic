@@ -1,5 +1,5 @@
 <app-header title="{{'settings' | translate}}" back_link="/profile" style="background: #f5f6f6; padding: 10px;"></app-header>
-<ion-content>
+<div style="background: #f5f6f6">
   <ion-grid class="ion-text-center">
     <div style="color: #3c426d; font-weight: bold;">
       {{'personal_data' | translate}}
@@ -106,30 +106,32 @@
           </ion-row>
         </ion-col>
       </ion-row>
-
-      <ion-row style="margin-top: 15px;">
-        <ion-col class="ion-align-self-center ion-text-center" dir="ltr">
-          <!-- <span style="font-size: 14px;"> {{'the_language' | translate}} </span> -->
-          <ion-button [color]="lang == 'en' ? 'primary' : 'light'" size="small" shape="round" (click)="setLang('en')">
-            <span> English </span>
-          </ion-button>
-          <ion-button [color]="lang == 'ar' ? 'primary' : 'light'" size="small" shape="round" (click)="setLang('ar')">
-            <span> عربـــــي </span>
-          </ion-button>
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col size="2"></ion-col>
-        <ion-col size="4" class="ion-align-self-center ion-text-center">
-          <span style="font-size: 14px;" class="bold-opacity-title"> {{'profile_privacy' | translate}} </span>
-        </ion-col>
-        <ion-col size="4" class="ion-align-self-center ion-text-center">
-          <ion-toggle color="medium" [checked]="profile_privacy" (ionChange)="changeToggle()"></ion-toggle>
-        </ion-col>
-        <ion-col size="2"></ion-col>
-      </ion-row>
     </div>
   </ion-grid>
+</div>
+    
+<ion-content>
+    <ion-row style="margin-top: 15px;">
+      <ion-col class="ion-align-self-center ion-text-center" dir="ltr">
+        <!-- <span style="font-size: 14px;"> {{'the_language' | translate}} </span> -->
+        <ion-button [color]="lang == 'en' ? 'primary' : 'light'" size="small" shape="round" (click)="setLang('en')">
+          <span> English </span>
+        </ion-button>
+        <ion-button [color]="lang == 'ar' ? 'primary' : 'light'" size="small" shape="round" (click)="setLang('ar')">
+          <span> عربـــــي </span>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="2"></ion-col>
+      <ion-col size="4" class="ion-align-self-center ion-text-center">
+        <span style="font-size: 14px;" class="bold-opacity-title"> {{'profile_privacy' | translate}} </span>
+      </ion-col>
+      <ion-col size="4" class="ion-align-self-center ion-text-center">
+        <ion-toggle color="medium" [checked]="profile_privacy" (ionChange)="changeToggle()"></ion-toggle>
+      </ion-col>
+      <ion-col size="2"></ion-col>
+    </ion-row>
 </ion-content>
 <app-footer active_page="profile_page"></app-footer>

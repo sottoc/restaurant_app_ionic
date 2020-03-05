@@ -26,7 +26,7 @@ export class RestaurantPage implements OnInit {
   slideOpts = {
     initialSlide: 0,
     slidesPerView: 3,
-    speed: 400
+    speed: 300
   };
   menus : any = []
   selected_menu_id = 0
@@ -71,6 +71,7 @@ export class RestaurantPage implements OnInit {
 
   async getMenus() {
     try {
+      await this.storage.set("restaurant_id", this.restaurant_id);
       this.loading = true;
       let res: any = await this.restApi.getMenus(this.restaurant_id);
       this.menus = res.data;

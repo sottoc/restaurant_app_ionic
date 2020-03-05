@@ -28,8 +28,15 @@
               <span class="field-text">{{'password' | translate}}</span>
             </ion-row>
             <ion-row>
-              <ion-input type="password" ngModel required color="primary" name="password"></ion-input>
+              <ion-input type="password" #password_input ngModel required color="primary" name="password"></ion-input>
             </ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="ion-text-center" style="font-size: 12px;">
+            <span> Remember Me </span>
+            &nbsp;
+            <ion-checkbox (ionChange)="rememberMe($event)" [checked]="remebered" color="primary" style="transform: translateY(5px);"> </ion-checkbox>
           </ion-col>
         </ion-row>
         <ion-row style="margin-top: 20px;">

@@ -1,30 +1,30 @@
 <app-header title="{{'contact_us' | translate}}" back_link="/profile" style="background-color: #f5f6f6; padding:10px 10px;"></app-header>
-<ion-content>
-  <ion-grid class="ion-padding">
-    <div>
-      <ion-row>
-        <ion-col class="ion-align-self-center ion-text-center">
-          <ion-button color="primary" size="small" shape="round">
-            <span> {{'contact_us_through' | translate}} </span>
-          </ion-button>
-        </ion-col>
-      </ion-row>
-      <div class="bold-opacity-title">
-        <ion-row>
-          <ion-col class="ion-align-self-center ion-text-center">
-            <ion-icon name="call"></ion-icon>
-            <span> 0570786888 </span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col class="ion-align-self-center ion-text-center" style="color: #3c426d;">
-            <ion-icon name="mail"></ion-icon>
-            <span> cmenu@cmenu.com </span>
-          </ion-col>
-        </ion-row>
-      </div>
-    </div>
+<div style="background-color: #f5f6f6;">
+  <ion-row>
+    <ion-col class="ion-align-self-center ion-text-center">
+      <ion-button color="primary" size="small" shape="round">
+        <span> {{'contact_us_through' | translate}} </span>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <div class="bold-opacity-title">
+    <ion-row>
+      <ion-col class="ion-align-self-center ion-text-center">
+        <ion-icon name="call"></ion-icon>
+        <span> 0570786888 </span>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-align-self-center ion-text-center" style="color: #3c426d;">
+        <ion-icon name="mail"></ion-icon>
+        <span> cmenu@cmenu.com </span>
+      </ion-col>
+    </ion-row>
+  </div>
+</div>
 
+<ion-content>
+  <ion-grid>
     <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" style="margin-top: 20px;" class="bold-opacity-title">
       <form #form="ngForm" (ngSubmit)="sendOpinion(form)">
         <ion-row>
@@ -64,6 +64,5 @@
       </form>
     </div>
   </ion-grid>
-  
 </ion-content>
 <app-footer active_page="profile_page"></app-footer>

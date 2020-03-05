@@ -1,8 +1,8 @@
-<app-header title="{{'dish' | translate}}" back_link="/restaurant" [params]="params" style="background-color: #f5f6f6; padding:10px 10px;"></app-header>
+<app-header title="{{'dish' | translate}}" back_link="/restaurant" [params]="back_params" style="background-color: #f5f6f6; padding:10px 10px;"></app-header>
 
 <ion-content>
 <div class="cover-div">
-  <img [src]="image_url" width="100%" height="250px" class="cover-img">
+  <img [src]="image_url" width="100%" height="250px" class="cover-img" (click)="openDishModal()">
   <img [src]="'../../../assets/imgs/logo_menu.png'" width="80px" height="36px" class="logo-img">
   <img [src]="dish_favorite_checked ? '../../../assets/imgs/heart_red.png' : '../../../assets/imgs/heart_white.png'" width="35px" height="35px" 
     (click)="setFavoriteDish()" class="favorite-icon">

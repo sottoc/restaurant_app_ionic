@@ -1,6 +1,6 @@
 <app-header title="{{'profile' | translate}}" back_link="/home" style="background-color: #3c426d; padding:10px 10px 0px 10px"></app-header>
-<ion-content>
-  <ion-grid style="height: 35%; background: #3c426d;" class="ion-padding">
+<div style="width: 100%; background: #3c426d;">
+  <ion-grid class="ion-padding">
     <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'">
       <ion-row>
         <ion-col size="4">
@@ -32,7 +32,9 @@
         </ion-button>
     </div>
   </ion-grid>
+</div>
 
+<ion-content>
   <ion-grid style="height: 65%;" class="ion-padding">
     <ion-button color="light" class="white-btn" shape="round" style="width: 100%;" routerLink="/favorite">
       <img src="../../../assets/imgs/favorite.png" width="20" height="20" style="margin-right: 60%; opacity: 0.9;">
@@ -59,6 +61,6 @@
       <span class="primary-text">{{'terms_of_use' | translate}} </span>
     </ion-button>
   </ion-grid>
-  
 </ion-content>
+
 <app-footer active_page="profile_page"></app-footer>
