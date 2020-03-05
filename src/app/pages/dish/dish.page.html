@@ -1,6 +1,5 @@
 <app-header title="{{'dish' | translate}}" back_link="/restaurant" [params]="back_params" style="background-color: #f5f6f6; padding:10px 10px;"></app-header>
 
-<ion-content>
 <div class="cover-div">
   <img [src]="image_url" width="100%" height="250px" class="cover-img" (click)="openDishModal()">
   <img [src]="'../../../assets/imgs/logo_menu.png'" width="80px" height="36px" class="logo-img">
@@ -32,7 +31,7 @@
   </ion-row>
 </div>
   
-<div>
+<ion-content>
   <ion-grid>
     <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" style="margin-top: 10px;" class="bold-opacity-title">
       <form #form="ngForm" (ngSubmit)="sendOpinion(form)">
@@ -52,6 +51,6 @@
       </form>
     </div>
   </ion-grid>
-</div>
 </ion-content>
+
 <app-footer active_page="home_page"></app-footer>

@@ -59,7 +59,7 @@ export class RegisterPage implements OnInit {
     var valid_state = re.test(String(email).toLowerCase());
     if (valid_state == false) {
       this.presentToast('Please write valid email address.');
-      this.emailInput.setFocus();
+      // this.emailInput.setFocus();
     } else {
       // check if already exist of this email by using API
     }
@@ -69,7 +69,7 @@ export class RegisterPage implements OnInit {
     var password = e.target.value;
     if (password.length < 6) {
       this.presentToast('Password length should be more than 6.');
-      this.passwordInput.setFocus();
+      // this.passwordInput.setFocus();
     }
   }
 
