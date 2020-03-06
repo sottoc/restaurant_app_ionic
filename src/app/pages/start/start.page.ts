@@ -59,7 +59,7 @@ export class StartPage implements OnInit {
     // this.nativePageTransitions.slide(options);
 
     let options : NativeTransitionOptions = {
-      direction: 'up',
+      direction: 'right',
       duration: 600
     }
     this.nativePageTransitions.flip(options);
