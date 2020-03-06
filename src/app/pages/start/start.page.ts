@@ -7,6 +7,8 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { Storage } from '@ionic/storage';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { Md5 } from 'ts-md5/dist/md5';
+import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions/ngx';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-start',
@@ -27,6 +29,7 @@ export class StartPage implements OnInit {
     private toastController: ToastController,
     private storage: Storage,
     private fb: Facebook,
+    private nativePageTransitions: NativePageTransitions
   ) { 
     this.lang = this.translate.currentLang;
   }
@@ -44,6 +47,34 @@ export class StartPage implements OnInit {
         duration: 2000
     });
     toast.present();
+  }
+
+  goToRegisterPage() {
+    // let options : NativeTransitionOptions = {
+    //   direction: 'left',
+    //   duration: 400,
+    //   slowdownfactor: -1,
+    //   iosdelay: 50
+    // }
+    // this.nativePageTransitions.slide(options);
+
+    let options : NativeTransitionOptions = {
+      direction: 'up',
+      duration: 600
+    }
+    this.nativePageTransitions.flip(options);
+
+    this.navCtrl.navigateBack('/register');
+  }
+
+  goToLoginPage() {
+    let options : NativeTransitionOptions = {
+      direction: 'left',
+      duration: 600
+    }
+    this.nativePageTransitions.flip(options);
+
+    this.navCtrl.navigateBack('/login');
   }
 
   async googleLogin() {

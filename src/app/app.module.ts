@@ -27,6 +27,8 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
 
 import { Facebook } from '@ionic-native/facebook/ngx';
 
+import { NativePageTransitions } from '@ionic-native/native-page-transitions/ngx';
+
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -59,7 +61,8 @@ export function createTranslateLoader(http: HttpClient) {
     FilePath,
     QRScanner,
     GooglePlus,
-    Facebook
+    Facebook,
+    NativePageTransitions
   ],
   bootstrap: [AppComponent]
 })

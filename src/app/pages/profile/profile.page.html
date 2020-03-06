@@ -36,27 +36,27 @@
 
 <ion-content>
   <ion-grid style="height: 65%;" class="ion-padding">
-    <ion-button color="light" class="white-btn" shape="round" style="width: 100%;" routerLink="/favorite">
+    <ion-button color="light" class="white-btn" shape="round" style="width: 100%;" (click)="goToFavorite()">
       <img src="../../../assets/imgs/favorite.png" width="20" height="20" style="margin-right: 60%; opacity: 0.9;">
       <span class="primary-text">{{'favorite' | translate}} </span>
     </ion-button>
-    <ion-button color="light" class="white-btn" shape="round" style="width: 100%;" routerLink="/friends">
+    <ion-button color="light" class="white-btn" shape="round" style="width: 100%;" (click)="goToFriends()">
       <img src="../../../assets/imgs/friends.png" width="20" height="20" style="margin-right: 60%; opacity: 0.9;">
       <span class="primary-text">{{'friends' | translate}} </span>
     </ion-button>
-    <ion-button color="light" class="white-btn" shape="round" style="width: 100%;" routerLink="/settings">
+    <ion-button color="light" class="white-btn" shape="round" style="width: 100%;" (click)="goToSettings()">
       <img src="../../../assets/imgs/settings.png" width="20" height="20" style="margin-right: 60%; opacity: 0.9;">
       <span class="primary-text">{{'settings' | translate}} </span>
     </ion-button>
-    <ion-button color="light" class="white-btn" shape="round" style="width: 100%;" routerLink="/about">
+    <ion-button color="light" class="white-btn" shape="round" style="width: 100%;" (click)="goToAbout()">
       <img src="../../../assets/imgs/about_us.png" width="20" height="20" style="margin-right: 60%; opacity: 0.9;">
       <span class="primary-text">{{'about_us' | translate}} </span>
     </ion-button>
-    <ion-button color="light" class="white-btn" shape="round" style="width: 100%;" routerLink="/contact">
+    <ion-button color="light" class="white-btn" shape="round" style="width: 100%;" (click)="goToContact()">
       <img src="../../../assets/imgs/contact_us.png" width="20" height="20" style="margin-right: 60%; opacity: 0.9;">
       <span class="primary-text">{{'contact_us' | translate}} </span>
     </ion-button>
-    <ion-button color="light" class="white-btn" shape="round" style="width: 100%;">
+    <ion-button color="light" class="white-btn" shape="round" style="width: 100%;" (click)="goToTerms()">
       <img src="../../../assets/imgs/terms_of_use.png" width="20" height="20" style="margin-right: 50%; opacity: 0.9;">
       <span class="primary-text">{{'terms_of_use' | translate}} </span>
     </ion-button>

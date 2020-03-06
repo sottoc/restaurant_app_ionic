@@ -78,9 +78,7 @@ export class DishModalComponent implements OnInit {
       slidesPerView: 1,
       speed: 300
     };
-    setTimeout(function() {
-      this.loading = false;
-    }, 500);
+    this.loading = false;
   }
 
   slideDidChange() {

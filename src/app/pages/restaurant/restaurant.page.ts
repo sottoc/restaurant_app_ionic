@@ -5,6 +5,7 @@ import { IonContent, IonSlides, NavController, ToastController } from '@ionic/an
 import { RestService } from '../../services/rest.service';
 import { environment } from '../../../environments/environment';
 import { Storage } from '@ionic/storage';
+import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions/ngx';
 
 const Item_Height = 139;
 
@@ -42,6 +43,7 @@ export class RestaurantPage implements OnInit {
     public restApi: RestService,
     private toastController: ToastController,
     private storage: Storage,
+    private nativePageTransitions: NativePageTransitions,
     private cdref: ChangeDetectorRef
   ) { 
     this.lang = this.translate.currentLang;
@@ -171,6 +173,13 @@ export class RestaurantPage implements OnInit {
   }
 
   visitDish(id, name, price, image_url, detail, favorite_checked) {
+    let options : NativeTransitionOptions = {
+      direction: 'left',
+      duration: 400,
+      slowdownfactor: -1,
+      iosdelay: 50
+    }
+    this.nativePageTransitions.slide(options);
     this.navCtrl.navigateBack('/dish', { queryParams: 
       {
         id: id,
