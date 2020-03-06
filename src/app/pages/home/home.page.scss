@@ -27,7 +27,14 @@ ion-searchbar {
     position: relative;
     margin: 3px;
     box-shadow: 1px 2px 2px #d8d2d2;
+    opacity: 0.9;
 }
+
+.cover-div:focus, .cover-div:active {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
 
 .top-div {
     position: absolute;

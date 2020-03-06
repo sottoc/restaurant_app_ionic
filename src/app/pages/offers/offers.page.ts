@@ -3,6 +3,7 @@ import { NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { RestService } from '../../services/rest.service';
 import { environment } from '../../../environments/environment';
+import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions/ngx';
 
 @Component({
   selector: 'app-offers',
@@ -17,6 +18,7 @@ export class OffersPage implements OnInit {
   constructor(
     private navCtrl: NavController,
     public restApi: RestService,
+    private nativePageTransitions: NativePageTransitions,
     private translate: TranslateService
   ) { 
     this.lang = this.translate.currentLang;
@@ -42,9 +44,21 @@ export class OffersPage implements OnInit {
   }
 
   visitOffer(offer_id) {
+    let options : NativeTransitionOptions = {
+      direction: 'left',
+      duration: 400,
+      slowdownfactor: -1,
+      iosdelay: 50
+    }
+    this.nativePageTransitions.slide(options);
+    let offer = this.offers.filter(offer => offer.id == offer_id)[0];
     this.navCtrl.navigateBack('/offerdetail', { queryParams: 
       {
         id : offer_id,
+        image_url : offer.image_url,
+        logo_url : offer.logo_url,
+        title: offer.title,
+        restaurant_id : offer.restaurant_id
       }
     });
   }

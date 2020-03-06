@@ -50,14 +50,6 @@ export class StartPage implements OnInit {
   }
 
   goToRegisterPage() {
-    // let options : NativeTransitionOptions = {
-    //   direction: 'left',
-    //   duration: 400,
-    //   slowdownfactor: -1,
-    //   iosdelay: 50
-    // }
-    // this.nativePageTransitions.slide(options);
-
     let options : NativeTransitionOptions = {
       direction: 'right',
       duration: 600

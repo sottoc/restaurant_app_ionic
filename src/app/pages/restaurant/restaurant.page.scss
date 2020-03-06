@@ -3,6 +3,15 @@
     // box-shadow: 1px 2px 2px #d8d2d2;
 }
 
+.dish-item-div {
+    opacity: 0.9;
+}
+
+.dish-item-div:focus, .dish-item-div:active {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
 .cover-img {
     z-index: -1;
 }

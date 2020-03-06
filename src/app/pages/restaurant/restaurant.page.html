@@ -46,27 +46,29 @@
   <ion-grid *ngIf="dishes.length">
     <ion-row>
       <ion-col size="6" *ngFor="let dish of dishes" style="padding-bottom: 10px;">
-        <div [id]="'dish_' + dish.id">
-          <img [src]="dish.image_url" width="100%" height="100px" class="cover-img" 
-          (click)="visitDish(dish.id, dish.name, dish.price, dish.image_url, dish.detail, dish.favorite_checked)">
-          <img [src]="dish.favorite_checked ? '../../../assets/imgs/heart_red.png' : '../../../assets/imgs/heart_white.png'" 
-            width="25px" height="25px" (click)="setFavoriteDish(dish.id)" class="dish-heart-img">
-          <img *ngIf="dish.image_url" [src]="'../../../assets/imgs/logo_menu.png'" width="40px" height="18px" class="logo-img-dish">
-        </div>
-        <div style="height: 25px; background: white; font-size: 12px; margin-top:-5px;">
-          <ion-row>
-            <ion-col size="5" class="ion-text-left">
-              <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" style="color: #f68625;">
-                <span> {{dish.price}} </span>
-                <span> {{'SAR' | translate}} </span>
-              </div>
-            </ion-col>
-            <ion-col size="7" class="ion-text-right">
-              <div class="bold-opacity-title" style="font-size: 15px;">
-                <span> {{dish.name}} </span>
-              </div>
-            </ion-col>
-          </ion-row>
+        <div class="dish-item-div">
+          <div [id]="'dish_' + dish.id">
+            <img [src]="dish.image_url" width="100%" height="100px" class="cover-img" 
+            (click)="visitDish(dish.id, dish.name, dish.price, dish.image_url, dish.detail, dish.favorite_checked)">
+            <img [src]="dish.favorite_checked ? '../../../assets/imgs/heart_red.png' : '../../../assets/imgs/heart_white.png'" 
+              width="25px" height="25px" (click)="setFavoriteDish(dish.id)" class="dish-heart-img">
+            <img *ngIf="dish.image_url" [src]="'../../../assets/imgs/logo_menu.png'" width="40px" height="18px" class="logo-img-dish">
+          </div>
+          <div style="height: 25px; background: white; font-size: 12px; margin-top:-5px;">
+            <ion-row>
+              <ion-col size="5" class="ion-text-left">
+                <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" style="color: #f68625;">
+                  <span> {{dish.price}} </span>
+                  <span> {{'SAR' | translate}} </span>
+                </div>
+              </ion-col>
+              <ion-col size="7" class="ion-text-right">
+                <div class="bold-opacity-title" style="font-size: 15px;">
+                  <span> {{dish.name}} </span>
+                </div>
+              </ion-col>
+            </ion-row>
+          </div>
         </div>
       </ion-col>
     </ion-row>
