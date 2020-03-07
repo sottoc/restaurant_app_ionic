@@ -51,7 +51,7 @@ export class StartPage implements OnInit {
 
   goToRegisterPage() {
     let options : NativeTransitionOptions = {
-      direction: 'right',
+      direction: 'left',
       duration: 600
     }
     this.nativePageTransitions.flip(options);
@@ -154,7 +154,9 @@ export class StartPage implements OnInit {
         const response : any = await this.restApi.userLogin(params);
         console.log(response);
         if (response.code == 200) {
-          await this.storage.set("user_profile", JSON.stringify(response.data[0]));
+          let profile = response.data[0];
+          profile.favorites = response.favorites;
+          await this.storage.set("user_profile", JSON.stringify(profile));
           this.loading.dismiss();
           this.navCtrl.navigateBack('/loginsplash');
         } else {

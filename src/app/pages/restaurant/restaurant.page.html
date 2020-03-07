@@ -29,6 +29,9 @@
 </div>
 
 <div *ngIf="!loading" style="background: #f5f6f6; padding: 5px 0px;">
+  <div *ngIf="!menus.length" class="ion-text-center no-content-label">
+    No menus
+  </div>
   <ion-slides #menu_slides [options]="slideOpts" *ngIf="menus.length">
     <ion-slide *ngFor="let menu of menus">
       <ion-button [color]="selected_menu_id == menu.id ? 'primary' : 'medium'" size="small" shape="round" (click)="selectMenu(menu.id)" style="width: 90%;">
@@ -36,12 +39,12 @@
       </ion-button>
     </ion-slide>
   </ion-slides>
-  <div *ngIf="!menus.length" class="ion-text-center">
-    No menus
-  </div>
 </div>
 
 <ion-content *ngIf="!loading" #dish_content (ionScroll)="scrollDishes($event)" (ionScrollEnd)="scrollDishesEnd()" [scrollEvents]="true">
+  <div *ngIf="!dishes.length" class="ion-text-center no-content-label">
+    No dishes
+  </div>
   <ion-grid *ngIf="dishes.length">
     <ion-row>
       <ion-col size="6" *ngFor="let dish of dishes" style="padding-bottom: 10px;">
@@ -72,9 +75,6 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <div *ngIf="!dishes.length" class="ion-text-center">
-    No dishes
-  </div>
 </ion-content>
 
 <div class="spin-dish" *ngIf="loading">

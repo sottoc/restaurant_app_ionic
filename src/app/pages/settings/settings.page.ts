@@ -247,6 +247,7 @@ export class SettingsPage implements OnInit {
       this.profile.logo_url = response.result;
       this.logo_url = this.api_url + response.result;
     } catch(err) {
+      console.log(err);
       this.presentToast(err.error);
     }
     loading.dismiss();

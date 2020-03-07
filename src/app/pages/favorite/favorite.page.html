@@ -39,6 +39,9 @@
 <ion-content>
   <ion-grid style="padding-bottom: 50px;" class="ion-padding">
     <div *ngIf="!selected_dishes && !loading">
+      <div *ngIf="!favorite_restaurants.length" class="ion-text-center no-content-label">
+        No favorite restaurants
+      </div>
       <ion-row *ngFor="let restaurant of favorite_restaurants">
         <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" class="list-div">
             <ion-row style="width: 100%;">
@@ -67,6 +70,9 @@
     </div>
 
     <div *ngIf="selected_dishes && !loading">
+      <div *ngIf="!favorite_dishes.length" class="ion-text-center no-content-label">
+        No favorite dishes
+      </div>
       <ion-row *ngFor="let dish of favorite_dishes">
         <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" class="list-div">
             <ion-row style="width: 100%;">
