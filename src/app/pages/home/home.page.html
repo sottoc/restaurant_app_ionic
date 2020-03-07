@@ -27,7 +27,7 @@
             </div>
             <img [src]="restaurant.logo_url" width="40px" height="40px" class="logo-img">
             <img [src]="restaurant.favorite_checked ? '../../../assets/imgs/heart_red.png' : '../../../assets/imgs/heart_white.png'" 
-              width="30px" height="30px" (click)="setFavorite(restaurant.id)" class="heart-img">
+              width="30px" height="30px" (click)="updateFavorite(restaurant.favorite_checked, restaurant.id, 1)" class="heart-img">
             <div class="bottom-div">
               <ion-row>
                 <ion-col size="5">
@@ -60,7 +60,7 @@
               <ion-col size="2" class="ion-text-center">
                 <div style="padding-top: 10px;">
                   <img [src]="restaurant.favorite_checked ? '../../../assets/imgs/heart_red.png' : '../../../assets/imgs/heart_white.png'" 
-                    width="26px" height="26px" (click)="setFavorite(restaurant.id)">
+                    width="26px" height="26px" (click)="updateFavorite(restaurant.favorite_checked, restaurant.id, 1)">
                 </div>
                 <div class="list-distance-text">
                   <span> {{restaurant.distance}} </span>

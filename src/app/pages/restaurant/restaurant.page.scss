@@ -1,9 +1,13 @@
 .cover-div {
-    position: relative;
+    position: absolute;
+    top: 75px;
+    width: 100%;
     // box-shadow: 1px 2px 2px #d8d2d2;
 }
 
 .dish-item-div {
+    width: 100%;
+    background: #c5c5c5;
     opacity: 0.9;
 }
 
@@ -44,6 +48,7 @@
     position: absolute;
     left: 10px;
     bottom: 25px;
+    z-index: 20000;
 }
 
 .dish-heart-img {
@@ -51,3 +56,10 @@
     left: 9px;
     top: 9px;
 }
+
+.spin-dish{
+    position: fixed;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+ }

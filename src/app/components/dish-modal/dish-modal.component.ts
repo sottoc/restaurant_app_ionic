@@ -20,6 +20,7 @@ export class DishModalComponent implements OnInit {
   slideOpts : any;
   initial_dish_id : any;
   active_dish: any;
+  profile : any
   @ViewChild('dish_slides', { static: false }) dish_slides: IonSlides;
   constructor(
     private translate: TranslateService,
@@ -29,8 +30,10 @@ export class DishModalComponent implements OnInit {
     private modalController: ModalController,
   ) { 
     this.lang = this.translate.currentLang;
-    this.storage.get('restaurant_id').then(restaurant_id =>{
-      this.restaurant_id = parseInt(restaurant_id);
+    this.storage.get('user_profile').then(profile =>{
+      profile = JSON.parse(profile);
+      this.profile = profile;
+      this.restaurant_id = parseInt(profile.restaurant_id);
       this.initial_dish_id = navParams.get('dish_id');
       this.getMenus();
     });
@@ -65,7 +68,7 @@ export class DishModalComponent implements OnInit {
       for (var i = 0; i < menu.items.length; i++) {
         let dish = menu.items[i];
         dish.index = index;
-        dish.favorite_checked = true;
+        dish.favorite_checked = this.profile.favorites.filter(item => item.relative_id == dish.id && item.type == 2).length > 0 ? true : false;
         dish.image_url = dish.image_url ? this.api_url + dish.image_url : '../../../assets/imgs/logo-black.png';
         this.dishes.push(dish);
         index++;

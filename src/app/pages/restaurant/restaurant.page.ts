@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
-import { IonContent, IonSlides, NavController, ToastController } from '@ionic/angular';
+import { IonContent, IonSlides, NavController, ToastController, LoadingController } from '@ionic/angular';
 import { RestService } from '../../services/rest.service';
 import { environment } from '../../../environments/environment';
 import { Storage } from '@ionic/storage';
@@ -36,6 +36,8 @@ export class RestaurantPage implements OnInit {
   @ViewChild('menu_slides', { static: false }) menu_slides: IonSlides;
   clicked_menu_status : boolean = false
   params: any
+  profile : any
+  from_where : any
   constructor(
     private translate: TranslateService,
     private route: ActivatedRoute,
@@ -44,6 +46,7 @@ export class RestaurantPage implements OnInit {
     private toastController: ToastController,
     private storage: Storage,
     private nativePageTransitions: NativePageTransitions,
+    private loadingController: LoadingController,
     private cdref: ChangeDetectorRef
   ) { 
     this.lang = this.translate.currentLang;
@@ -55,6 +58,12 @@ export class RestaurantPage implements OnInit {
       this.restaurant_name = params.name;
       this.restaurant_cate = params.category_name;
       this.restaurant_favorite_checked = params.favorite_checked;
+      this.from_where = params.from_where;
+    });
+
+    this.storage.get('user_profile').then(profile =>{
+      profile = JSON.parse(profile);
+      this.profile = profile;
       this.getMenus();
     });
   }
@@ -73,7 +82,6 @@ export class RestaurantPage implements OnInit {
 
   async getMenus() {
     try {
-      await this.storage.set("restaurant_id", this.restaurant_id);
       this.loading = true;
       let res: any = await this.restApi.getMenus(this.restaurant_id);
       this.menus = res.data;
@@ -96,29 +104,16 @@ export class RestaurantPage implements OnInit {
     this.menus.forEach(menu => {
       for (var i = 0; i < menu.items.length; i++) {
         let dish = menu.items[i];
-        dish.favorite_checked = true;
-        dish.image_url = dish.image_url ? this.api_url + dish.image_url : dish.image_url;
+        dish.favorite_checked = this.profile.favorites.filter(item => item.relative_id == dish.id && item.type == 2).length > 0 ? true : false;
+        dish.image_url = dish.image_url ? this.api_url + dish.image_url : '../../../assets/imgs/logo-black.png';
         this.dishes.push(dish);
       }
     });
+
     this.loading = false;
     this.cdref.detectChanges();
+    
   }
-
-  setFavorite() {
-    this.restaurant_favorite_checked = !this.restaurant_favorite_checked;
-  }
-
-  setFavoriteDish(dish_id) {
-    for(var i = 0; i<this.dishes.length; i++) {
-      this.dishes[i]
-    }
-    this.dishes.forEach((element) => {
-      if (element.id == dish_id) {
-        element.favorite_checked = !element.favorite_checked;
-      }
-    });
-  }  
 
   selectMenu(menu_id) {
     this.clicked_menu_status = true;
@@ -192,4 +187,45 @@ export class RestaurantPage implements OnInit {
       }
     });
   }
+
+  async updateFavorite(favorite_checked, relative_id, type) {
+    const loading = await this.loadingController.create({
+        message: favorite_checked ? 'Removing from favorite ...' : 'Setting as favorite ...',
+    });
+    await loading.present();
+    const params = {"user_id" : this.profile.id, "relative_id" : relative_id, "type" : type };
+    let res: any = favorite_checked ? await this.restApi.removeFavorite(params) : await this.restApi.setFavorite(params);
+    if (res.code == 200) {  // if success
+      // update profile favorites
+      if (favorite_checked == false) { 
+        this.profile.favorites.push({ relative_id: relative_id, type: type});
+      } else {
+        let index = -1;
+        this.profile.favorites.forEach((item, i) => {
+          if (item.relative_id == relative_id && item.type == type) {
+            index = i;
+          }
+        });
+        this.profile.favorites.splice(index, 1);
+      }
+      await this.storage.set("user_profile", JSON.stringify(this.profile));
+      // update UI
+      if (type == 1) {
+        this.restaurant_favorite_checked = !favorite_checked
+      }
+      if (type == 2) {
+        this.dishes.forEach((dish) => {
+          if (dish.id == relative_id) {
+            dish.favorite_checked = !dish.favorite_checked;
+          }
+        });
+      }
+    } else { // if failed
+      this.presentToast(res.result);
+    }
+    loading.dismiss();
+  }
+
+
+
 }

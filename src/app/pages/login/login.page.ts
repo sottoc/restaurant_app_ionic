@@ -75,7 +75,9 @@ export class LoginPage implements OnInit {
       } else {
         const response : any = await this.restApi.userLogin({ email: email, password: password});
         if (response.code == 200) {
-          await this.storage.set("user_profile", JSON.stringify(response.data[0]));
+          let profile = response.data[0];
+          profile.favorites = response.favorites;
+          await this.storage.set("user_profile", JSON.stringify(profile));
           if (this.remebered == true) {
             await this.storage.set("login_info", JSON.stringify({ email: email, password: password}));
           }

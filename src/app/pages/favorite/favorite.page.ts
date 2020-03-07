@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Storage } from '@ionic/storage';
 import { environment } from '../../../environments/environment';
+import { RestService } from '../../services/rest.service';
+import { LoadingController, ToastController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-favorite',
@@ -13,105 +15,158 @@ export class FavoritePage implements OnInit {
   lang : string
   logo_url : any
   name: string
+  profile: any
   favorite_restaurants : any = []
   favorite_dishes : any = []
   selected_dishes : boolean = false
+  loading : boolean = false
   constructor(
     private translate: TranslateService,
     private storage: Storage,
+    public restApi: RestService,
+    private loadingController: LoadingController,
+    private toastController: ToastController,
+    private navCtrl: NavController,
   ) { 
     this.lang = this.translate.currentLang;
     this.storage.get('user_profile').then(profile => {
       profile = JSON.parse(profile);
+      this.profile = profile;
       this.logo_url = profile.logo_url ? this.api_url + profile.logo_url : null;
       this.name = profile.name;
+      this.loading = true;
+      this.getFavorites(1);
     });
-    this.favorite_restaurants = [
-      {
-        id: 1,
-        name: 'ResName',
-        logo_url: 'https://png.pngtree.com/png-clipart/20190515/original/pngtree-simple-coffee-elemental-design-png-image_3597680.jpg',
-        cover_img_url: 'http://ec2-54-211-162-185.compute-1.amazonaws.com:8000/storage/restaurants/ZY-Photo-2018-09-23-00000030%20(Copy).JPG_1547864374.jpeg',
-        favorite_checked: true,
-        distance: 5,
-        category_name: "Cate"
-      },
-      {
-        id: 2,
-        name: 'Name',
-        logo_url: '',
-        cover_img_url: 'http://ec2-54-211-162-185.compute-1.amazonaws.com:8000/storage/restaurants/unnamed.jpg_1547870811.jpeg',
-        favorite_checked: true,
-        distance: 2,
-        category_name: "Cate"
-      },
-      {
-        id: 3,
-        name: 'Res_name',
-        logo_url: '',
-        cover_img_url: 'http://ec2-54-211-162-185.compute-1.amazonaws.com:8000/storage/restaurants/rst_911429.jpg_1547870543.jpeg',
-        favorite_checked: true,
-        distance: 23,
-        category_name: "Cate"
-      },
-      {
-        id: 4,
-        name: 'Name',
-        logo_url: 'https://png.pngtree.com/png-clipart/20190515/original/pngtree-simple-coffee-elemental-design-png-image_3597680.jpg',
-        cover_img_url: 'http://ec2-54-211-162-185.compute-1.amazonaws.com:8000/storage/restaurants/CMTHYqDUcAAa8yB.jpg_1547869818.jpeg',
-        favorite_checked: true,
-        distance: 23,
-        category_name: "Cate"
-      },
-      {
-        id: 5,
-        name: 'Name',
-        logo_url: '',
-        cover_img_url: 'http://ec2-54-211-162-185.compute-1.amazonaws.com:8000/storage/restaurants/ZY-Photo-2018-09-23-00000030%20(Copy).JPG_1547864374.jpeg',
-        favorite_checked: true,
-        distance: 3,
-        category_name: "Cate"
-      }
-    ]
-
-    this.favorite_dishes = [
-      {
-        dish_id: 1,
-        dish_img_url: 'http://ec2-54-211-162-185.compute-1.amazonaws.com:8000/storage/restaurants/CMTHYqDUcAAa8yB.jpg_1547869818.jpeg',
-        favorite_checked: true,
-        name: 'yyyyyy',
-        category_name: 'uuuuuuu',
-      },
-      {
-        dish_id: 2,
-        dish_img_url: 'http://ec2-54-211-162-185.compute-1.amazonaws.com:8000/storage/restaurants/CMTHYqDUcAAa8yB.jpg_1547869818.jpeg',
-        favorite_checked: true,
-        name: 'ssssss',
-        category_name: 'yyyyyyyyy',
-      },
-      {
-        dish_id: 3,
-        dish_img_url: 'http://ec2-54-211-162-185.compute-1.amazonaws.com:8000/storage/restaurants/CMTHYqDUcAAa8yB.jpg_1547869818.jpeg',
-        favorite_checked: true,
-        name: 'gggggg',
-        category_name: 'uuuuuuu',
-      }
-    ]
   }
 
   ngOnInit() {
   }
 
+  async presentToast(text) {
+    const toast = await this.toastController.create({
+        message: text,
+        position: 'middle',
+        duration: 2000
+    });
+    toast.present();
+  }
+
+  async getFavorites(type) {
+    try {
+      let res: any = await this.restApi.getFavorites(this.profile.id, type);
+      let favorites_data = res.data;
+      favorites_data.forEach(element => {
+        if (type == 1) {
+          element.image_url = element.image_url ? this.api_url + element.image_url : '../../../assets/imgs/empty.png';
+          element.category_name = element.category_name ? element.category_name : '';
+        } else {
+          element.image_url = element.image_url ? this.api_url + element.image_url : '../../../assets/imgs/logo-black.png';
+        }
+        element.logo_url = element.logo_url ? this.api_url + element.logo_url : '../../../assets/imgs/logo-black.png';
+        element.favorite_checked = true;
+        element.distance = 5;
+      });
+      if (type == 1) {
+        this.favorite_restaurants = favorites_data;
+      } else {
+        this.favorite_dishes = favorites_data;
+      }
+      this.loading = false;
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
   switchDishRest(field) {
+    this.loading = true;
     if (field == 'dish') {
+      this.getFavorites(2);
       this.selected_dishes = true;
     } else {
+      this.getFavorites(1);
       this.selected_dishes = false;
     }
   }
 
-  setFavorite(id) {
-    console.log(id);
+  async updateFavorite(favorite_checked, relative_id, type) {
+    const loading = await this.loadingController.create({
+        message: favorite_checked ? 'Removing from favorite ...' : 'Setting as favorite ...',
+    });
+    await loading.present();
+    const params = {"user_id" : this.profile.id, "relative_id" : relative_id, "type" : type };
+    let res: any = favorite_checked ? await this.restApi.removeFavorite(params) : await this.restApi.setFavorite(params);
+    if (res.code == 200) {  // if success
+      // update profile favorites
+      if (favorite_checked == false) { 
+        this.profile.favorites.push({ relative_id: relative_id, type: type});
+      } else {
+        let index = -1;
+        this.profile.favorites.forEach((item, i) => {
+          if (item.relative_id == relative_id && item.type == type) {
+            index = i;
+          }
+        });
+        this.profile.favorites.splice(index, 1);
+      }
+      await this.storage.set("user_profile", JSON.stringify(this.profile));
+      // update UI
+      let index = -1;
+      if (type == 1) {
+        this.favorite_restaurants.forEach((item, i) => {
+          if (item.id == relative_id) {
+            index = i;
+          }
+        });
+        this.favorite_restaurants.splice(index, 1);
+      } else {
+        this.favorite_dishes.forEach((item, i) => {
+          if (item.id == relative_id) {
+            index = i;
+          }
+        });
+        this.favorite_dishes.splice(index, 1);
+      }
+    } else { // if failed
+      this.presentToast(res.result);
+    }
+    loading.dismiss();
+  }
+
+  async visitRestaurant(id, image_url, logo_url, name, category_name, favorite_checked) {
+    // let options : NativeTransitionOptions = {
+    //   direction: 'left',
+    //   duration: 400,
+    //   slowdownfactor: -1,
+    //   iosdelay: 50
+    // }
+    // this.nativePageTransitions.slide(options);
+    this.profile.restaurant_id = id;
+    await this.storage.set("user_profile", JSON.stringify(this.profile));
+    this.navCtrl.navigateBack('/restaurant', { queryParams: 
+      {
+        id : id,
+        image_url : image_url,
+        logo_url : logo_url,
+        name : name,
+        category_name : category_name,
+        favorite_checked : favorite_checked,
+        from_where : 'favorite'
+      }
+    });
+  }
+
+  visitDish(id, name, price, image_url, detail, favorite_checked) {
+    this.navCtrl.navigateBack('/dish', { queryParams: 
+      {
+        id: id,
+        name: name,
+        price: price,
+        image_url: image_url,
+        detail: detail,
+        favorite_checked: favorite_checked,
+        back_params: null
+      }
+    });
   }
 
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ModalController, IonSearchbar, NavController, ToastController } from '@ionic/angular';
+import { ModalController, IonSearchbar, NavController, ToastController, LoadingController } from '@ionic/angular';
 import { FilterModalComponent } from '../../components/filter-modal/filter-modal.component';
 import { RestService } from '../../services/rest.service';
 import { environment } from '../../../environments/environment';
@@ -31,9 +31,11 @@ export class HomePage implements OnInit {
     public restApi: RestService,
     private storage: Storage,
     private nativePageTransitions: NativePageTransitions,
+    private loadingController: LoadingController,
     private cdref: ChangeDetectorRef
   ) {
     this.lang = this.translate.currentLang;
+    this.loading = true;
     this.storage.get('user_profile').then(profile =>{
       profile = JSON.parse(profile);
       this.profile = profile;
@@ -56,14 +58,13 @@ export class HomePage implements OnInit {
 
   async getRestaurants() {
     try {
-      this.loading = true;
       let res: any = await this.restApi.getRestaurants(this.city);
       this.tempRestaurant = res.data;
       this.tempRestaurant = this.tempRestaurant.filter(item => item.is_open == 1);
       this.tempRestaurant.forEach(element => {
-        element.image_url = this.api_url + element.image_url;
+        element.image_url = element.image_url ? this.api_url + element.image_url : '../../../assets/imgs/empty.png';
         element.logo_url = element.logo_url ? this.api_url + element.logo_url : '../../../assets/imgs/logo-black.png';
-        element.favorite_checked = false;
+        element.favorite_checked = this.profile.favorites.filter(item => item.relative_id == element.id && item.type == 1).length > 0 ? true : false;
         element.distance = 12,
         element.category_name = element.categories.length > 0 ? element.categories[0].name : '';
       });
@@ -103,6 +104,7 @@ export class HomePage implements OnInit {
       cssClass: 'filter-modal',
     });
     modal.onDidDismiss().then(data => {
+      this.loading = true;
       this.refreshRestaurants();
     });
     return await modal.present();
@@ -121,12 +123,37 @@ export class HomePage implements OnInit {
     }
   }
 
-  setFavorite(id) {
-    this.restaurants.forEach(e => {
-      if (e.id == id) {
-        e.favorite_checked = !e.favorite_checked;
-      }
+  async updateFavorite(favorite_checked, relative_id, type) {
+    const loading = await this.loadingController.create({
+        message: favorite_checked ? 'Removing from favorite ...' : 'Setting as favorite ...',
     });
+    await loading.present();
+    const params = {"user_id" : this.profile.id, "relative_id" : relative_id, "type" : type };
+    let res: any = favorite_checked ? await this.restApi.removeFavorite(params) : await this.restApi.setFavorite(params);
+    if (res.code == 200) {  // if success
+      // update profile favorites
+      if (favorite_checked == false) { 
+        this.profile.favorites.push({ relative_id: relative_id, type: type});
+      } else {
+        let index = -1;
+        this.profile.favorites.forEach((item, i) => {
+          if (item.relative_id == relative_id && item.type == type) {
+            index = i;
+          }
+        });
+        this.profile.favorites.splice(index, 1);
+      }
+      await this.storage.set("user_profile", JSON.stringify(this.profile));
+      // update UI
+      this.restaurants.forEach(e => {
+        if (e.id == relative_id) {
+          e.favorite_checked = !e.favorite_checked;
+        }
+      });
+    } else { // if failed
+      this.presentToast(res.result);
+    }
+    loading.dismiss();
   }
 
   showList() {
@@ -137,7 +164,7 @@ export class HomePage implements OnInit {
     this.display_grid_state = true;
   }
 
-  visitRestaurant(id, image_url, logo_url, name, category_name, favorite_checked) {
+  async visitRestaurant(id, image_url, logo_url, name, category_name, favorite_checked) {
     let options : NativeTransitionOptions = {
       direction: 'left',
       duration: 400,
@@ -145,6 +172,8 @@ export class HomePage implements OnInit {
       iosdelay: 50
     }
     this.nativePageTransitions.slide(options);
+    this.profile.restaurant_id = id;
+    await this.storage.set("user_profile", JSON.stringify(this.profile));
     this.navCtrl.navigateBack('/restaurant', { queryParams: 
       {
         id : id,

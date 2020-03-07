@@ -92,6 +92,26 @@ export class RestService {
     return this.handleRequest(0, url, {});
   }
 
+  setFavorite(params) {
+    const url = `${this.api_url}/api/set_favorite`;
+    return this.handleRequest(1, url, params);
+  }
+
+  removeFavorite(params) {
+    const url = `${this.api_url}/api/remove_favorite`;
+    return this.handleRequest(1, url, params);
+  }
+
+  getFavorites(user_id, type) {
+    const url = `${this.api_url}/api/get_favorites/${user_id}/${type}`;
+    return this.handleRequest(0, url, {});
+  }
+
+  getAllFavorites(user_id) {
+    const url = `${this.api_url}/api/get_all_favorites/${user_id}`;
+    return this.handleRequest(0, url, {});
+  }
+
   handleRequest(method, url, params) {
     return new Promise(async (resolve, reject) => {
       try {

@@ -18,9 +18,15 @@ export class HeaderComponent implements OnInit {
   }
 
   goBack() {
-    let queryParams = this.params ? JSON.parse(this.params) : {};
-    this.navCtrl.navigateBack(this.back_link, {
-      queryParams: queryParams
-    });
+    if (this.back_link == '/home' && this.params == 'favorite') {
+      this.navCtrl.navigateBack('/favorite');
+    } else if (this.back_link == '/restaurant' && JSON.parse(this.params) == null) {
+      this.navCtrl.navigateBack('/favorite');
+    } else {
+      let queryParams = this.params ? JSON.parse(this.params) : {};
+      this.navCtrl.navigateBack(this.back_link, {
+        queryParams: queryParams
+      });
+    }
   }
 }

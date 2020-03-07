@@ -38,23 +38,20 @@
 </div>
 <ion-content>
   <ion-grid style="padding-bottom: 50px;" class="ion-padding">
-    <div *ngIf="!selected_dishes">
+    <div *ngIf="!selected_dishes && !loading">
       <ion-row *ngFor="let restaurant of favorite_restaurants">
         <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" class="list-div">
             <ion-row style="width: 100%;">
-              <ion-col size="5">
+              <ion-col size="7" (click)="visitRestaurant(restaurant.id, restaurant.image_url, restaurant.logo_url, restaurant.name, restaurant.category_name, restaurant.favorite_checked)">
                 <div style="padding-top: 15px;">
                   <div> <span class="list-rest-name-text"> {{restaurant.name}} </span></div>
                   <div> <span class="list-cate-name-text"> {{restaurant.category_name}} </span></div>
                 </div>
               </ion-col>
-              <ion-col size="2">
-                
-              </ion-col>
               <ion-col size="2" class="ion-text-center">
                 <div style="padding-top: 10px;">
                   <img [src]="restaurant.favorite_checked ? '../../../assets/imgs/heart_red.png' : '../../../assets/imgs/heart_white.png'" 
-                    width="26px" height="26px" (click)="setFavorite(restaurant.id)">
+                    width="26px" height="26px" (click)="updateFavorite(restaurant.favorite_checked, restaurant.id, 1)">
                 </div>
                 <div class="list-distance-text">
                   <span> {{restaurant.distance}} </span>
@@ -62,34 +59,34 @@
                 </div>
               </ion-col>
               <ion-col size="3">
-                <img [src]="restaurant.logo_url ? restaurant.logo_url : '../../../assets/imgs/splash.png'" width="65px" height="65px" class="list-logo-img">
+                <img [src]="restaurant.logo_url" width="65px" height="65px" class="list-logo-img">
               </ion-col>
             </ion-row>
         </div>
       </ion-row>
     </div>
 
-    <div *ngIf="selected_dishes">
+    <div *ngIf="selected_dishes && !loading">
       <ion-row *ngFor="let dish of favorite_dishes">
         <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" class="list-div">
             <ion-row style="width: 100%;">
-              <ion-col size="5">
-                <div style="padding-top: 15px;">
+              <ion-col size="7" (click)="visitDish(dish.id, dish.name, dish.price, dish.image_url, dish.detail, dish.favorite_checked)">
+                <div style="padding-top: 12px;">
                   <div> <span class="list-rest-name-text"> {{dish.name}} </span></div>
-                  <div> <span class="list-cate-name-text"> {{dish.category_name}} </span></div>
+                  <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" class="list-cate-name-text"> 
+                    <span> {{dish.price}} </span>
+                    <span> {{'SAR' | translate}} </span>
+                  </div>
                 </div>
-              </ion-col>
-              <ion-col size="2">
-                
               </ion-col>
               <ion-col size="2" class="ion-text-center">
                 <div style="padding-top: 10px;">
                   <img [src]="dish.favorite_checked ? '../../../assets/imgs/heart_red.png' : '../../../assets/imgs/heart_white.png'" 
-                    width="26px" height="26px">
+                    width="26px" height="26px" (click)="updateFavorite(dish.favorite_checked, dish.id, 2)">
                 </div>
               </ion-col>
               <ion-col size="3">
-                <img [src]="dish.dish_img_url ? dish.dish_img_url : '../../../assets/imgs/splash.png'" width="65px" height="65px" class="list-logo-img">
+                <img [src]="dish.image_url" width="65px" height="65px" class="list-logo-img">
               </ion-col>
             </ion-row>
         </div>
@@ -97,4 +94,9 @@
     </div>
   </ion-grid>
 </ion-content>
+
+<div class="spin" *ngIf="loading">
+  <ion-spinner name="bubbles"></ion-spinner>
+</div>
+
 <app-footer active_page="profile_page"></app-footer>
