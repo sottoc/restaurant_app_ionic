@@ -87,10 +87,6 @@ export class SettingsPage implements OnInit {
     }
   }
 
-  async ionViewWillLeave() {
-    await this.storage.set("user_profile", JSON.stringify(this.profile));
-  }
-
   async presentToast(text) {
     const toast = await this.toastController.create({
         message: text,
@@ -135,7 +131,7 @@ export class SettingsPage implements OnInit {
 
   takePicture(sourceType: PictureSourceType) {
       var options: CameraOptions = {
-          quality: 40,
+          quality: 20,
           sourceType: sourceType,
           saveToPhotoAlbum: false,
           correctOrientation: true
@@ -245,6 +241,7 @@ export class SettingsPage implements OnInit {
     try {
       const response : any = await this.restApi.uploadLogo(params);
       this.profile.logo_url = response.result;
+      await this.storage.set("user_profile", JSON.stringify(this.profile));
       this.logo_url = this.api_url + response.result;
     } catch(err) {
       console.log(err);
@@ -298,7 +295,6 @@ export class SettingsPage implements OnInit {
   }
 
   async loseFocus(field) {
-    console.log("blur", field);
     let response : any
     switch (field) {
       case "name":
@@ -347,6 +343,7 @@ export class SettingsPage implements OnInit {
         if (response.code == 200) {
           this.profile.country_code = this.countryCodeInput.value;
           this.profile.phone_number = this.phoneInput.value;
+          await this.storage.set("user_profile", JSON.stringify(this.profile));
           this.navCtrl.navigateBack('/phoneverify', { queryParams: 
             {
               email: this.profile.email,
@@ -362,6 +359,7 @@ export class SettingsPage implements OnInit {
       default:
         break;
     }
+    await this.storage.set("user_profile", JSON.stringify(this.profile));
     this.setDisabled();
   }
 
