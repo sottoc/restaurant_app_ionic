@@ -77,6 +77,8 @@ export class LoginPage implements OnInit {
         if (response.code == 200) {
           let profile = response.data[0];
           profile.favorites = response.favorites;
+          profile.followers = response.followers[0].count;
+          profile.followings = response.followings[0].count;
           await this.storage.set("user_profile", JSON.stringify(profile));
           if (this.remebered == true) {
             await this.storage.set("login_info", JSON.stringify({ email: email, password: password}));

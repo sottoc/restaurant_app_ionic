@@ -152,10 +152,11 @@ export class StartPage implements OnInit {
   async login(params) {
     try {
         const response : any = await this.restApi.userLogin(params);
-        console.log(response);
         if (response.code == 200) {
           let profile = response.data[0];
           profile.favorites = response.favorites;
+          profile.followers = response.followers[0].count;
+          profile.followings = response.followings[0].count;
           await this.storage.set("user_profile", JSON.stringify(profile));
           this.loading.dismiss();
           this.navCtrl.navigateBack('/loginsplash');

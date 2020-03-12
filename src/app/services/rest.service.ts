@@ -112,6 +112,26 @@ export class RestService {
     return this.handleRequest(0, url, {});
   }
 
+  getFriends(params) {
+    const url = `${this.api_url}/api/get_friends`;
+    return this.handleRequest(1, url, params);
+  }
+
+  searchPeople(params) {
+    const url = `${this.api_url}/api/search_people`;
+    return this.handleRequest(1, url, params);
+  }
+
+  addFriend(params) {
+    const url = `${this.api_url}/api/add_friend`;
+    return this.handleRequest(1, url, params);
+  }
+
+  getFollows(user_id) {
+    const url = `${this.api_url}/api/get_follows/${user_id}`;
+    return this.handleRequest(0, url, {});
+  }
+
   handleRequest(method, url, params) {
     return new Promise(async (resolve, reject) => {
       try {

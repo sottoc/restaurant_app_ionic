@@ -13,13 +13,15 @@ import { LoadingController, ToastController, NavController } from '@ionic/angula
 export class FavoritePage implements OnInit {
   api_url = environment.api_url
   lang : string
+  loading : boolean = false
   logo_url : any
   name: string
   profile: any
   favorite_restaurants : any = []
   favorite_dishes : any = []
   selected_dishes : boolean = false
-  loading : boolean = false
+  followers = 0
+  followings = 0
   constructor(
     private translate: TranslateService,
     private storage: Storage,
@@ -35,11 +37,22 @@ export class FavoritePage implements OnInit {
       this.logo_url = profile.logo_url ? this.api_url + profile.logo_url : null;
       this.name = profile.name;
       this.loading = true;
+      this.getFollows();
       this.getFavorites(1);
     });
   }
 
   ngOnInit() {
+  }
+
+  async getFollows() {
+    try {
+      let res: any = await this.restApi.getFollows(this.profile.id);
+      this.followers = res.followers[0].count;
+      this.followings = res.followings[0].count;
+    } catch(err) {
+      console.log(err);
+    }
   }
 
   async presentToast(text) {

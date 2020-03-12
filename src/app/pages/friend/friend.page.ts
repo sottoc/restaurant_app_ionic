@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
+import { Storage } from '@ionic/storage';
+import { environment } from '../../../environments/environment';
+import { RestService } from '../../services/rest.service';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-friend',
@@ -9,115 +13,104 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class FriendPage implements OnInit {
   lang : string
-  name : string = "محمد أحمد"
-  bio : string = "لاعب كرة سلة و كاتب , أحب السفرعاشق الهلال"
-  city : string = "المدينة المنورة"
+  api_url = environment.api_url
+  loading : boolean = false
+  logged_id : any
+  name : string
+  bio : string
+  city : string
   user_id : any
-  is_followed : boolean = true
+  is_followed : boolean = false
   logo_url : string
   favorite_restaurants : any = []
   favorite_dishes : any = []
   selected_dishes : boolean = false
+  followers = 0
+  followings = 0
   constructor(
     private translate: TranslateService,
     private route: ActivatedRoute,
+    public restApi: RestService,
+    private loadingController: LoadingController,
   ) { 
     this.lang = this.translate.currentLang;
     this.route.queryParams.subscribe((params: any) => {
+      this.logged_id = params.logged_id;
       this.user_id = params.user_id;
-      this.is_followed = params.is_followed;
+      this.name = params.name;
+      this.city = params.city;
+      this.bio = params.bio;
+      this.is_followed = params.is_friend;
       this.logo_url = params.logo_url;
+      this.getFollows();
+      this.is_followed ? this.getFavorites(1) : null;
     });
-    this.favorite_restaurants = [
-      {
-        id: 1,
-        name: 'ResName',
-        logo_url: 'https://png.pngtree.com/png-clipart/20190515/original/pngtree-simple-coffee-elemental-design-png-image_3597680.jpg',
-        cover_img_url: 'http://ec2-54-211-162-185.compute-1.amazonaws.com:8000/storage/restaurants/ZY-Photo-2018-09-23-00000030%20(Copy).JPG_1547864374.jpeg',
-        favorite_checked: true,
-        distance: 5,
-        category_name: "Cate"
-      },
-      {
-        id: 2,
-        name: 'Name',
-        logo_url: '',
-        cover_img_url: 'http://ec2-54-211-162-185.compute-1.amazonaws.com:8000/storage/restaurants/unnamed.jpg_1547870811.jpeg',
-        favorite_checked: true,
-        distance: 2,
-        category_name: "Cate"
-      },
-      {
-        id: 3,
-        name: 'Res_name',
-        logo_url: '',
-        cover_img_url: 'http://ec2-54-211-162-185.compute-1.amazonaws.com:8000/storage/restaurants/rst_911429.jpg_1547870543.jpeg',
-        favorite_checked: true,
-        distance: 23,
-        category_name: "Cate"
-      },
-      {
-        id: 4,
-        name: 'Name',
-        logo_url: 'https://png.pngtree.com/png-clipart/20190515/original/pngtree-simple-coffee-elemental-design-png-image_3597680.jpg',
-        cover_img_url: 'http://ec2-54-211-162-185.compute-1.amazonaws.com:8000/storage/restaurants/CMTHYqDUcAAa8yB.jpg_1547869818.jpeg',
-        favorite_checked: true,
-        distance: 23,
-        category_name: "Cate"
-      },
-      {
-        id: 5,
-        name: 'Name',
-        logo_url: '',
-        cover_img_url: 'http://ec2-54-211-162-185.compute-1.amazonaws.com:8000/storage/restaurants/ZY-Photo-2018-09-23-00000030%20(Copy).JPG_1547864374.jpeg',
-        favorite_checked: true,
-        distance: 3,
-        category_name: "Cate"
-      }
-    ]
-
-    this.favorite_dishes = [
-      {
-        dish_id: 1,
-        dish_img_url: 'http://ec2-54-211-162-185.compute-1.amazonaws.com:8000/storage/restaurants/CMTHYqDUcAAa8yB.jpg_1547869818.jpeg',
-        favorite_checked: true,
-        name: 'yyyyyy',
-        category_name: 'uuuuuuu',
-      },
-      {
-        dish_id: 2,
-        dish_img_url: 'http://ec2-54-211-162-185.compute-1.amazonaws.com:8000/storage/restaurants/CMTHYqDUcAAa8yB.jpg_1547869818.jpeg',
-        favorite_checked: true,
-        name: 'ssssss',
-        category_name: 'yyyyyyyyy',
-      },
-      {
-        dish_id: 3,
-        dish_img_url: 'http://ec2-54-211-162-185.compute-1.amazonaws.com:8000/storage/restaurants/CMTHYqDUcAAa8yB.jpg_1547869818.jpeg',
-        favorite_checked: true,
-        name: 'gggggg',
-        category_name: 'uuuuuuu',
-      }
-    ]
   }
 
   ngOnInit() {
   }
 
-  switchDishRest(field) {
-    if (field == 'dish') {
-      this.selected_dishes = true;
-    } else {
-      this.selected_dishes = false;
+  async getFollows() {
+    try {
+      let res: any = await this.restApi.getFollows(this.user_id);
+      this.followers = res.followers[0].count;
+      this.followings = res.followings[0].count;
+    } catch(err) {
+      console.log(err);
     }
   }
 
-  setFavorite(id) {
-    console.log(id);
+  async makeFriend() {
+    const loading = await this.loadingController.create({
+        message: 'Following...',
+    });
+    await loading.present();
+    let res: any = await this.restApi.addFriend({
+      user_id: this.logged_id,
+      friend_id: this.user_id
+    });
+    if (res.code == 200) {
+      this.is_followed = true;
+      this.getFavorites(1);
+    }
+    loading.dismiss();
   }
 
-  makeFriend() {
-    this.is_followed = true;
+  async getFavorites(type) {
+    try {
+      this.loading = true;
+      let res: any = await this.restApi.getFavorites(this.user_id, type);
+      let favorites_data = res.data;
+      favorites_data.forEach(element => {
+        if (type == 1) {
+          element.image_url = element.image_url ? this.api_url + element.image_url : '../../../assets/imgs/empty.png';
+          element.category_name = element.category_name ? element.category_name : '';
+        } else {
+          element.image_url = element.image_url ? this.api_url + element.image_url : '../../../assets/imgs/logo-black.png';
+        }
+        element.logo_url = element.logo_url ? this.api_url + element.logo_url : '../../../assets/imgs/logo-black.png';
+        element.favorite_checked = true;
+        element.distance = 5;
+      });
+      if (type == 1) {
+        this.favorite_restaurants = favorites_data;
+      } else {
+        this.favorite_dishes = favorites_data;
+      }
+      this.loading = false;
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
+  switchDishRest(field) {
+    if (field == 'dish') {
+      this.selected_dishes = true;
+      this.getFavorites(2);
+    } else {
+      this.selected_dishes = false;
+      this.getFavorites(1);
+    }
   }
 
 }

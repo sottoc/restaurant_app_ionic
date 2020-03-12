@@ -1,14 +1,14 @@
-<app-header title="{{'friend' | translate}}" back_link="/friends" style="background-color: #3c426d; padding:10px 10px"></app-header>
+<app-header title="{{'friend' | translate}}" back_link="/friends" style="background-color: #3c426d; padding:10px 10px 0px 10px"></app-header>
 <div style="width: 100%; background: #3c426d;">
   <ion-grid class="ion-padding">
     <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'">
       <ion-row>
-        <ion-col size="5">
-          <div style="margin: auto; width: 80px; height: 80px; border: 1px solid #f68625; border-radius: 50%;">
-            <img [src]="logo_url" style="border-radius: 50%;">
+        <ion-col size="6" class="ion-text-center">
+          <div style="margin: auto;">
+            <img [src]="logo_url" width="80px" height="80px" style="border-radius: 50%; border: 1px solid #f68625;">
           </div>
         </ion-col>
-        <ion-col size="7" style="font-size: 15px; color: white; margin-top: 10px;">
+        <ion-col size="6" style="font-size: 15px; color: white; margin-top: 10px;">
           <div style="color: #f68625; font-weight: bold;">
             <span> {{name}} </span>
           </div>
@@ -21,14 +21,14 @@
         </ion-col>
       </ion-row>
     </div>
-    <div style="text-align: center; margin-top:15px;">
+    <div *ngIf="is_followed" style="text-align: center; margin-top:15px;">
         <ion-button color="light" size="small" class="white-btn" shape="round" style="height: 23px;">
           <span class="follow-text">{{'followers' | translate}} </span>
-          <span class="follow-text" style="margin-left: 4px;"> 236 </span>
+          <span class="follow-text" style="margin-left: 4px;"> {{followers}} </span>
         </ion-button>
         <ion-button color="light" size="small" class="white-btn" shape="round" style="height: 23px;">
           <span class="follow-text">{{'following' | translate}} </span>
-          <span class="follow-text" style="margin-left: 4px;"> 40 </span>
+          <span class="follow-text" style="margin-left: 4px;"> {{followings}} </span>
         </ion-button>
     </div>
     <div *ngIf="!is_followed" style="text-align: center; margin-top:5px;">
@@ -50,8 +50,11 @@
   </div>
 </div>
 <ion-content>
-  <ion-grid style="padding-bottom: 50px;" class="ion-padding" *ngIf="is_followed">
-    <div *ngIf="!selected_dishes">
+  <ion-grid *ngIf="is_followed" style="padding-bottom: 50px;" class="ion-padding" >
+    <div *ngIf="!selected_dishes && !loading">
+      <div *ngIf="!favorite_restaurants.length" class="ion-text-center no-content-label">
+        No favorite restaurants
+      </div>
       <ion-row *ngFor="let restaurant of favorite_restaurants">
         <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" class="list-div">
             <ion-row style="width: 100%;">
@@ -67,7 +70,7 @@
               <ion-col size="2" class="ion-text-center">
                 <div style="padding-top: 10px;">
                   <img [src]="restaurant.favorite_checked ? '../../../assets/imgs/heart_red.png' : '../../../assets/imgs/heart_white.png'" 
-                    width="26px" height="26px" (click)="setFavorite(restaurant.id)">
+                    width="26px" height="26px">
                 </div>
                 <div class="list-distance-text">
                   <span> {{restaurant.distance}} </span>
@@ -75,14 +78,17 @@
                 </div>
               </ion-col>
               <ion-col size="3">
-                <img [src]="restaurant.logo_url ? restaurant.logo_url : '../../../assets/imgs/splash.png'" width="65px" height="65px" class="list-logo-img">
+                <img [src]="restaurant.logo_url" width="65px" height="65px" class="list-logo-img">
               </ion-col>
             </ion-row>
         </div>
       </ion-row>
     </div>
 
-    <div *ngIf="selected_dishes">
+    <div *ngIf="selected_dishes && !loading">
+      <div *ngIf="!favorite_dishes.length" class="ion-text-center no-content-label">
+        No favorite dishes
+      </div>
       <ion-row *ngFor="let dish of favorite_dishes">
         <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" class="list-div">
             <ion-row style="width: 100%;">
@@ -102,7 +108,7 @@
                 </div>
               </ion-col>
               <ion-col size="3">
-                <img [src]="dish.dish_img_url ? dish.dish_img_url : '../../../assets/imgs/splash.png'" width="65px" height="65px" class="list-logo-img">
+                <img [src]="dish.image_url" width="65px" height="65px" class="list-logo-img">
               </ion-col>
             </ion-row>
         </div>
@@ -110,4 +116,9 @@
     </div>
   </ion-grid>
 </ion-content>
+
+<div class="spin" *ngIf="loading">
+  <ion-spinner name="bubbles"></ion-spinner>
+</div>
+
 <app-footer active_page="profile_page"></app-footer>

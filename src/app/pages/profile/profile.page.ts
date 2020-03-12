@@ -21,6 +21,8 @@ export class ProfilePage implements OnInit {
   city_name: string
   logo_url : any
   options : any
+  followers = 0
+  followings = 0
   constructor(
     private translate: TranslateService,
     private storage: Storage,
@@ -38,6 +40,7 @@ export class ProfilePage implements OnInit {
       this.bio = profile.bio;
       this.city = profile.city;
       this.city_name = profile.city_name;
+      this.getFollows();
       if (this.city_name) {
         this.refresh();
       } else {
@@ -47,6 +50,16 @@ export class ProfilePage implements OnInit {
   }
 
   ngOnInit() {    
+  }
+
+  async getFollows() {
+    try {
+      let res: any = await this.restApi.getFollows(this.profile.id);
+      this.followers = res.followers[0].count;
+      this.followings = res.followings[0].count;
+    } catch(err) {
+      console.log(err);
+    }
   }
 
   async getCityName() {
