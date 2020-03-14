@@ -33,7 +33,8 @@ export class DishModalComponent implements OnInit {
     this.storage.get('user_profile').then(profile =>{
       profile = JSON.parse(profile);
       this.profile = profile;
-      this.restaurant_id = parseInt(profile.restaurant_id);
+      this.restaurant_id = navParams.get('restaurant_id');
+      console.log(this.restaurant_id);
       this.initial_dish_id = navParams.get('dish_id');
       this.getMenus();
     });
@@ -87,7 +88,6 @@ export class DishModalComponent implements OnInit {
   slideDidChange() {
     this.dish_slides.getActiveIndex().then((index) => {
       this.active_dish = this.dishes.filter(dish => dish.index == index)[0];
-      console.log(this.active_dish);
     });
     
   }

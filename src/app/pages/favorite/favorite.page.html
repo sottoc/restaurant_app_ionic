@@ -76,7 +76,7 @@
       <ion-row *ngFor="let dish of favorite_dishes">
         <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" class="list-div">
             <ion-row style="width: 100%;">
-              <ion-col size="7" (click)="visitDish(dish.id, dish.name, dish.price, dish.image_url, dish.detail, dish.favorite_checked)">
+              <ion-col size="7" (click)="visitDish(dish.id, dish.name, dish.price, dish.image_url, dish.detail, dish.favorite_checked, dish.restaurant_id)">
                 <div style="padding-top: 12px;">
                   <div> <span class="list-rest-name-text"> {{dish.name}} </span></div>
                   <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" class="list-cate-name-text"> 

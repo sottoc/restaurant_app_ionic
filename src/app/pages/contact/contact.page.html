@@ -2,7 +2,7 @@
 <div style="background-color: #f5f6f6;">
   <ion-row>
     <ion-col class="ion-align-self-center ion-text-center">
-      <ion-button color="primary" size="small" shape="round">
+      <ion-button color="primary" size="small" shape="round" (click)="callNow()">
         <span> {{'contact_us_through' | translate}} </span>
       </ion-button>
     </ion-col>
@@ -53,7 +53,7 @@
             <span> {{'white_your_message_here' | translate}} </span>
           </ion-row>
           <ion-row>
-            <ion-textarea type="number" ngModel required color="primary" value="" name="opinion" style="background: white; border:1px solid rgba(60, 67, 109, 0.5);"></ion-textarea>
+            <ion-textarea type="number" ngModel required color="primary" value="" name="message" style="background: white; border:1px solid rgba(60, 67, 109, 0.5);"></ion-textarea>
           </ion-row>
         </div>
         <div style="padding: 5px;" [dir]="lang == 'en' ? 'rtl' : 'ltr'">

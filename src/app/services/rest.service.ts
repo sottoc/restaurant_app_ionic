@@ -132,6 +132,16 @@ export class RestService {
     return this.handleRequest(0, url, {});
   }
 
+  postDishOpinion(params) {
+    const url = `${this.api_url}/api/dish_opinion`;
+    return this.handleRequest(1, url, params);
+  }
+
+  postContact(params) {
+    const url = `${this.api_url}/api/user_contact`;
+    return this.handleRequest(1, url, params);
+  }
+
   handleRequest(method, url, params) {
     return new Promise(async (resolve, reject) => {
       try {

@@ -29,6 +29,8 @@ import { Facebook } from '@ionic-native/facebook/ngx';
 
 import { NativePageTransitions } from '@ionic-native/native-page-transitions/ngx';
 
+import { CallNumber } from '@ionic-native/call-number/ngx';
+
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -62,7 +64,8 @@ export function createTranslateLoader(http: HttpClient) {
     QRScanner,
     GooglePlus,
     Facebook,
-    NativePageTransitions
+    NativePageTransitions,
+    CallNumber
   ],
   bootstrap: [AppComponent]
 })

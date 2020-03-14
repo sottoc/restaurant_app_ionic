@@ -183,6 +183,7 @@ export class RestaurantPage implements OnInit {
         image_url: image_url,
         detail: detail,
         favorite_checked: favorite_checked,
+        restaurant_id: this.restaurant_id,
         back_params: this.params
       }
     });
@@ -225,7 +226,5 @@ export class RestaurantPage implements OnInit {
     }
     loading.dismiss();
   }
-
-
-
+  
 }

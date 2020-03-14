@@ -18,7 +18,8 @@ export class DishPage implements OnInit {
   dish_name: string
   dish_price: any
   dish_favorite_checked: boolean = true
-  dish_detail: string 
+  dish_detail: string
+  restaurant_id: any 
   back_params : any = {}
   profile: any
   constructor(
@@ -39,6 +40,7 @@ export class DishPage implements OnInit {
      this.dish_price = params.price;
      this.dish_detail = params.detail != 'null' ? params.detail : '';
      this.dish_favorite_checked = params.favorite_checked;
+     this.restaurant_id = params.restaurant_id;
     });
 
     this.storage.get('user_profile').then(profile =>{
@@ -62,7 +64,7 @@ export class DishPage implements OnInit {
   async openDishModal() {
     let modal = await this.modalCtrl.create({
       component: DishModalComponent,
-      componentProps: { dish_id: this.dish_id },
+      componentProps: { dish_id: this.dish_id, restaurant_id: this.restaurant_id },
       cssClass: 'dish-modal',
       backdropDismiss:false,
     });
@@ -76,8 +78,17 @@ export class DishPage implements OnInit {
   async sendOpinion(form) {
     try {
       const { opinion } = form.control.value;
-      console.log(opinion);
-
+      const params = {
+        user_id: this.profile.id,
+        dish_id: this.dish_id,
+        opinion: opinion
+      }
+      const res : any = await this.restApi.postDishOpinion(params);
+      if (res.code == 200) {
+        this.presentToast(String(res.result) == '1' ? 'Updated successfully' : 'Posted successfully');
+      } else {
+        this.presentToast('Failed');
+      }
     } catch (err) {
       console.error("ERROR", err)
     }

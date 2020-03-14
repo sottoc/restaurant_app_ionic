@@ -20,6 +20,7 @@
     "@angular/platform-browser": "~8.1.2",
     "@angular/platform-browser-dynamic": "~8.1.2",
     "@angular/router": "~8.1.2",
+    "@ionic-native/call-number": "^5.22.0",
     "@ionic-native/camera": "^5.18.1-beta.5",
     "@ionic-native/core": "^5.0.0",
     "@ionic-native/facebook": "^5.21.5",
@@ -36,6 +37,7 @@
     "@ionic/storage": "^2.2.0",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
+    "call-number": "^1.0.1",
     "com.telerik.plugins.nativepagetransitions": "^0.6.5",
     "cordova-android": "8.1.0",
     "cordova-ios": "5.1.1",
@@ -120,7 +122,8 @@
         "FACEBOOK_ANDROID_SDK_VERSION": "5.13.0"
       },
       "cordova-plugin-add-swift-support": {},
-      "com.telerik.plugins.nativepagetransitions": {}
+      "com.telerik.plugins.nativepagetransitions": {},
+      "mx.ferreyra.callnumber": {}
     },
     "platforms": [
       "ios",

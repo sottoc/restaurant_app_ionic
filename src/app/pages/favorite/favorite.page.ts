@@ -146,13 +146,6 @@ export class FavoritePage implements OnInit {
   }
 
   async visitRestaurant(id, image_url, logo_url, name, category_name, favorite_checked) {
-    // let options : NativeTransitionOptions = {
-    //   direction: 'left',
-    //   duration: 400,
-    //   slowdownfactor: -1,
-    //   iosdelay: 50
-    // }
-    // this.nativePageTransitions.slide(options);
     this.profile.restaurant_id = id;
     await this.storage.set("user_profile", JSON.stringify(this.profile));
     this.navCtrl.navigateBack('/restaurant', { queryParams: 
@@ -168,7 +161,7 @@ export class FavoritePage implements OnInit {
     });
   }
 
-  visitDish(id, name, price, image_url, detail, favorite_checked) {
+  visitDish(id, name, price, image_url, detail, favorite_checked, restaurant_id) {
     this.navCtrl.navigateBack('/dish', { queryParams: 
       {
         id: id,
@@ -177,6 +170,7 @@ export class FavoritePage implements OnInit {
         image_url: image_url,
         detail: detail,
         favorite_checked: favorite_checked,
+        restaurant_id: restaurant_id,
         back_params: null
       }
     });
