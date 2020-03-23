@@ -106,6 +106,7 @@ export class RestaurantPage implements OnInit {
         let dish = menu.items[i];
         dish.favorite_checked = this.profile.favorites.filter(item => item.relative_id == dish.id && item.type == 2).length > 0 ? true : false;
         dish.image_url = dish.image_url ? this.api_url + dish.image_url : '../../../assets/imgs/logo-black.png';
+        dish.price = dish.price % 100 == 0 ? dish.price / 100 : (dish.price / 100).toFixed(2);
         this.dishes.push(dish);
       }
     });

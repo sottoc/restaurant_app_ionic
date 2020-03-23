@@ -92,15 +92,16 @@
       <ion-row *ngFor="let dish of favorite_dishes">
         <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" class="list-div">
             <ion-row style="width: 100%;">
-              <ion-col size="5">
+              <ion-col size="7">
                 <div style="padding-top: 15px;">
                   <div> <span class="list-rest-name-text"> {{dish.name}} </span></div>
-                  <div> <span class="list-cate-name-text"> {{dish.category_name}} </span></div>
+                  <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" class="list-cate-name-text"> 
+                    <span> {{dish.price}} </span>
+                    <span> {{'SAR' | translate}} </span>
+                  </div>
                 </div>
               </ion-col>
-              <ion-col size="2">
-                
-              </ion-col>
+              
               <ion-col size="2" class="ion-text-center">
                 <div style="padding-top: 10px;">
                   <img [src]="dish.favorite_checked ? '../../../assets/imgs/heart_red.png' : '../../../assets/imgs/heart_white.png'" 

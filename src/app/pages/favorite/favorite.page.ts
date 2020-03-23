@@ -74,6 +74,7 @@ export class FavoritePage implements OnInit {
           element.category_name = element.category_name ? element.category_name : '';
         } else {
           element.image_url = element.image_url ? this.api_url + element.image_url : '../../../assets/imgs/logo-black.png';
+          element.price = element.price % 100 == 0 ? element.price / 100 : (element.price / 100).toFixed(2);
         }
         element.logo_url = element.logo_url ? this.api_url + element.logo_url : '../../../assets/imgs/logo-black.png';
         element.favorite_checked = true;
