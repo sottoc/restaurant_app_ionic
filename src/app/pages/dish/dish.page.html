@@ -3,8 +3,8 @@
   <div class="cover-div">
     <img [src]="image_url" width="100%" height="100%" class="cover-img" (click)="openDishModal()">
     <img [src]="'../../../assets/imgs/logo_menu.png'" width="80px" height="36px" class="logo-img">
-    <img [src]="dish_favorite_checked ? '../../../assets/imgs/heart_red.png' : '../../../assets/imgs/heart_white.png'" width="35px" height="35px" 
-      (click)="updateFavorite(dish_favorite_checked, dish_id, 2)" class="favorite-icon">
+    <!-- <img [src]="dish_favorite_checked ? '../../../assets/imgs/heart_red.png' : '../../../assets/imgs/heart_white.png'" width="35px" height="35px" 
+      (click)="updateFavorite(dish_favorite_checked, dish_id, 2)" class="favorite-icon"> -->
   </div>
   <div class="bottom-div">
     <ion-row style="font-size: 18px;">
@@ -31,7 +31,7 @@
     </ion-row>
   </div>
 
-  <ion-grid>
+  <!-- <ion-grid>
     <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" style="margin-top: 10px;" class="bold-opacity-title">
       <form #form="ngForm" (ngSubmit)="sendOpinion(form)">
         <div style="padding: 8px; font-size: 12px;">
@@ -49,7 +49,7 @@
         </div>
       </form>
     </div>
-  </ion-grid>
+  </ion-grid> -->
   
 </ion-content>
 

@@ -26,15 +26,15 @@
               <span class="cate-name-text"> {{restaurant.category_name}} </span>
             </div>
             <img [src]="restaurant.logo_url" width="40px" height="40px" class="logo-img">
-            <img [src]="restaurant.favorite_checked ? '../../../assets/imgs/heart_red.png' : '../../../assets/imgs/heart_white.png'" 
-              width="30px" height="30px" (click)="updateFavorite(restaurant.favorite_checked, restaurant.id, 1)" class="heart-img">
+            <!-- <img [src]="restaurant.favorite_checked ? '../../../assets/imgs/heart_red.png' : '../../../assets/imgs/heart_white.png'" 
+              width="30px" height="30px" (click)="updateFavorite(restaurant.favorite_checked, restaurant.id, 1)" class="heart-img"> -->
             <div class="bottom-div">
               <ion-row>
                 <ion-col size="5">
                   <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'">
-                    <ion-icon name="pin"></ion-icon>
+                    <!-- <ion-icon name="pin"></ion-icon>
                     <span> {{restaurant.distance}} </span>
-                    <span> {{'km' | translate}} </span>
+                    <span> {{'km' | translate}} </span> -->
                   </div>
                 </ion-col>
               </ion-row>
@@ -59,12 +59,12 @@
               </ion-col>
               <ion-col size="2" class="ion-text-center">
                 <div style="padding-top: 10px;">
-                  <img [src]="restaurant.favorite_checked ? '../../../assets/imgs/heart_red.png' : '../../../assets/imgs/heart_white.png'" 
-                    width="26px" height="26px" (click)="updateFavorite(restaurant.favorite_checked, restaurant.id, 1)">
+                  <!-- <img [src]="restaurant.favorite_checked ? '../../../assets/imgs/heart_red.png' : '../../../assets/imgs/heart_white.png'" 
+                    width="26px" height="26px" (click)="updateFavorite(restaurant.favorite_checked, restaurant.id, 1)"> -->
                 </div>
                 <div class="list-distance-text">
-                  <span> {{restaurant.distance}} </span>
-                  <span> {{'km' | translate}} </span>
+                  <!-- <span> {{restaurant.distance}} </span>
+                  <span> {{'km' | translate}} </span> -->
                 </div>
               </ion-col>
               <ion-col size="3">

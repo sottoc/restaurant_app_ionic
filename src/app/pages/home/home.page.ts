@@ -20,8 +20,28 @@ export class HomePage implements OnInit {
   display_grid_state : boolean = true
   loading: boolean = false
   selected_category_ids: any = []
-  city : any
-  profile : any
+  // profile: any
+  // city: any
+  profile : any = {
+    "id": 5,
+    "email": "test@test.com",
+    "username": "gus_programmer",
+    "password": "e10adc3949ba59abbe56e057f20f883e",
+    "city": "10",
+    "name": "Gus Developer",
+    "bio": "iOS/Android programmer",
+    "logo_url": "/storage/user_logo/1584585087201.jpg_1584585089.jpeg",
+    "country_code": "663",
+    "phone_number": "564976312",
+    "phone_verified": 0,
+    "status": 1,
+    "created_at": null,
+    "updated_at": null,
+    "followers": 0,
+    "followings": 0,
+    "favorites":[]
+  }
+  city : any = "10"
   @ViewChild('searchInput', {static: false}) searchInput: IonSearchbar;
   constructor(
     private translate: TranslateService,
@@ -36,12 +56,13 @@ export class HomePage implements OnInit {
   ) {
     this.lang = this.translate.currentLang;
     this.loading = true;
-    this.storage.get('user_profile').then(profile =>{
-      profile = JSON.parse(profile);
-      this.profile = profile;
-      this.city = profile.city;
-      this.getRestaurants();
-    });
+    // this.storage.get('user_profile').then(profile =>{
+    //   profile = JSON.parse(profile);
+    //   this.profile = profile;
+    //   this.city = profile.city;
+    //   this.getRestaurants();
+    // });
+    this.init();
   }
 
   ngOnInit() {
@@ -54,6 +75,17 @@ export class HomePage implements OnInit {
         duration: 2000
     });
     toast.present();
+  }
+
+  async init() {
+    await this.storage.set("user_profile", JSON.stringify(this.profile));
+    let res: any = await this.restApi.getCategories(this.city);
+    let categories = res.data;
+    categories.forEach(element => {
+      element.isChecked = true;
+    });
+    await this.storage.set("categories", JSON.stringify(categories));
+    this.getRestaurants();
   }
 
   async getRestaurants() {

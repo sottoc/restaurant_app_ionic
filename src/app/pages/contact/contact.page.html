@@ -2,22 +2,22 @@
 <div style="background-color: #f5f6f6;">
   <ion-row>
     <ion-col class="ion-align-self-center ion-text-center">
-      <ion-button color="primary" size="small" shape="round" (click)="callNow()">
+      <ion-button color="primary" size="small" shape="round">
         <span> {{'contact_us_through' | translate}} </span>
       </ion-button>
     </ion-col>
   </ion-row>
   <div class="bold-opacity-title">
     <ion-row>
-      <ion-col class="ion-align-self-center ion-text-center">
+      <!-- <ion-col class="ion-align-self-center ion-text-center">
         <ion-icon name="call"></ion-icon>
         <span> 0570786888 </span>
-      </ion-col>
+      </ion-col> -->
     </ion-row>
     <ion-row>
       <ion-col class="ion-align-self-center ion-text-center" style="color: #3c426d;">
         <ion-icon name="mail"></ion-icon>
-        <span> cmenu@cmenu.com </span>
+        <span> cmenu@cmenu.cc </span>
       </ion-col>
     </ion-row>
   </div>
@@ -26,7 +26,7 @@
 <ion-content>
   <ion-grid>
     <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" style="margin-top: 20px;" class="bold-opacity-title">
-      <form #form="ngForm" (ngSubmit)="sendOpinion(form)">
+      <!-- <form #form="ngForm" (ngSubmit)="sendOpinion(form)">
         <ion-row>
           <ion-col class="ion-align-self-center ion-text-center">
             <span style="font-size: 17px; text-decoration: underline;"> {{'or_leave_your_message' | translate}} </span>
@@ -61,7 +61,7 @@
             <ion-button type="submit" color="primary" shape="round" [disabled]="form.invalid" style="width: 45%; height:30px;">{{'send' | translate}}</ion-button>
           </ion-row>
         </div>
-      </form>
+      </form> -->
     </div>
   </ion-grid>
 </ion-content>

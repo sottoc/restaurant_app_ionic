@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, ModalController } from '@ionic/angular';
+import { QrcodeModalComponent } from '../qrcode-modal/qrcode-modal.component';
 
 @Component({
   selector: 'app-footer',
@@ -9,7 +10,8 @@ import { NavController } from '@ionic/angular';
 export class FooterComponent implements OnInit {
   @Input() active_page: string;
   constructor(
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private modalCtrl: ModalController
   ) { }
 
   ngOnInit() {}
@@ -22,6 +24,20 @@ export class FooterComponent implements OnInit {
   goToOffers() {
     this.active_page = "offers_page";
     this.navCtrl.navigateBack("/offers");
+  }
+
+  async openQRModal() {
+    let modal = await this.modalCtrl.create({
+      component: QrcodeModalComponent,
+      componentProps: { },
+      cssClass: 'dish-modal',
+      backdropDismiss:false,
+    });
+    modal.onDidDismiss().then(data => {
+      // let dish = data.data;
+      // this.updateDish(dish.id, dish.name, dish.price, dish.image_url, dish.detail, dish.favorite_checked);
+    });
+    return await modal.present();
   }
 
   goToQRScan() {
