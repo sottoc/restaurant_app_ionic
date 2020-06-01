@@ -18,7 +18,9 @@ export class HeaderComponent implements OnInit {
   }
 
   goBack() {
-    if (this.back_link == '/home' && this.params == 'favorite') {
+    if (this.back_link == '/start') {
+      this.navCtrl.navigateBack('/home');
+    } else if (this.back_link == '/home' && this.params == 'favorite') {
       this.navCtrl.navigateBack('/favorite');
     } else if (this.back_link == '/restaurant' && JSON.parse(this.params) == null) {
       this.navCtrl.navigateBack('/favorite');
