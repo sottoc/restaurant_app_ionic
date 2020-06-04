@@ -7,7 +7,6 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { FilterModalComponent } from './filter-modal/filter-modal.component';
 import { DishModalComponent } from './dish-modal/dish-modal.component';
-// import { QrcodeModalComponent } from './qrcode-modal/qrcode-modal.component';
 
 const components = [
 	HeaderComponent,
