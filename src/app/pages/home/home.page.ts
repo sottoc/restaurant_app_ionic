@@ -95,7 +95,7 @@ export class HomePage implements OnInit {
       this.tempRestaurant = this.tempRestaurant.filter(item => item.is_open == 1);
       this.tempRestaurant.forEach(element => {
         element.image_url = element.image_url ? this.api_url + element.image_url : '../../../assets/imgs/empty.png';
-        element.logo_url = element.logo_url ? this.api_url + element.logo_url : '../../../assets/imgs/logo-black.png';
+        element.logo_url = element.logo_url ? this.api_url + element.logo_url : '../../../assets/imgs/logo.png';
         element.favorite_checked = this.profile.favorites.filter(item => item.relative_id == element.id && item.type == 1).length > 0 ? true : false;
         element.distance = 12,
         element.category_name = element.categories.length > 0 ? element.categories[0].name : '';

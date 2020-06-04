@@ -61,6 +61,7 @@ export class QrcodePage implements OnInit {
   }
 
   qrScan() {
+    document.getElementById('qrscan_title').style.display = "none";
     this.qrScanner.prepare()
       .then((status: QRScannerStatus) => {
         if (status.authorized) { // camera permission was granted

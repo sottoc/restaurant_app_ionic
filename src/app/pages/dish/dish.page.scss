@@ -1,7 +1,8 @@
 .cover-div {
     position: relative;
-    background: #c5c5c5;
-    height: 230px;
+    // background: #c5c5c5;
+    // height: 300px;
+    width: 100% !important;
 }
 
 .logo-img {
@@ -18,7 +19,37 @@
 }
 
 .bottom-div {
-    background: white;
     color: #3c426d;
     padding: 2px;
+}
+
+// ion-slides {
+// 	height: 100% !important;
+
+// 	ion-slide { 
+// 		align-items: start;
+// 		text-align: center;
+
+// 		// .slide-content {
+// 		// 	padding: 30px 10%;
+
+// 		// 	.image-wrap {
+// 		// 		width: 80%;
+// 		// 		margin: 0 auto;
+
+// 		// 		img {
+// 		// 			width: 100%;
+// 		// 		}
+// 		// 	}
+
+// 		// 	.text p {
+// 		// 		margin-top: 0;
+// 		// 		margin-bottom: 10px;
+// 		// 	}
+// 		// }
+// 	}
+// }
+
+.swiper-slide img {
+    height: 250px !important;
 }

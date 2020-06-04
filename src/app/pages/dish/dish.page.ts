@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController, ModalController, LoadingController, ToastController } from '@ionic/angular';
+import { IonSlides, NavController, ModalController, LoadingController, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { RestService } from '../../services/rest.service';
-import { DishModalComponent } from '../../components/dish-modal/dish-modal.component';
+// import { DishModalComponent } from '../../components/dish-modal/dish-modal.component';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-dish',
@@ -13,6 +14,8 @@ import { DishModalComponent } from '../../components/dish-modal/dish-modal.compo
 })
 export class DishPage implements OnInit {
   lang : string
+  loading : boolean = false
+  api_url = environment.api_url
   dish_id: any
   image_url: string
   dish_name: string
@@ -22,6 +25,13 @@ export class DishPage implements OnInit {
   restaurant_id: any 
   back_params : any = {}
   profile: any
+
+  menus : any = []
+  dishes : any = []
+  slideOpts : any;
+  initial_dish_id : any;
+  active_dish: any;
+  @ViewChild('dish_slides', { static: false }) dish_slides: IonSlides;
   constructor(
     private translate: TranslateService,
     private route: ActivatedRoute,
@@ -46,6 +56,8 @@ export class DishPage implements OnInit {
     this.storage.get('user_profile').then(profile =>{
       profile = JSON.parse(profile);
       this.profile = profile;
+      this.initial_dish_id = this.dish_id;
+      this.getMenus();
     });
   }
 
@@ -61,19 +73,68 @@ export class DishPage implements OnInit {
     toast.present();
   }
 
-  async openDishModal() {
-    let modal = await this.modalCtrl.create({
-      component: DishModalComponent,
-      componentProps: { dish_id: this.dish_id, restaurant_id: this.restaurant_id },
-      cssClass: 'dish-modal',
-      backdropDismiss:false,
-    });
-    modal.onDidDismiss().then(data => {
-      let dish = data.data;
-      this.updateDish(dish.id, dish.name, dish.price, dish.image_url, dish.detail, dish.favorite_checked);
-    });
-    return await modal.present();
+  async getMenus() {
+    try {
+      this.loading = true;
+      let res: any = await this.restApi.getMenus(this.restaurant_id);
+      this.menus = res.data;
+      this.menus.sort((a, b) => {
+        if (a.id > b.id) return 1;
+        if (b.id > a.id) return -1;
+      });
+      if (this.menus && this.menus.length) {
+        this.getDishes();
+      } else {
+        this.loading = false;
+      }
+    } catch(err) {
+      this.loading = false;
+      console.log(err);
+    }
   }
+
+  getDishes() {
+    let index = 0;
+    this.menus.forEach(menu => {
+      for (var i = 0; i < menu.items.length; i++) {
+        let dish = menu.items[i];
+        dish.index = index;
+        dish.favorite_checked = this.profile.favorites.filter(item => item.relative_id == dish.id && item.type == 2).length > 0 ? true : false;
+        dish.image_url = dish.image_url ? this.api_url + dish.image_url : '../../../assets/imgs/logo.png';
+        dish.price = dish.price % 100 == 0 ? dish.price / 100 : (dish.price / 100).toFixed(2);
+        this.dishes.push(dish);
+        index++;
+      }
+    });
+    
+    let initial_index = this.dishes.filter(dish => dish.id == this.initial_dish_id)[0].index;
+    this.slideOpts = {
+      initialSlide: initial_index,
+      slidesPerView: 1,
+      speed: 300
+    };
+    this.loading = false;
+  }
+
+  slideDidChange() {
+    this.dish_slides.getActiveIndex().then((index) => {
+      this.active_dish = this.dishes.filter(dish => dish.index == index)[0];
+    });
+  }
+
+  // async openDishModal() {
+  //   let modal = await this.modalCtrl.create({
+  //     component: DishModalComponent,
+  //     componentProps: { dish_id: this.dish_id, restaurant_id: this.restaurant_id },
+  //     cssClass: 'dish-modal',
+  //     backdropDismiss:false,
+  //   });
+  //   modal.onDidDismiss().then(data => {
+  //     let dish = data.data;
+  //     this.updateDish(dish.id, dish.name, dish.price, dish.image_url, dish.detail, dish.favorite_checked);
+  //   });
+  //   return await modal.present();
+  // }
 
   async sendOpinion(form) {
     try {
