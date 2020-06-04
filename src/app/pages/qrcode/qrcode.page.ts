@@ -48,7 +48,7 @@ export class QrcodePage implements OnInit {
       this.restaurants = res.data;
       this.restaurants.forEach(element => {
         element.image_url = this.api_url + element.image_url;
-        element.logo_url = element.logo_url ? this.api_url + element.logo_url : '../../../assets/imgs/logo-black.png';
+        element.logo_url = element.logo_url ? this.api_url + element.logo_url : '../../../assets/imgs/logo.png';
         element.favorite_checked = false;
         element.distance = 12;
         element.category_name = element.categories.length > 0 ? element.categories[0].name : '';
@@ -61,7 +61,8 @@ export class QrcodePage implements OnInit {
   }
 
   qrScan() {
-    document.getElementById('qrscan_title').style.display = "none";
+    document.getElementById('qrscan_title').style.visibility = "hidden";
+    document.getElementById('qrcode_page').style.background = "none";
     this.qrScanner.prepare()
       .then((status: QRScannerStatus) => {
         if (status.authorized) { // camera permission was granted
@@ -102,7 +103,7 @@ export class QrcodePage implements OnInit {
       this.navCtrl.navigateBack('/home', { 
         queryParams: {}
       });
-    }, 500);
+    }, 200);
   }
 
   findRestaurant() {
