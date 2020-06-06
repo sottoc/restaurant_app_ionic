@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { ToastController, NavController } from '@ionic/angular';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { RestService } from '../../services/rest.service';
@@ -11,18 +12,21 @@ import { Storage } from '@ionic/storage';
   styleUrls: ['./qrcode.page.scss'],
 })
 export class QrcodePage implements OnInit {
+  lang : string
   QRSCANNED_DATA: string
   api_url = environment.api_url
   restaurants : any = []
   scanSub : any
   city: any
   constructor(
+    private translate: TranslateService,
     private navCtrl: NavController,
     private toastController: ToastController,
     private qrScanner: QRScanner,
     public restApi: RestService,
     private storage: Storage,
   ) { 
+    this.lang = this.translate.currentLang;
     this.storage.get('user_profile').then(profile =>{
       profile = JSON.parse(profile);
       this.city = profile.city;
@@ -120,7 +124,7 @@ export class QrcodePage implements OnInit {
                 id : restaurant.id,
                 image_url : restaurant.image_url,
                 logo_url : restaurant.logo_url,
-                name : restaurant.category_name,
+                name : restaurant.name,
                 category_name : restaurant.category_name,
                 favorite_checked : restaurant.favorite_checked
               }

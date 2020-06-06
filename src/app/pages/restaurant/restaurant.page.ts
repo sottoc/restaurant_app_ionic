@@ -17,7 +17,7 @@ const Item_Height = 139;
 export class RestaurantPage implements OnInit {
   lang : string
   api_url = environment.api_url
-  loading: boolean = false
+  loading: boolean = true
   restaurant_id : any
   cover_img_url: string
   logo_url: string
@@ -105,7 +105,7 @@ export class RestaurantPage implements OnInit {
       for (var i = 0; i < menu.items.length; i++) {
         let dish = menu.items[i];
         dish.favorite_checked = this.profile.favorites.filter(item => item.relative_id == dish.id && item.type == 2).length > 0 ? true : false;
-        dish.image_url = dish.image_url ? this.api_url + dish.image_url : '../../../assets/imgs/logo-black.png';
+        dish.image_url = dish.image_url ? this.api_url + dish.image_url : '../../../assets/imgs/logo.png';
         dish.price = dish.price % 100 == 0 ? dish.price / 100 : (dish.price / 100).toFixed(2);
         this.dishes.push(dish);
       }

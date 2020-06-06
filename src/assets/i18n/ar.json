@@ -55,6 +55,8 @@
   "friend": "Friend",
   "find_more_people": "Find more people",
   "follow": "Follow",
+  "scan_qr_code_to_see_menu": "امسح رمز ال QR لتصفح المنيو",
+  "cancel": "إلغاء",
 
   "SEARCH_PLACEHOLDER": "ابحث في قائمة العناصر، مثل \"Donald Duck\""
 }

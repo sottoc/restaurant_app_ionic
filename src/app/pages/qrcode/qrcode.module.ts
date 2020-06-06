@@ -8,12 +8,15 @@ import { QrcodePageRoutingModule } from './qrcode-routing.module';
 
 import { QrcodePage } from './qrcode.page';
 
+import { TranslateModule } from '@ngx-translate/core';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    QrcodePageRoutingModule
+    QrcodePageRoutingModule,
+    TranslateModule.forChild(),
   ],
   declarations: [QrcodePage]
 })

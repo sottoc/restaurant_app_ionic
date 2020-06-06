@@ -18,6 +18,26 @@ import { Router } from '@angular/router';
 export class StartPage implements OnInit {
   lang : string
   loading: any
+  profile : any = {
+    "id": 5,
+    "email": "test@test.com",
+    "username": "gus_programmer",
+    "password": "e10adc3949ba59abbe56e057f20f883e",
+    "city": "10",
+    "name": "Gus Developer",
+    "bio": "iOS/Android programmer",
+    "logo_url": "/storage/user_logo/1584585087201.jpg_1584585089.jpeg",
+    "country_code": "663",
+    "phone_number": "564976312",
+    "phone_verified": 0,
+    "status": 1,
+    "created_at": null,
+    "updated_at": null,
+    "followers": 0,
+    "followings": 0,
+    "favorites":[]
+  }
+  city : any = "10"
   constructor(
     private translate: TranslateService,
     public events: Events,
@@ -32,6 +52,7 @@ export class StartPage implements OnInit {
     private nativePageTransitions: NativePageTransitions
   ) { 
     this.lang = this.translate.currentLang;
+    this.init();
   }
 
   async ngOnInit() {
@@ -47,6 +68,16 @@ export class StartPage implements OnInit {
         duration: 2000
     });
     toast.present();
+  }
+
+  async init() {
+    await this.storage.set("user_profile", JSON.stringify(this.profile));
+    let res: any = await this.restApi.getCategories(this.city);
+    let categories = res.data;
+    categories.forEach(element => {
+      element.isChecked = true;
+    });
+    await this.storage.set("categories", JSON.stringify(categories));
   }
 
   goToRegisterPage() {
@@ -174,6 +205,14 @@ export class StartPage implements OnInit {
       this.lang = langauge;
     }, 300);
     this.ref.detectChanges();
+  }
+
+  goToHome() {
+    this.navCtrl.navigateBack("/home");
+  }
+
+  goToQRScan() {
+    this.navCtrl.navigateBack("/qrcode");
   }
 
 }

@@ -55,6 +55,8 @@
   "friend": "Friend",
   "find_more_people": "Find more people",
   "follow": "Follow",
+  "scan_qr_code_to_see_menu": "Scan QR code to see menu",
+  "cancel": "Cancel",
 
   
   "SEARCH_PLACEHOLDER": "Search the items list, e.g. \"Donald Duck\""

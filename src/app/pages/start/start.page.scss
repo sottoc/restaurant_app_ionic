@@ -1,0 +1,28 @@
+.start-page {
+    background-color: #f0f0f0;
+    height: 100vh;
+    .home-block1, .home-block2 {
+        background-color: #f5f6f6;
+        padding: 40px;
+        width: 150px;
+        border-radius: 10px;
+        margin: 0 auto;
+    }
+
+    .home-block2 {
+        padding: 20px !important;
+    }
+
+    .home-block1:active, .home-block2:active {
+        transform: scale(1.1);
+        background-color: #f5f6f6;
+    }
+
+    img {
+        width: 60px;
+        height: 60px;
+        span {
+            font-size: 17px;
+        }
+    }
+}

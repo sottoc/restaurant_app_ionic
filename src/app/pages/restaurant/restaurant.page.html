@@ -29,7 +29,7 @@
 </div>
 
 <div *ngIf="!loading" style="background: #f5f6f6; padding: 5px 0px;">
-  <div *ngIf="!menus.length" class="ion-text-center no-content-label">
+  <div *ngIf="!menus.length && !loading" class="ion-text-center no-content-label">
     No menus
   </div>
   <ion-slides #menu_slides [options]="slideOpts" *ngIf="menus.length">
@@ -42,7 +42,7 @@
 </div>
 
 <ion-content *ngIf="!loading" #dish_content (ionScroll)="scrollDishes($event)" (ionScrollEnd)="scrollDishesEnd()" [scrollEvents]="true">
-  <div *ngIf="!dishes.length" class="ion-text-center no-content-label">
+  <div *ngIf="!dishes.length && !loading" class="ion-text-center no-content-label">
     No dishes
   </div>
   <ion-grid *ngIf="dishes.length">
