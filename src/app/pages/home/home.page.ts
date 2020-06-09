@@ -78,7 +78,6 @@ export class HomePage implements OnInit {
   }
 
   async init() {
-    await this.storage.set("user_profile", JSON.stringify(this.profile));
     let res: any = await this.restApi.getCategories(this.city);
     let categories = res.data;
     categories.forEach(element => {

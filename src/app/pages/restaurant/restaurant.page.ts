@@ -58,14 +58,9 @@ export class RestaurantPage implements OnInit {
       this.restaurant_name = params.name;
       this.restaurant_cate = params.category_name;
       this.restaurant_favorite_checked = params.favorite_checked;
-      this.from_where = params.from_where;
-    });
-
-    this.storage.get('user_profile').then(profile =>{
-      profile = JSON.parse(profile);
-      this.profile = profile;
       this.getMenus();
     });
+    
   }
   
   ngOnInit() {
@@ -104,7 +99,8 @@ export class RestaurantPage implements OnInit {
     this.menus.forEach(menu => {
       for (var i = 0; i < menu.items.length; i++) {
         let dish = menu.items[i];
-        dish.favorite_checked = this.profile.favorites.filter(item => item.relative_id == dish.id && item.type == 2).length > 0 ? true : false;
+        // dish.favorite_checked = this.profile.favorites.filter(item => item.relative_id == dish.id && item.type == 2).length > 0 ? true : false;
+        dish.favorite_checked = false;
         dish.image_url = dish.image_url ? this.api_url + dish.image_url : '../../../assets/imgs/logo.png';
         dish.price = dish.price % 100 == 0 ? dish.price / 100 : (dish.price / 100).toFixed(2);
         this.dishes.push(dish);
@@ -113,7 +109,6 @@ export class RestaurantPage implements OnInit {
 
     this.loading = false;
     this.cdref.detectChanges();
-    
   }
 
   selectMenu(menu_id) {

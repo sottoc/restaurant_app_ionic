@@ -72,12 +72,6 @@ export class StartPage implements OnInit {
 
   async init() {
     await this.storage.set("user_profile", JSON.stringify(this.profile));
-    let res: any = await this.restApi.getCategories(this.city);
-    let categories = res.data;
-    categories.forEach(element => {
-      element.isChecked = true;
-    });
-    await this.storage.set("categories", JSON.stringify(categories));
   }
 
   goToRegisterPage() {

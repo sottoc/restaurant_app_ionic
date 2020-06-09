@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonSlides, NavController, ModalController, LoadingController, ToastController } from '@ionic/angular';
@@ -14,7 +14,7 @@ import { environment } from '../../../environments/environment';
 })
 export class DishPage implements OnInit {
   lang : string
-  loading : boolean = true
+  loading : boolean = false
   api_url = environment.api_url
   dish_id: any
   image_url: string
@@ -40,6 +40,7 @@ export class DishPage implements OnInit {
     private toastController: ToastController,
     private loadingController: LoadingController,
     public restApi: RestService,
+    private cdref: ChangeDetectorRef
   ) { 
     this.lang = this.translate.currentLang;
     this.route.queryParams.subscribe((params: any) => {
@@ -51,7 +52,7 @@ export class DishPage implements OnInit {
       this.dish_detail = params.detail != 'null' ? params.detail : '';
       this.dish_favorite_checked = params.favorite_checked;
       this.restaurant_id = params.restaurant_id;
-      this.initial_dish_id = this.dish_id;
+      this.initial_dish_id = params.id;
       this.getMenus();
     });
   }
@@ -77,6 +78,7 @@ export class DishPage implements OnInit {
         if (a.id > b.id) return 1;
         if (b.id > a.id) return -1;
       });
+      
       if (this.menus && this.menus.length) {
         this.getDishes();
       } else {
@@ -104,12 +106,13 @@ export class DishPage implements OnInit {
     });
     
     let initial_index = this.dishes.filter(dish => dish.id == this.initial_dish_id)[0].index;
+    this.loading = false;
     this.slideOpts = {
       initialSlide: initial_index,
       slidesPerView: 1,
       speed: 300
     };
-    this.loading = false;
+    this.cdref.detectChanges();
   }
 
   slideDidChange() {
@@ -132,37 +135,37 @@ export class DishPage implements OnInit {
   //   return await modal.present();
   // }
 
-  async sendOpinion(form) {
-    try {
-      const { opinion } = form.control.value;
-      const params = {
-        user_id: this.profile.id,
-        dish_id: this.dish_id,
-        opinion: opinion
-      }
-      const res : any = await this.restApi.postDishOpinion(params);
-      if (res.code == 200) {
-        this.presentToast(String(res.result) == '1' ? 'Updated successfully' : 'Posted successfully');
-      } else {
-        this.presentToast('Failed');
-      }
-    } catch (err) {
-      console.error("ERROR", err)
-    }
-  }
+  // async sendOpinion(form) {
+  //   try {
+  //     const { opinion } = form.control.value;
+  //     const params = {
+  //       user_id: this.profile.id,
+  //       dish_id: this.dish_id,
+  //       opinion: opinion
+  //     }
+  //     const res : any = await this.restApi.postDishOpinion(params);
+  //     if (res.code == 200) {
+  //       this.presentToast(String(res.result) == '1' ? 'Updated successfully' : 'Posted successfully');
+  //     } else {
+  //       this.presentToast('Failed');
+  //     }
+  //   } catch (err) {
+  //     console.error("ERROR", err)
+  //   }
+  // }
 
-  setFavoriteDish() {
-    this.dish_favorite_checked = !this.dish_favorite_checked;
-  }
+  // setFavoriteDish() {
+  //   this.dish_favorite_checked = !this.dish_favorite_checked;
+  // }
 
-  updateDish(id, name, price, image_url, detail, favorite_checked) {
-     this.dish_id = id;
-     this.image_url = image_url;
-     this.dish_name = name;
-     this.dish_price = price;
-     this.dish_detail = detail != 'null' ? detail : '';
-     this.dish_favorite_checked = favorite_checked;
-  }
+  // updateDish(id, name, price, image_url, detail, favorite_checked) {
+  //    this.dish_id = id;
+  //    this.image_url = image_url;
+  //    this.dish_name = name;
+  //    this.dish_price = price;
+  //    this.dish_detail = detail != 'null' ? detail : '';
+  //    this.dish_favorite_checked = favorite_checked;
+  // }
 
   // async updateFavorite(favorite_checked, relative_id, type) {
   //   const loading = await this.loadingController.create({

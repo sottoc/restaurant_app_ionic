@@ -17,7 +17,7 @@ export class QrcodePage implements OnInit {
   api_url = environment.api_url
   restaurants : any = []
   scanSub : any
-  city: any
+  city: any = "10"
   constructor(
     private translate: TranslateService,
     private navCtrl: NavController,
@@ -27,11 +27,7 @@ export class QrcodePage implements OnInit {
     private storage: Storage,
   ) { 
     this.lang = this.translate.currentLang;
-    this.storage.get('user_profile').then(profile =>{
-      profile = JSON.parse(profile);
-      this.city = profile.city;
-      this.getRestaurants();
-    });
+    this.getRestaurants();
   }
 
   ngOnInit() {
@@ -117,6 +113,7 @@ export class QrcodePage implements OnInit {
     if (this.QRSCANNED_DATA.includes(address_key) && this.QRSCANNED_DATA.split('_')[0] == address_key) {
       const restaurant_id = this.QRSCANNED_DATA.split('_')[1];
       let restaurant = this.restaurants.filter(e => e.id == restaurant_id)[0];
+      console.log("qrcode_restaurant", restaurant);
       if (restaurant) {
         if (restaurant.is_open == 1) { // if restaurant is opened
             this.navCtrl.navigateBack('/restaurant', { queryParams: 
@@ -125,7 +122,7 @@ export class QrcodePage implements OnInit {
                 image_url : restaurant.image_url,
                 logo_url : restaurant.logo_url,
                 name : restaurant.name,
-                category_name : restaurant.category_name,
+                category_name : restaurant.name,
                 favorite_checked : restaurant.favorite_checked
               }
             });
