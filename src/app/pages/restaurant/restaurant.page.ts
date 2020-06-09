@@ -198,6 +198,16 @@ export class RestaurantPage implements OnInit {
     this.iab.create(this.pdf_url, '_blank');
   }
 
+  // previewPdfFile() {
+  //   var url = this.api_url + this.pdf_url;
+  //   this.previewAnyFile.preview(url).then(() => {
+
+  //   }, (err)=>{
+  //     this.presentToast(JSON.stringify(err));
+  //   });
+
+  // }
+
   // async updateFavorite(favorite_checked, relative_id, type) {
   //   const loading = await this.loadingController.create({
   //       message: favorite_checked ? 'Removing from favorite ...' : 'Setting as favorite ...',
