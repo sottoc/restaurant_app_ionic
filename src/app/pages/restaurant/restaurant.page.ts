@@ -7,6 +7,9 @@ import { environment } from '../../../environments/environment';
 import { Storage } from '@ionic/storage';
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions/ngx';
 
+import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+
 const Item_Height = 139;
 
 @Component({
@@ -14,6 +17,7 @@ const Item_Height = 139;
   templateUrl: './restaurant.page.html',
   styleUrls: ['./restaurant.page.scss'],
 })
+
 export class RestaurantPage implements OnInit {
   lang : string
   api_url = environment.api_url
@@ -21,6 +25,7 @@ export class RestaurantPage implements OnInit {
   restaurant_id : any
   cover_img_url: string
   logo_url: string
+  pdf_url: string
   restaurant_favorite_checked: boolean
   restaurant_name: string
   restaurant_cate: string
@@ -38,6 +43,7 @@ export class RestaurantPage implements OnInit {
   params: any
   profile : any
   from_where : any
+
   constructor(
     private translate: TranslateService,
     private route: ActivatedRoute,
@@ -47,7 +53,9 @@ export class RestaurantPage implements OnInit {
     private storage: Storage,
     private nativePageTransitions: NativePageTransitions,
     private loadingController: LoadingController,
-    private cdref: ChangeDetectorRef
+    private cdref: ChangeDetectorRef,
+    public previewAnyFile: PreviewAnyFile,
+    private iab: InAppBrowser
   ) { 
     this.lang = this.translate.currentLang;
     this.route.queryParams.subscribe((params: any) => {
@@ -58,6 +66,7 @@ export class RestaurantPage implements OnInit {
       this.restaurant_name = params.name;
       this.restaurant_cate = params.category_name;
       this.restaurant_favorite_checked = params.favorite_checked;
+      this.pdf_url = this.api_url + params.pdf_url;
       this.getMenus();
     });
     
@@ -185,42 +194,46 @@ export class RestaurantPage implements OnInit {
     });
   }
 
-  async updateFavorite(favorite_checked, relative_id, type) {
-    const loading = await this.loadingController.create({
-        message: favorite_checked ? 'Removing from favorite ...' : 'Setting as favorite ...',
-    });
-    await loading.present();
-    const params = {"user_id" : this.profile.id, "relative_id" : relative_id, "type" : type };
-    let res: any = favorite_checked ? await this.restApi.removeFavorite(params) : await this.restApi.setFavorite(params);
-    if (res.code == 200) {  // if success
-      // update profile favorites
-      if (favorite_checked == false) { 
-        this.profile.favorites.push({ relative_id: relative_id, type: type});
-      } else {
-        let index = -1;
-        this.profile.favorites.forEach((item, i) => {
-          if (item.relative_id == relative_id && item.type == type) {
-            index = i;
-          }
-        });
-        this.profile.favorites.splice(index, 1);
-      }
-      await this.storage.set("user_profile", JSON.stringify(this.profile));
-      // update UI
-      if (type == 1) {
-        this.restaurant_favorite_checked = !favorite_checked
-      }
-      if (type == 2) {
-        this.dishes.forEach((dish) => {
-          if (dish.id == relative_id) {
-            dish.favorite_checked = !dish.favorite_checked;
-          }
-        });
-      }
-    } else { // if failed
-      this.presentToast(res.result);
-    }
-    loading.dismiss();
+  previewPdfFile() {
+    this.iab.create(this.pdf_url, '_blank');
   }
+
+  // async updateFavorite(favorite_checked, relative_id, type) {
+  //   const loading = await this.loadingController.create({
+  //       message: favorite_checked ? 'Removing from favorite ...' : 'Setting as favorite ...',
+  //   });
+  //   await loading.present();
+  //   const params = {"user_id" : this.profile.id, "relative_id" : relative_id, "type" : type };
+  //   let res: any = favorite_checked ? await this.restApi.removeFavorite(params) : await this.restApi.setFavorite(params);
+  //   if (res.code == 200) {  // if success
+  //     // update profile favorites
+  //     if (favorite_checked == false) { 
+  //       this.profile.favorites.push({ relative_id: relative_id, type: type});
+  //     } else {
+  //       let index = -1;
+  //       this.profile.favorites.forEach((item, i) => {
+  //         if (item.relative_id == relative_id && item.type == type) {
+  //           index = i;
+  //         }
+  //       });
+  //       this.profile.favorites.splice(index, 1);
+  //     }
+  //     await this.storage.set("user_profile", JSON.stringify(this.profile));
+  //     // update UI
+  //     if (type == 1) {
+  //       this.restaurant_favorite_checked = !favorite_checked
+  //     }
+  //     if (type == 2) {
+  //       this.dishes.forEach((dish) => {
+  //         if (dish.id == relative_id) {
+  //           dish.favorite_checked = !dish.favorite_checked;
+  //         }
+  //       });
+  //     }
+  //   } else { // if failed
+  //     this.presentToast(res.result);
+  //   }
+  //   loading.dismiss();
+  // }
   
 }

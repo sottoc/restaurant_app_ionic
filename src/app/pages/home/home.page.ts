@@ -195,7 +195,7 @@ export class HomePage implements OnInit {
     this.display_grid_state = true;
   }
 
-  async visitRestaurant(id, image_url, logo_url, name, category_name, favorite_checked) {
+  async visitRestaurant(id, image_url, logo_url, name, category_name, favorite_checked, pdf_url) {
     let options : NativeTransitionOptions = {
       direction: 'left',
       duration: 400,
@@ -212,7 +212,8 @@ export class HomePage implements OnInit {
         logo_url : logo_url,
         name : name,
         category_name : category_name,
-        favorite_checked : favorite_checked
+        favorite_checked : favorite_checked,
+        pdf_url : pdf_url
       }
     });
   }
