@@ -66,7 +66,7 @@ export class RestaurantPage implements OnInit {
       this.restaurant_name = params.name;
       this.restaurant_cate = params.category_name;
       this.restaurant_favorite_checked = params.favorite_checked;
-      this.pdf_url = this.api_url + params.pdf_url;
+      this.pdf_url = params.pdf_url;
       this.getMenus();
     });
     
@@ -195,7 +195,7 @@ export class RestaurantPage implements OnInit {
   }
 
   previewPdfFile() {
-    this.iab.create(this.pdf_url, '_blank');
+    this.iab.create(this.api_url + this.pdf_url, '_blank');
   }
 
   // previewPdfFile() {

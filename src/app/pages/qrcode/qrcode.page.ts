@@ -123,7 +123,8 @@ export class QrcodePage implements OnInit {
                 logo_url : restaurant.logo_url,
                 name : restaurant.name,
                 category_name : restaurant.name,
-                favorite_checked : restaurant.favorite_checked
+                favorite_checked : restaurant.favorite_checked,
+                pdf_url : restaurant.pdf_url
               }
             });
         } else { // if restaurant is closed
