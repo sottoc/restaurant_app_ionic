@@ -189,10 +189,12 @@ export class HomePage implements OnInit {
 
   showList() {
     this.display_grid_state = false;
+    this.cdref.detectChanges();
   }
 
   showGrid() {
     this.display_grid_state = true;
+    this.cdref.detectChanges();
   }
 
   async visitRestaurant(id, image_url, logo_url, name, category_name, favorite_checked, pdf_url) {

@@ -8,7 +8,9 @@
 .logo-img {
     position: absolute;
     left: 10px;
-    bottom: 10px;
+    bottom: 12px;
+    width: 60px !important;
+    height: 28px !important;
     opacity: 0.8;
 }
 
@@ -50,6 +52,12 @@
 // 	}
 // }
 
-.swiper-slide img {
+.swiper-slide .cover-img {
     height: 250px !important;
+    width: 350px !important;
+}
+
+.swiper-slide .cover-img-blank {
+    height: 250px !important;
+    opacity: 0.3;
 }

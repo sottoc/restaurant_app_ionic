@@ -98,6 +98,7 @@ export class DishPage implements OnInit {
         dish.index = index;
         // dish.favorite_checked = this.profile.favorites.filter(item => item.relative_id == dish.id && item.type == 2).length > 0 ? true : false;
         dish.favorite_checked = false;
+        dish.image_url_flag = dish.image_url ? true : false;
         dish.image_url = dish.image_url ? this.api_url + dish.image_url : '../../../assets/imgs/logo.png';
         dish.price = dish.price % 100 == 0 ? dish.price / 100 : (dish.price / 100).toFixed(2);
         this.dishes.push(dish);

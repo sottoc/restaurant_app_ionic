@@ -9,16 +9,16 @@
     <div class="bottom-div">
       <ion-row>
         <ion-col size="4" class="ion-text-left">
-          <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" style="font-size: 12px; padding-top: 32px;">
+          <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" style="font-size: 12px; padding-top: 10px;">
             <!-- <ion-icon name="pin"></ion-icon>
             <span> 12 </span>
             <span> {{'km' | translate}} </span> -->
-            <span *ngIf="pdf_url" style="font-size: 15px;" (click)="previewPdfFile()"> PDF </span>
+            <ion-icon name="document" size="large" *ngIf="pdf_url" (click)="previewPdfFile()"></ion-icon>
           </div>
         </ion-col>
         <ion-col size="8" class="ion-text-right">
           <div>
-            <span style="font-size: 20px;" class="bold-opacity-title"> {{restaurant_name}} </span>
+            <span style="font-size: 18px;" class="bold-opacity-title"> {{restaurant_name}} </span>
           </div>
           <div>
             <span> {{restaurant_cate}} </span>

@@ -6,7 +6,8 @@
           <ion-slide *ngFor="let dish of dishes">
             <div style="height: 100%;">
               <div class="cover-div">
-                <img [src]="dish.image_url" width="100%" height="100%" class="cover-img">
+                <img [src]="dish.image_url" width="100%" height="100%" [class]="dish.image_url_flag ? 'cover-img' : 'cover-img-blank'">
+                <img *ngIf="dish.image_url_flag" src="../../../assets/imgs/logo_menu.png" class="logo-img">
               </div>
               <div class="bottom-div">
                 <ion-row style="font-size: 18px;">
