@@ -122,7 +122,7 @@ export class QrcodePage implements OnInit {
                 image_url : restaurant.image_url,
                 logo_url : restaurant.logo_url,
                 name : restaurant.name,
-                category_name : restaurant.name,
+                category_name : restaurant.category_name,
                 favorite_checked : restaurant.favorite_checked,
                 pdf_url : restaurant.pdf_url
               }
