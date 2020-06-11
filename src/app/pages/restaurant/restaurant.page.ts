@@ -195,7 +195,8 @@ export class RestaurantPage implements OnInit {
   }
 
   previewPdfFile() {
-    this.iab.create(this.api_url + this.pdf_url, '_blank');
+    let options = 'toolbarposition=top,closebuttoncaption=Close,closebuttoncolor=#3c426d';
+    this.iab.create(this.api_url + this.pdf_url, '_blank', options);
   }
 
   // previewPdfFile() {
