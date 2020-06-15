@@ -50,7 +50,7 @@
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-filepath": "^1.5.7",
     "cordova-plugin-googleplus": "^8.4.0",
-    "cordova-plugin-inappbrowser": "^3.2.0",
+    "cordova-plugin-inappbrowser": "^4.0.0",
     "cordova-plugin-ionic-webview": "^5.0.0",
     "cordova-plugin-preview-any-file": "^0.1.6",
     "cordova-plugin-qrscanner": "^3.0.1",
@@ -126,8 +126,8 @@
       "com.telerik.plugins.nativepagetransitions": {},
       "mx.ferreyra.callnumber": {},
       "cordova-plugin-preview-any-file": {},
-      "cordova-plugin-inappbrowser": {},
-      "cordova-plugin-ionic-webview": {}
+      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-inappbrowser": {}
     },
     "platforms": [
       "ios",
