@@ -129,6 +129,9 @@ export class QrcodePage implements OnInit {
             });
         } else { // if restaurant is closed
           this.presentToast('This restaurant is closed');
+          this.navCtrl.navigateBack('/home', { 
+            queryParams: {}
+          });
         }
       } else {
         this.presentToast('Cannot find a restaurant of id = ' + restaurant_id);

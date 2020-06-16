@@ -31,8 +31,6 @@ import { NativePageTransitions } from '@ionic-native/native-page-transitions/ngx
 
 import { CallNumber } from '@ionic-native/call-number/ngx';
 
-import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
-
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -70,7 +68,6 @@ export function createTranslateLoader(http: HttpClient) {
     Facebook,
     NativePageTransitions,
     CallNumber,
-    PreviewAnyFile,
     InAppBrowser
   ],
   bootstrap: [AppComponent]

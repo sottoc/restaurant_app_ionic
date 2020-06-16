@@ -7,7 +7,6 @@ import { environment } from '../../../environments/environment';
 import { Storage } from '@ionic/storage';
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions/ngx';
 
-import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 const Item_Height = 139;
@@ -54,7 +53,6 @@ export class RestaurantPage implements OnInit {
     private nativePageTransitions: NativePageTransitions,
     private loadingController: LoadingController,
     private cdref: ChangeDetectorRef,
-    public previewAnyFile: PreviewAnyFile,
     private iab: InAppBrowser
   ) { 
     this.lang = this.translate.currentLang;
@@ -198,16 +196,6 @@ export class RestaurantPage implements OnInit {
     let options = 'toolbarposition=top,closebuttoncaption=Back';
     this.iab.create(this.api_url + this.pdf_url, '_blank', options);
   }
-
-  // previewPdfFile() {
-  //   var url = this.api_url + this.pdf_url;
-  //   this.previewAnyFile.preview(url).then(() => {
-
-  //   }, (err)=>{
-  //     this.presentToast(JSON.stringify(err));
-  //   });
-
-  // }
 
   // async updateFavorite(favorite_checked, relative_id, type) {
   //   const loading = await this.loadingController.create({
