@@ -108,7 +108,6 @@
     <plugin name="cordova-plugin-device" spec="2.0.2" />
     <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
-    <plugin name="cordova-plugin-ionic-webview" spec="^4.0.0" />
     <plugin name="cordova-plugin-add-swift-support" spec="1.7.2" />
     <allow-navigation href="http://localhost:8100" sessionid="81c08632" />
 </widget>

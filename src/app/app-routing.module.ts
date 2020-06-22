@@ -7,12 +7,10 @@ const routes: Routes = [
     path: 'start',
     loadChildren: () => import('./pages/start/start.module').then( m => m.StartPageModule)
   },
-  
   {
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   },
-  
   {
     path: 'qrcode',
     loadChildren: () => import('./pages/qrcode/qrcode.module').then( m => m.QrcodePageModule)
