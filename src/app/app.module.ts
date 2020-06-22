@@ -23,13 +23,7 @@ import { IonicStorageModule } from '@ionic/storage';
 
 import { QRScanner } from '@ionic-native/qr-scanner/ngx';
 
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
-
-import { Facebook } from '@ionic-native/facebook/ngx';
-
 import { NativePageTransitions } from '@ionic-native/native-page-transitions/ngx';
-
-import { CallNumber } from '@ionic-native/call-number/ngx';
 
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
@@ -64,10 +58,7 @@ export function createTranslateLoader(http: HttpClient) {
     WebView,
     FilePath,
     QRScanner,
-    GooglePlus,
-    Facebook,
     NativePageTransitions,
-    CallNumber,
     InAppBrowser
   ],
   bootstrap: [AppComponent]

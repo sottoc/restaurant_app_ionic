@@ -3,9 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Events, ToastController, NavController } from '@ionic/angular';
 import { RestService } from '../../services/rest.service';
 import { LoadingController } from '@ionic/angular';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { Storage } from '@ionic/storage';
-import { Facebook } from '@ionic-native/facebook/ngx';
 import { Md5 } from 'ts-md5/dist/md5';
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions/ngx';
 import { Router } from '@angular/router';
@@ -44,11 +42,9 @@ export class StartPage implements OnInit {
     private ref: ChangeDetectorRef,
     private navCtrl: NavController,
     public restApi: RestService,
-    private google:GooglePlus,
     public loadingController: LoadingController,
     private toastController: ToastController,
     private storage: Storage,
-    private fb: Facebook,
     private nativePageTransitions: NativePageTransitions
   ) { 
     this.lang = this.translate.currentLang;
@@ -92,62 +88,6 @@ export class StartPage implements OnInit {
     this.nativePageTransitions.flip(options);
 
     this.navCtrl.navigateBack('/login');
-  }
-
-  async googleLogin() {
-    const params = {
-      'scopes':'profile',
-      'webClientId': '782070961638-5hg2j42u2oq59j2jh6va97bs4vnpqqvv.apps.googleusercontent.com',
-      'offline': true
-    }
-    this.loading.present();
-    this.google.login(params)
-      .then((response) => {
-        console.log(response);
-        const params = {
-          email: response.email,
-          username: response.email,
-          password: Md5.hashStr(response.email),
-          city: '',
-          name: response.displayName,
-          country_code: '',
-          phone_number: ''
-        }
-        this.register(params);
-      }).catch((error) => {
-        console.error(error)
-        this.presentToast('error:' + JSON.stringify(error))
-        this.loading.dismiss();
-      });
-  }
-
-  async facebookLogin() {
-    this.loading.present();
-    //the permissions your facebook app needs from the user
-    const permissions = ["public_profile", "email"];
-    this.fb.login(permissions)
-		.then(response =>{
-      console.log(response);
-			let userId = response.authResponse.userID;
-			this.fb.api("/me?fields=name,email", permissions)
-			.then(user =>{
-        console.log(user);
-        const params = {
-          email: user.email,
-          username: user.email,
-          password: Md5.hashStr(user.email),
-          city: '',
-          name: user.name,
-          country_code: '',
-          phone_number: ''
-        }
-        this.register(params);
-        this.loading.dismiss();
-			})
-		}, error =>{
-			console.log(error);
-			this.loading.dismiss();
-		});
   }
 
   async twitterLogin() {
