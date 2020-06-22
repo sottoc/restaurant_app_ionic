@@ -5,7 +5,6 @@ import { IonInput, NavController, Events, Platform, ActionSheetController, Toast
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/Camera/ngx';
 import { File, FileEntry } from '@ionic-native/File/ngx';
 import { HttpClient } from '@angular/common/http';
-import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { Storage } from '@ionic/storage';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { RestService } from '../../services/rest.service';
@@ -46,8 +45,7 @@ export class SettingsPage implements OnInit {
     public platform: Platform,
     private camera: Camera, 
     private file: File, 
-    private http: HttpClient, 
-    private webview: WebView,
+    private http: HttpClient,
     private actionSheetController: ActionSheetController, 
     private toastController: ToastController,
     private storage: Storage, 
@@ -100,7 +98,7 @@ export class SettingsPage implements OnInit {
     if (img === null) {
       return '';
     } else {
-      let converted = this.webview.convertFileSrc(img);
+      let converted = null;
       return converted;
     }
   }
