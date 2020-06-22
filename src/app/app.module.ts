@@ -15,8 +15,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { Camera } from '@ionic-native/Camera/ngx';
-import { File } from "@ionic-native/File/ngx";
-import { FilePath } from '@ionic-native/file-path/ngx';
  
 import { IonicStorageModule } from '@ionic/storage';
 
@@ -59,8 +57,6 @@ export function createTranslateLoader(http: HttpClient) {
     HTTP,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Camera,
-    File,
-    FilePath,
     QRScanner,
     GooglePlus,
     Facebook,
