@@ -4,9 +4,6 @@ import { Events, ToastController, NavController } from '@ionic/angular';
 import { RestService } from '../../services/rest.service';
 import { LoadingController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-import { Md5 } from 'ts-md5/dist/md5';
-import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions/ngx';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-start',
@@ -45,7 +42,6 @@ export class StartPage implements OnInit {
     public loadingController: LoadingController,
     private toastController: ToastController,
     private storage: Storage,
-    private nativePageTransitions: NativePageTransitions
   ) { 
     this.lang = this.translate.currentLang;
     this.init();
@@ -71,21 +67,11 @@ export class StartPage implements OnInit {
   }
 
   goToRegisterPage() {
-    let options : NativeTransitionOptions = {
-      direction: 'left',
-      duration: 600
-    }
-    this.nativePageTransitions.flip(options);
 
     this.navCtrl.navigateBack('/register');
   }
 
   goToLoginPage() {
-    let options : NativeTransitionOptions = {
-      direction: 'left',
-      duration: 600
-    }
-    this.nativePageTransitions.flip(options);
 
     this.navCtrl.navigateBack('/login');
   }

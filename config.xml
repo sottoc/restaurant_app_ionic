@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="io.cmenu.cmenulist" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Restaurant</name>
-    <description>An awesome Ionic/Cordova app.</description>
-    <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
+    <description>An Awesome Restaurant App</description>
+    <author email="C.menu18@gmail.com" href="http://ionicframework.com/">Khaled</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

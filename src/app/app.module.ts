@@ -20,8 +20,6 @@ import { IonicStorageModule } from '@ionic/storage';
 
 import { QRScanner } from '@ionic-native/qr-scanner/ngx';
 
-import { NativePageTransitions } from '@ionic-native/native-page-transitions/ngx';
-
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -52,7 +50,6 @@ export function createTranslateLoader(http: HttpClient) {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Camera,
     QRScanner,
-    NativePageTransitions,
     InAppBrowser
   ],
   bootstrap: [AppComponent]

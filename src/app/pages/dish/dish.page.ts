@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { IonSlides, NavController, ModalController, LoadingController, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { RestService } from '../../services/rest.service';
-// import { DishModalComponent } from '../../components/dish-modal/dish-modal.component';
 import { environment } from '../../../environments/environment';
 
 @Component({

@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions/ngx';
 
 @Component({
   selector: 'app-header',
@@ -13,20 +12,12 @@ export class HeaderComponent implements OnInit {
   @Input() params: string;
   constructor(
     private navCtrl: NavController,
-    private nativePageTransitions: NativePageTransitions
   ) { }
 
   ngOnInit() {
   }
 
   goBack() {
-    let options : NativeTransitionOptions = {
-      direction: 'right',
-      duration: 300,
-      slowdownfactor: -1,
-      iosdelay: 50
-    }
-    this.nativePageTransitions.slide(options);
     if (this.back_link == '/start') {
       this.navCtrl.navigateBack('/home');
     } else if (this.back_link == '/home' && this.params == 'favorite') {

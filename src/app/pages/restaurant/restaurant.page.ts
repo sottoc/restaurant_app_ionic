@@ -5,7 +5,6 @@ import { IonContent, IonSlides, NavController, ToastController, LoadingControlle
 import { RestService } from '../../services/rest.service';
 import { environment } from '../../../environments/environment';
 import { Storage } from '@ionic/storage';
-import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions/ngx';
 
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
@@ -50,7 +49,6 @@ export class RestaurantPage implements OnInit {
     public restApi: RestService,
     private toastController: ToastController,
     private storage: Storage,
-    private nativePageTransitions: NativePageTransitions,
     private loadingController: LoadingController,
     private cdref: ChangeDetectorRef,
     private iab: InAppBrowser
@@ -171,13 +169,6 @@ export class RestaurantPage implements OnInit {
   }
 
   visitDish(id, name, price, image_url, detail, favorite_checked) {
-    let options : NativeTransitionOptions = {
-      direction: 'left',
-      duration: 400,
-      slowdownfactor: -1,
-      iosdelay: 50
-    }
-    this.nativePageTransitions.slide(options);
     this.navCtrl.navigateBack('/dish', { queryParams: 
       {
         id: id,

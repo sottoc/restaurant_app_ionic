@@ -5,7 +5,6 @@ import { FilterModalComponent } from '../../components/filter-modal/filter-modal
 import { RestService } from '../../services/rest.service';
 import { environment } from '../../../environments/environment';
 import { Storage } from '@ionic/storage';
-import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions/ngx';
 
 @Component({
   selector: 'app-home',
@@ -50,7 +49,6 @@ export class HomePage implements OnInit {
     private toastController: ToastController,
     public restApi: RestService,
     private storage: Storage,
-    private nativePageTransitions: NativePageTransitions,
     private loadingController: LoadingController,
     private cdref: ChangeDetectorRef
   ) {
@@ -198,13 +196,6 @@ export class HomePage implements OnInit {
   }
 
   async visitRestaurant(id, image_url, logo_url, name, category_name, favorite_checked, pdf_url) {
-    let options : NativeTransitionOptions = {
-      direction: 'left',
-      duration: 400,
-      slowdownfactor: -1,
-      iosdelay: 50
-    }
-    this.nativePageTransitions.slide(options);
     this.profile.restaurant_id = id;
     await this.storage.set("user_profile", JSON.stringify(this.profile));
     this.navCtrl.navigateBack('/restaurant', { queryParams: 
