@@ -99,7 +99,8 @@
       "cordova-plugin-add-swift-support": {},
       "cordova-plugin-ionic-webview": {
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
-      }
+      },
+      "cordova-plugin-inappbrowser": {}
     },
     "platforms": [
       "ios",
